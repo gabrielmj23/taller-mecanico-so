@@ -7,5 +7,6 @@ class Inventario {
     private:
         vector<Pieza> stock;
     public:
+        Inventario(vector<Pieza> stock);
         int buscarCantidadPiezaPorNombre(string nombre); 
 };

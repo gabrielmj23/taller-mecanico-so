@@ -9,6 +9,7 @@ class SistemaVehiculo {
         string nombre;
         vector<Pieza> piezas;
     public:
+        SistemaVehiculo(string nombre, vector<Pieza> piezas);
         string getNombre();
         void iniciarSistema();
         void reemplazarPieza(Pieza p);

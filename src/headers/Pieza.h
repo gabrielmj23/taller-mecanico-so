@@ -6,5 +6,6 @@ class Pieza {
     private:
         string nombre;
     public:
+        Pieza(string nombre);
         string getNombre();
 };

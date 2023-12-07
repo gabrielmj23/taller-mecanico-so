@@ -3,6 +3,11 @@
 #include <SistemaVehiculo.h>
 using namespace std;
 
+SistemaVehiculo::SistemaVehiculo(string nombre, vector<Pieza> piezas) {
+    this->nombre = nombre;
+    this->piezas = piezas;
+}
+
 string SistemaVehiculo::getNombre() {
     return nombre;
 }
