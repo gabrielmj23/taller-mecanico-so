@@ -2,6 +2,14 @@
 
 Proyecto de la asignatura Sistemas Operativos, con el objetivo de simular la automatización de un taller mecánico para vehículos Toyota Corolla.
 
+## Integrantes
+- José Bertorelli
+- Gabriel Méndez
+- Roberth Graffe
+- Andrés Chacón
+- Karim Sahili
+- Yamal Abousaid
+
 ## Funcionalidades
 - Atiende múltiples vehículos de forma paralela
 - Recibe solicitudes por red LAN
