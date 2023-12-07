@@ -8,5 +8,7 @@ class Inventario {
         vector<Pieza> stock;
     public:
         Inventario(vector<Pieza> stock);
+        void agregarPieza(Pieza p);
+        Pieza sacarPieza(string nombre);
         int buscarCantidadPiezaPorNombre(string nombre); 
 };
