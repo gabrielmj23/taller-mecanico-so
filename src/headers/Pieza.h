@@ -5,4 +5,6 @@ using namespace std;
 class Pieza {
     private:
         string nombre;
+    public:
+        string getNombre();
 };

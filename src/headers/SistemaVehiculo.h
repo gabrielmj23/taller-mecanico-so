@@ -7,5 +7,9 @@ using namespace std;
 class SistemaVehiculo {
     private:
         string nombre;
-        vector<Pieza> piezas; 
+        vector<Pieza> piezas;
+    public:
+        string getNombre();
+        void iniciarSistema();
+        void reemplazarPieza(Pieza p);
 };

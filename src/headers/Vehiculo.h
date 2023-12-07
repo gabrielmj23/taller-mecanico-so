@@ -5,5 +5,7 @@ using namespace std;
 class Vehiculo {
     private:
         string cedula_propietario;
-        string placa;       
+        string placa;
+    public:
+        void identificar();
 };
