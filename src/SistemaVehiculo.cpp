@@ -12,8 +12,8 @@ string SistemaVehiculo::getNombre() {
     return nombre;
 }
 
-void SistemaVehiculo::iniciarSistema() {
-    cout << "Iniciando sistema: " << nombre << '\n';
+void *SistemaVehiculo::iniciarSistema() {
+    cout << "Iniciando sistema: Sistema de " << nombre << '\n';
 }
 
 void SistemaVehiculo::reemplazarPieza(Pieza p) {
