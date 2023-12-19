@@ -14,5 +14,7 @@ private:
 
 public:
     Vehiculo(string cedulaPropietario, string nombrePropietario, string placa, vector<SistemaVehiculo> sistemas);
+    string getPlaca();
+    vector<SistemaVehiculo> getSistemas();
     void identificar();
 };

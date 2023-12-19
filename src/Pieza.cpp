@@ -13,3 +13,8 @@ string Pieza::getNombre()
 {
     return nombre;
 }
+
+EstadoPieza Pieza::getEstado()
+{
+    return this->estado;
+}

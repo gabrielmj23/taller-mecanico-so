@@ -11,6 +11,7 @@ class SistemaVehiculo {
     public:
         SistemaVehiculo(string nombre, vector<Pieza> piezas);
         string getNombre();
+        vector<Pieza> getPiezas();
         void *iniciarSistema();
         void reemplazarPieza(Pieza p);
 };

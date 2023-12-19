@@ -12,6 +12,11 @@ string SistemaVehiculo::getNombre() {
     return nombre;
 }
 
+vector<Pieza> SistemaVehiculo::getPiezas()
+{
+    return this->piezas;
+}
+
 void *SistemaVehiculo::iniciarSistema() {
     cout << "Iniciando sistema: Sistema de " << nombre << '\n';
 }

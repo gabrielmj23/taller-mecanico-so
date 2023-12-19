@@ -15,4 +15,5 @@ class Pieza {
     public:
         Pieza(string nombre, string descripcion, EstadoPieza estado);
         string getNombre();
+        EstadoPieza getEstado();
 };
