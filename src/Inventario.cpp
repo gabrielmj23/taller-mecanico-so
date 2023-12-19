@@ -23,7 +23,7 @@ Pieza Inventario::sacarPieza(string nombre)
             return ret;
         }
     }
-    return Pieza("No existe");
+    return Pieza("No existe", "No existe", FUNCIONA);
 }
 
 int Inventario::buscarCantidadPiezaPorNombre(string nombre)
