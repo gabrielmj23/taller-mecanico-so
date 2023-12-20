@@ -1,0 +1,9 @@
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/centro_garantia_vehiculos.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/list_install_components.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/install.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/install/local.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/install/strip.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/centro_garantia_vehiculos_autogen_timestamp_deps.dir
+/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug/CMakeFiles/centro_garantia_vehiculos_autogen.dir
