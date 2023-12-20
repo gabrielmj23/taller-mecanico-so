@@ -5,7 +5,7 @@ Proyecto de la asignatura Sistemas Operativos, con el objetivo de simular la aut
 ## Integrantes
 - José Bertorelli
 - Gabriel Méndez
-- Roberth Graffe
+- Roberth  Graffe
 - Andrés Chacón
 - Karim Sahili
 - Yamal Abousaid
