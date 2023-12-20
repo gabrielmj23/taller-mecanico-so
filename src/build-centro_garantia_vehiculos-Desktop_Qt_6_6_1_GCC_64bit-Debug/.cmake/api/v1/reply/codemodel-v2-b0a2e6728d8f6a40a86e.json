@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-201100804d67e7120230.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "centro_garantia_vehiculos",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "centro_garantia_vehiculos::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-centro_garantia_vehiculos-Debug-348e4d2a7b1027cad126.json",
+					"name" : "centro_garantia_vehiculos",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "centro_garantia_vehiculos_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-centro_garantia_vehiculos_autogen-Debug-cb3ec552da4ae1777631.json",
+					"name" : "centro_garantia_vehiculos_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "centro_garantia_vehiculos_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-centro_garantia_vehiculos_autogen_timestamp_deps-Debug-b9c0db23e77643ac17ff.json",
+					"name" : "centro_garantia_vehiculos_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_GCC_64bit-Debug",
+		"source" : "/home/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}
