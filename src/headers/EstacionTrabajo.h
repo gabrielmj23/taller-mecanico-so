@@ -9,11 +9,10 @@ class EstacionTrabajo
 private:
     string nombre;
     pthread_t hilo_estacion;
+    bool trabajando;
 
 public:
     EstacionTrabajo(string nombre);
     string getNombre();
-    void *iniciarEstacion();
-    void *iniciarTrabajo(void *vehiculo);
-    void reemplazarPieza(Pieza p);
+    void iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas);
 };

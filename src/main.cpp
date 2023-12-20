@@ -34,7 +34,7 @@ inline Vehiculo crearCorolla(string cedula, string nombre, string placa)
 									   Pieza("Bielas", "Sin descripción", RANDOM_FUNC)});
 
 	// Sistema de transmisión
-	SistemaVehiculo transmision("Transmision", vector<Pieza>{
+	SistemaVehiculo transmision("Transmisión", vector<Pieza>{
 												   Pieza("Caja de cambios", "Caja automática CVT", RANDOM_FUNC),
 												   Pieza("Embrague", "Sin descripción", RANDOM_FUNC),
 												   Pieza("Árbol de transmisión", "Sin descripción", RANDOM_FUNC),
@@ -61,7 +61,7 @@ inline Vehiculo crearCorolla(string cedula, string nombre, string placa)
 											   });
 
 	// Sistema de suspensión
-	SistemaVehiculo suspension("Suspension", vector<Pieza>{
+	SistemaVehiculo suspension("Suspensión", vector<Pieza>{
 												 Pieza("Amortiguadores", "De gas", RANDOM_FUNC),
 												 Pieza("Muelle helicoidal", "De tipo MacPherson", RANDOM_FUNC),
 												 Pieza("Barra de torsión", "Para la suspensión trasera", RANDOM_FUNC),
@@ -130,13 +130,13 @@ private:
 	map<string, vector<Pieza>> diagnosticar(Vehiculo &v)
 	{
 		map<string, vector<Pieza>> piezasPorEstacion;
-		for (SistemaVehiculo &sistema : v.getSistemas())
+		for (SistemaVehiculo &sistema : *(v.getSistemas()))
 		{
 			for (Pieza &pieza : sistema.getPiezas())
 			{
 				if (pieza.getEstado() == FALLA)
 				{
-					piezasPorEstacion[sistema.getNombre()].push_back(pieza);
+					piezasPorEstacion[sistema.getNombre()].push_back(pieza); // Deja las referencias de las piezas a reemplazar
 				}
 			}
 		}
@@ -170,17 +170,32 @@ public:
 	 */
 	void recibirVehiculo(Vehiculo &v)
 	{
-		cout << "Recibió vehículo de placa: " << v.getPlaca() << "\n";
+		cout << "Recibió vehículo de placa: " << v.getPlaca() << "\n---\n";
+		// Diagnosticar
 		map<string, vector<Pieza>> piezasPorEstacion = diagnosticar(v);
-		for (auto p: piezasPorEstacion)
+		for (auto p : piezasPorEstacion)
 		{
-			cout << "Piezas a reemplazar en " << p.first << ":\n";
+			cout << "Piezas a reemplazar en Sistema de " << p.first << ":\n";
 			for (Pieza &pieza : p.second)
 			{
 				cout << pieza.getNombre() << "\n";
 			}
 		}
-		cout << "Vehículo liberado\n";
+		// Hacer trabajo
+		for (auto p : piezasPorEstacion)
+		{
+			// Determinar estación de trabajo y trabajar
+			for (EstacionTrabajo &e : this->estaciones)
+			{
+				if (e.getNombre() == p.first)
+				{
+					cout << "Enviando a estación de " << p.first << "\n";
+					e.iniciarEstacion(v, p.second);
+					break;
+				}
+			}
+		}
+		cout << "Vehículo liberado\n========\n";
 	}
 };
 
