@@ -1,23 +1,19 @@
-#include "mainwindow.h"
-
 #include <QApplication>
-#include <QLocale>
-#include <QTranslator>
+#include <QWidget>
+#include <QPushButton>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
-    QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
-        const QString baseName = "centro_garantia_vehiculos_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
-            a.installTranslator(&translator);
-            break;
-        }
-    }
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QWidget window;
+    window.setWindowTitle("Interfaz Simple");
+    window.setGeometry(100, 100, 200, 100);
+
+    QPushButton button("Haz clic", &window);
+    button.setGeometry(50, 20, 100, 30);
+
+    window.show();
+
+    return app.exec();
 }
