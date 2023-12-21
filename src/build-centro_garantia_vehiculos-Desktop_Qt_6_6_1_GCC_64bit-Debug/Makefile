@@ -188,6 +188,7 @@ DIST          = ../../../../Qt/6.6.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/spec_post.prf \
+		../centro_garantia_vehiculos/.qmake.stash \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/toolchain.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/default_pre.prf \
@@ -355,6 +356,7 @@ Makefile: ../centro_garantia_vehiculos/centro_garantia_vehiculos.pro ../../../..
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/linux-g++/qmake.conf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/toolchain.prf \
 		../../../../Qt/6.6.1/gcc_64/mkspecs/features/default_pre.prf \
@@ -515,6 +517,7 @@ Makefile: ../centro_garantia_vehiculos/centro_garantia_vehiculos.pro ../../../..
 ../../../../Qt/6.6.1/gcc_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/6.6.1/gcc_64/mkspecs/linux-g++/qmake.conf:
 ../../../../Qt/6.6.1/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/6.6.1/gcc_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/6.6.1/gcc_64/mkspecs/features/toolchain.prf:
 ../../../../Qt/6.6.1/gcc_64/mkspecs/features/default_pre.prf:
@@ -790,7 +793,30 @@ main.o: ../centro_garantia_vehiculos/main.cpp ../../../../Qt/6.6.1/gcc_64/includ
 		../../../../Qt/6.6.1/gcc_64/include/QtGui/QTransform \
 		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/QPushButton \
 		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractbutton.h
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtGui/QScreen \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/QTableWidget \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qtableview.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qframe.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtGui/qvalidator.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtCore/qregularexpression.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qslider.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qstyle.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/QHeaderView \
+		../../../../Qt/6.6.1/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../../Qt/6.6.1/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../centro_garantia_vehiculos/main.cpp
 
 ####### Install
