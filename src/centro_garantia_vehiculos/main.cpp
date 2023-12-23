@@ -6,15 +6,16 @@
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QDebug>
-#include <QDate> 
+#include <QDate>
 #include <QDialog>
-#include <QLineEdit>
-#include <QPushButton>
 #include <QFormLayout>
+#include <QDialogButtonBox>
+#include <QLineEdit>
 
 using namespace std;
 
-class Cliente {
+class Cliente
+{
 public:
     QString nombre;
     QString cedula;
@@ -23,11 +24,13 @@ public:
     QString numContacto;
 };
 
-class CustomTableWidget : public QTableWidget {
+class CustomTableWidget : public QTableWidget
+{
 public:
-    CustomTableWidget(QWidget* parent = nullptr) : QTableWidget(parent) {}
+    CustomTableWidget(QWidget *parent = nullptr) : QTableWidget(parent) {}
 
-    void populateTable(Cliente* clientes, int clientesLength) {
+    void populateTable(Cliente *clientes, int clientesLength)
+    {
         // Set the number of rows and columns in the table
         int numRows = clientesLength;
         int numColumns = 5;
@@ -36,7 +39,11 @@ public:
 
         // Set the column headers
         QStringList headers;
-        headers << "Nombre" << "Cedula" << "Numero de Carros" << "Fecha de Registro" << "Numero de Contacto";
+        headers << "Nombre"
+                << "Cedula"
+                << "Numero de Carros"
+                << "Fecha de Registro"
+                << "Numero de Contacto";
         setHorizontalHeaderLabels(headers);
 
         // Set the table to stretch to fit the available space
@@ -46,12 +53,13 @@ public:
         int tableHeight = numRows * rowHeight(0) + horizontalHeader()->height() + frameWidth() * 2;
         setFixedHeight(tableHeight);
 
-        for (int row = 0; row < clientesLength; row++) {
-            QTableWidgetItem* itemNombre = new QTableWidgetItem(clientes[row].nombre);
-            QTableWidgetItem* itemCedula = new QTableWidgetItem(clientes[row].cedula);
-            QTableWidgetItem* itemNumCarros = new QTableWidgetItem(QString::number(clientes[row].numCarros));
-            QTableWidgetItem* itemFechaRegistro = new QTableWidgetItem(clientes[row].fechaRegistro);
-            QTableWidgetItem* itemNumContacto = new QTableWidgetItem(clientes[row].numContacto);
+        for (int row = 0; row < clientesLength; row++)
+        {
+            QTableWidgetItem *itemNombre = new QTableWidgetItem(clientes[row].nombre);
+            QTableWidgetItem *itemCedula = new QTableWidgetItem(clientes[row].cedula);
+            QTableWidgetItem *itemNumCarros = new QTableWidgetItem(QString::number(clientes[row].numCarros));
+            QTableWidgetItem *itemFechaRegistro = new QTableWidgetItem(clientes[row].fechaRegistro);
+            QTableWidgetItem *itemNumContacto = new QTableWidgetItem(clientes[row].numContacto);
 
             setItem(row, 0, itemNombre);
             setItem(row, 1, itemCedula);
@@ -61,9 +69,6 @@ public:
         }
     }
 };
-
-
-
 
 int main(int argc, char *argv[])
 {
@@ -75,8 +80,9 @@ int main(int argc, char *argv[])
     window.setFixedSize(983, 738); // Para que no se pueda cambiar el tamaño de la ventana
 
     // Para centrar la posicion de la ventana segun la pantalla
-    QScreen* screen = QGuiApplication::primaryScreen();
-    if (const QScreen *screen = QGuiApplication::primaryScreen()) {
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (const QScreen *screen = QGuiApplication::primaryScreen())
+    {
         int screenWidth = screen->size().width();
         int screenHeight = screen->size().height();
         int windowWidth = window.width();
@@ -93,8 +99,7 @@ int main(int argc, char *argv[])
     Cliente clientes[] = {
         {"John Doe", "123456789", 2, "2021-01-01", "555-1234"},
         {"Jane Smith", "987654321", 1, "2021-02-15", "555-5678"},
-        {"Alice Johnson", "456789123", 3, "2021-03-10", "555-9012"}
-    };
+        {"Alice Johnson", "456789123", 3, "2021-03-10", "555-9012"}};
 
     int clientesLength = sizeof(clientes) / sizeof(clientes[0]);
 
@@ -102,23 +107,50 @@ int main(int argc, char *argv[])
 
     QLineEdit searchBox(&window);
     searchBox.setGeometry(10, 10, 200, 30);
-    QObject::connect(&searchBox, &QLineEdit::textChanged, [&tableWidget](const QString &text){
+    QObject::connect(&searchBox, &QLineEdit::textChanged, [&tableWidget](const QString &text)
+                     {
         for (int row = 0; row < tableWidget.rowCount(); row++) {
             QTableWidgetItem* item = tableWidget.item(row, 0);
             bool match = item && item->text().contains(text, Qt::CaseInsensitive);
             tableWidget.setRowHidden(row, !match);
-        }
-    });
+        } });
 
     QPushButton addButton("Add Cliente", &window);
     addButton.setGeometry(10, 650, 100, 30);
     addButton.setStyleSheet("background-color: green; color: white;");
-    QObject::connect(&addButton, &QPushButton::clicked, [&tableWidget]() {
+    QObject::connect(&addButton, &QPushButton::clicked, [&tableWidget]()
+                     {
+        QDialog dialog(nullptr);
+        QFormLayout form(&dialog);
+
+        QLineEdit *lineEditName = new QLineEdit(&dialog);
+        QLineEdit *lineEditCedula = new QLineEdit(&dialog);
+        QLineEdit *lineEditNumContacto = new QLineEdit(&dialog);
+        form.addRow("Nombre y Apellido:", lineEditName);
+        form.addRow("Cedula:", lineEditCedula);
+        form.addRow("Numero de Contacto:", lineEditNumContacto);
+
+        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+        form.addRow(&buttonBox);
+
+        QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+        QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+        if (dialog.exec() == QDialog::Accepted) {
+            QString name = lineEditName->text();
+            QString cedula = lineEditCedula->text();
+            QString numContacto = lineEditNumContacto->text();
+            if(name == "" || cedula == "" || numContacto == "") {
+                qDebug() << "Error: No se puede dejar campos vacios";
+                return;
+            }
+           
+
         // Create a new Cliente object
         Cliente newCliente;
-        newCliente.nombre = "New Cliente";
-        newCliente.cedula = "123456789";
-        newCliente.numCarros = 1;
+        newCliente.nombre = name;
+        newCliente.cedula = cedula;
+        newCliente.numCarros = 0;
         newCliente.fechaRegistro = QDate::currentDate().toString("yyyy-MM-dd"); // Set fechaRegistro to today's date
         newCliente.numContacto = "555-4321";
 
@@ -144,7 +176,7 @@ int main(int argc, char *argv[])
         // Reset the table height based on the number of rows
         int tableHeight = (numRows + 1) * tableWidget.rowHeight(0) + tableWidget.horizontalHeader()->height() + tableWidget.frameWidth() * 2;
         tableWidget.setFixedHeight(tableHeight);
-    });
+        } });
 
     // Move the button up and to the right of the table
     addButton.move(tableWidget.x() + tableWidget.width() - addButton.width(), tableWidget.y() - addButton.height());
