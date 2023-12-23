@@ -6,6 +6,12 @@
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QDebug>
+#include <QDate> 
+#include <QDialog>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFormLayout>
+
 using namespace std;
 
 class Cliente {
@@ -57,6 +63,8 @@ public:
 };
 
 
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
@@ -85,9 +93,7 @@ int main(int argc, char *argv[])
     Cliente clientes[] = {
         {"John Doe", "123456789", 2, "2021-01-01", "555-1234"},
         {"Jane Smith", "987654321", 1, "2021-02-15", "555-5678"},
-        {"Alice Johnson", "456789123", 3, "2021-03-10", "555-9012"},
         {"Alice Johnson", "456789123", 3, "2021-03-10", "555-9012"}
-        // Add more objects as needed
     };
 
     int clientesLength = sizeof(clientes) / sizeof(clientes[0]);
@@ -95,7 +101,7 @@ int main(int argc, char *argv[])
     tableWidget.populateTable(clientes, clientesLength);
 
     QLineEdit searchBox(&window);
-    searchBox.setGeometry(10, 10, 200, 20);
+    searchBox.setGeometry(10, 10, 200, 30);
     QObject::connect(&searchBox, &QLineEdit::textChanged, [&tableWidget](const QString &text){
         for (int row = 0; row < tableWidget.rowCount(); row++) {
             QTableWidgetItem* item = tableWidget.item(row, 0);
@@ -103,6 +109,45 @@ int main(int argc, char *argv[])
             tableWidget.setRowHidden(row, !match);
         }
     });
+
+    QPushButton addButton("Add Cliente", &window);
+    addButton.setGeometry(10, 650, 100, 30);
+    addButton.setStyleSheet("background-color: green; color: white;");
+    QObject::connect(&addButton, &QPushButton::clicked, [&tableWidget]() {
+        // Create a new Cliente object
+        Cliente newCliente;
+        newCliente.nombre = "New Cliente";
+        newCliente.cedula = "123456789";
+        newCliente.numCarros = 1;
+        newCliente.fechaRegistro = QDate::currentDate().toString("yyyy-MM-dd"); // Set fechaRegistro to today's date
+        newCliente.numContacto = "555-4321";
+
+        // Get the current number of rows in the table
+        int numRows = tableWidget.rowCount();
+
+        // Insert a new row at the end of the table
+        tableWidget.insertRow(numRows);
+
+        // Populate the table with the data from the new Cliente object
+        QTableWidgetItem* itemNombre = new QTableWidgetItem(newCliente.nombre);
+        QTableWidgetItem* itemCedula = new QTableWidgetItem(newCliente.cedula);
+        QTableWidgetItem* itemNumCarros = new QTableWidgetItem(QString::number(newCliente.numCarros));
+        QTableWidgetItem* itemFechaRegistro = new QTableWidgetItem(newCliente.fechaRegistro);
+        QTableWidgetItem* itemNumContacto = new QTableWidgetItem(newCliente.numContacto);
+
+        tableWidget.setItem(numRows, 0, itemNombre);
+        tableWidget.setItem(numRows, 1, itemCedula);
+        tableWidget.setItem(numRows, 2, itemNumCarros);
+        tableWidget.setItem(numRows, 3, itemFechaRegistro);
+        tableWidget.setItem(numRows, 4, itemNumContacto);
+
+        // Reset the table height based on the number of rows
+        int tableHeight = (numRows + 1) * tableWidget.rowHeight(0) + tableWidget.horizontalHeader()->height() + tableWidget.frameWidth() * 2;
+        tableWidget.setFixedHeight(tableHeight);
+    });
+
+    // Move the button up and to the right of the table
+    addButton.move(tableWidget.x() + tableWidget.width() - addButton.width(), tableWidget.y() - addButton.height());
 
     window.show();
 
