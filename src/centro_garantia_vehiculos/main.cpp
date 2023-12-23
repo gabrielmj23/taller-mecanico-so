@@ -6,7 +6,6 @@
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QDebug>
-#include <Cliente.h>
 using namespace std;
 
 class Cliente {
@@ -26,7 +25,7 @@ int main(int argc, char *argv[])
     QWidget window;
     window.setWindowTitle("Centro de Garantia y Vehiculos");
     window.setGeometry(0, 0, 983, 838);
-    window.setFixedSize(983, 838); // Para que no se pueda cambiar el tamaño de la ventana
+    window.setFixedSize(983, 738); // Para que no se pueda cambiar el tamaño de la ventana
 
     // Para centrar la posicion de la ventana segun la pantalla
     QScreen* screen = QGuiApplication::primaryScreen();
@@ -41,7 +40,7 @@ int main(int argc, char *argv[])
     }
 
     QTableWidget tableWidget(&window);
-    tableWidget.setGeometry(10, 40, 963, 788);
+    tableWidget.setGeometry(10, 40, 963, 600);
 
 
     // Example array of Cliente objects
