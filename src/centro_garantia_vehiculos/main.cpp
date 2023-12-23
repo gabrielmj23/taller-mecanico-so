@@ -43,20 +43,6 @@ int main(int argc, char *argv[])
     QTableWidget tableWidget(&window);
     tableWidget.setGeometry(10, 40, 963, 788);
 
-    // Set the number of rows and columns in the table
-    int numRows = 10;
-    int numColumns = 5;
-    tableWidget.setRowCount(numRows);
-    tableWidget.setColumnCount(numColumns);
-
-    // Set the column headers
-    QStringList headers;
-    headers << "Nombre" << "Cedula" << "Numero de Carros" << "Fecha de Registro" << "Numero de Contacto";
-    tableWidget.setHorizontalHeaderLabels(headers);
-
-    // Set the table to stretch to fit the available space
-    // tableWidget.horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // tableWidget.verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // Example array of Cliente objects
     Cliente clientes[] = {
@@ -68,6 +54,22 @@ int main(int argc, char *argv[])
 
     // Populate the table with data from the Cliente objects
     int clientesLength = sizeof(clientes) / sizeof(clientes[0]);
+
+    // Set the number of rows and columns in the table
+    int numRows = clientesLength;
+    int numColumns = 5;
+    tableWidget.setRowCount(numRows);
+    tableWidget.setColumnCount(numColumns);
+
+    // Set the column headers
+    QStringList headers;
+    headers << "Nombre" << "Cedula" << "Numero de Carros" << "Fecha de Registro" << "Numero de Contacto";
+    tableWidget.setHorizontalHeaderLabels(headers);
+
+    // Set the table to stretch to fit the available space
+    tableWidget.horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // tableWidget.verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
     for (int row = 0; row < clientesLength; row++) {
         QTableWidgetItem* itemNombre = new QTableWidgetItem(clientes[row].nombre);
         QTableWidgetItem* itemCedula = new QTableWidgetItem(clientes[row].cedula);
