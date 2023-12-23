@@ -55,11 +55,11 @@ int main(int argc, char *argv[])
     tableWidget.setHorizontalHeaderLabels(headers);
 
     // Set the table to stretch to fit the available space
-    tableWidget.horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    tableWidget.verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // tableWidget.horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    // tableWidget.verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // Example array of Cliente objects
-    Cliente Clientes[] = {
+    Cliente clientes[] = {
         {"John Doe", "123456789", 2, "2021-01-01", "555-1234"},
         {"Jane Smith", "987654321", 1, "2021-02-15", "555-5678"},
         {"Alice Johnson", "456789123", 3, "2021-03-10", "555-9012"}
@@ -67,12 +67,13 @@ int main(int argc, char *argv[])
     };
 
     // Populate the table with data from the Cliente objects
-    for (int row = 0; row < 3; row++) {
-        QTableWidgetItem* itemNombre = new QTableWidgetItem(Clientes[row].nombre);
-        QTableWidgetItem* itemCedula = new QTableWidgetItem(Clientes[row].cedula);
-        QTableWidgetItem* itemNumCarros = new QTableWidgetItem(QString::number(Clientes[row].numCarros));
-        QTableWidgetItem* itemFechaRegistro = new QTableWidgetItem(Clientes[row].fechaRegistro);
-        QTableWidgetItem* itemNumContacto = new QTableWidgetItem(Clientes[row].numContacto);
+    int clientesLength = sizeof(clientes) / sizeof(clientes[0]);
+    for (int row = 0; row < clientesLength; row++) {
+        QTableWidgetItem* itemNombre = new QTableWidgetItem(clientes[row].nombre);
+        QTableWidgetItem* itemCedula = new QTableWidgetItem(clientes[row].cedula);
+        QTableWidgetItem* itemNumCarros = new QTableWidgetItem(QString::number(clientes[row].numCarros));
+        QTableWidgetItem* itemFechaRegistro = new QTableWidgetItem(clientes[row].fechaRegistro);
+        QTableWidgetItem* itemNumContacto = new QTableWidgetItem(clientes[row].numContacto);
 
         tableWidget.setItem(row, 0, itemNombre);
         tableWidget.setItem(row, 1, itemCedula);
