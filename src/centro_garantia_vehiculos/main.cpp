@@ -6,7 +6,7 @@
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QDebug>
-
+#include <Cliente.h>
 using namespace std;
 
 class Cliente {
