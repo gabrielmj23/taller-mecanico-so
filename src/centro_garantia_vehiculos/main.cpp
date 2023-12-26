@@ -1,3 +1,4 @@
+
 #include <QApplication>
 #include <QWidget>
 #include <QPushButton>
@@ -11,6 +12,9 @@
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QIcon>
+#include <QFile>
+#include <QCoreApplication>
 
 using namespace std;
 
@@ -73,6 +77,13 @@ public:
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    
+    // Colocar el logo de la aplicación
+    QString imagePath = "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/assets/logo500.png";
+    if (!QFile::exists(imagePath)) {
+        qDebug() << "Error: No se encontró el archivo del icono";
+    }
+    app.setWindowIcon(QIcon(imagePath));
 
     QWidget window;
     window.setWindowTitle("Centro de Garantia y Vehiculos");
@@ -92,10 +103,17 @@ int main(int argc, char *argv[])
         window.setGeometry(x, y, windowWidth, windowHeight);
     }
 
-    CustomTableWidget tableWidget(&window);
-    tableWidget.setGeometry(10, 40, 963, 600);
 
-    // Example array of Cliente objects
+/*
+*
+*   TABLA DE CLIENTES
+*
+*/
+
+    CustomTableWidget tableWidget(&window);
+    tableWidget.setGeometry(10, 50, 963, 600);
+
+    // Arreglo clientes ejemplo
     Cliente clientes[] = {
         {"John Doe", "123456789", 2, "2021-01-01", "555-1234"},
         {"Jane Smith", "987654321", 1, "2021-02-15", "555-5678"},
@@ -105,81 +123,129 @@ int main(int argc, char *argv[])
 
     tableWidget.populateTable(clientes, clientesLength);
 
+    /*
+        Cuadro de busqueda de clientes x nombre
+    */
+
     QLineEdit searchBox(&window);
     searchBox.setGeometry(10, 10, 200, 30);
     QObject::connect(&searchBox, &QLineEdit::textChanged, [&tableWidget](const QString &text)
                      {
-        for (int row = 0; row < tableWidget.rowCount(); row++) {
-            QTableWidgetItem* item = tableWidget.item(row, 0);
-            bool match = item && item->text().contains(text, Qt::CaseInsensitive);
-            tableWidget.setRowHidden(row, !match);
-        } });
+            for (int row = 0; row < tableWidget.rowCount(); row++) {
+                            QTableWidgetItem* item = tableWidget.item(row, 0);
+                            bool match = item && item->text().contains(text, Qt::CaseInsensitive);
+                            tableWidget.setRowHidden(row, !match);
+                        } });
 
-    QPushButton addButton("Add Cliente", &window);
-    addButton.setGeometry(10, 650, 100, 30);
+/*
+*Botones (Agregar, Seleccionar, Eliminar)
+*/
+    QPushButton addButton("Agregar", &window);
+    addButton.setGeometry(10, 10, 100, 30);
     addButton.setStyleSheet("background-color: green; color: white;");
     QObject::connect(&addButton, &QPushButton::clicked, [&tableWidget]()
                      {
-        QDialog dialog(nullptr);
-        QFormLayout form(&dialog);
+                        QDialog dialog(nullptr);
+                        QFormLayout form(&dialog);
 
-        QLineEdit *lineEditName = new QLineEdit(&dialog);
-        QLineEdit *lineEditCedula = new QLineEdit(&dialog);
-        QLineEdit *lineEditNumContacto = new QLineEdit(&dialog);
-        form.addRow("Nombre y Apellido:", lineEditName);
-        form.addRow("Cedula:", lineEditCedula);
-        form.addRow("Numero de Contacto:", lineEditNumContacto);
+                        QLineEdit *lineEditName = new QLineEdit(&dialog);
+                        QLineEdit *lineEditCedula = new QLineEdit(&dialog);
+                        QLineEdit *lineEditNumContacto = new QLineEdit(&dialog);
+                        form.addRow("Nombre y Apellido:", lineEditName);
+                        form.addRow("Cedula:", lineEditCedula);
+                        form.addRow("Numero de Contacto:", lineEditNumContacto);
 
-        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
-        form.addRow(&buttonBox);
+                        QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+                        form.addRow(&buttonBox);
 
-        QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
-        QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+                        QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+                        QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 
-        if (dialog.exec() == QDialog::Accepted) {
-            QString name = lineEditName->text();
-            QString cedula = lineEditCedula->text();
-            QString numContacto = lineEditNumContacto->text();
-            if(name == "" || cedula == "" || numContacto == "") {
-                qDebug() << "Error: No se puede dejar campos vacios";
-                return;
-            }
-           
+                        if (dialog.exec() == QDialog::Accepted) {
+                            QString name = lineEditName->text();
+                            QString cedula = lineEditCedula->text();
+                            QString numContacto = lineEditNumContacto->text();
+                            if(name == "" || cedula == "" || numContacto == "") {
+                                qDebug() << "Error: No se puede dejar campos vacios";
+                                return;
+                            }
+                           
 
-        // Create a new Cliente object
-        Cliente newCliente;
-        newCliente.nombre = name;
-        newCliente.cedula = cedula;
-        newCliente.numCarros = 0;
-        newCliente.fechaRegistro = QDate::currentDate().toString("yyyy-MM-dd"); // Set fechaRegistro to today's date
-        newCliente.numContacto = "555-4321";
+                        // Create a new Cliente object
+                        Cliente newCliente;
+                        newCliente.nombre = name;
+                        newCliente.cedula = cedula;
+                        newCliente.numCarros = 0;
+                        newCliente.fechaRegistro = QDate::currentDate().toString("yyyy-MM-dd"); // Set fechaRegistro to today's date
+                        newCliente.numContacto = "555-4321";
 
-        // Get the current number of rows in the table
-        int numRows = tableWidget.rowCount();
+                        // Get the current number of rows in the table
+                        int numRows = tableWidget.rowCount();
 
-        // Insert a new row at the end of the table
-        tableWidget.insertRow(numRows);
+                        // Insert a new row at the end of the table
+                        tableWidget.insertRow(numRows);
 
-        // Populate the table with the data from the new Cliente object
-        QTableWidgetItem* itemNombre = new QTableWidgetItem(newCliente.nombre);
-        QTableWidgetItem* itemCedula = new QTableWidgetItem(newCliente.cedula);
-        QTableWidgetItem* itemNumCarros = new QTableWidgetItem(QString::number(newCliente.numCarros));
-        QTableWidgetItem* itemFechaRegistro = new QTableWidgetItem(newCliente.fechaRegistro);
-        QTableWidgetItem* itemNumContacto = new QTableWidgetItem(newCliente.numContacto);
+                        // Populate the table with the data from the new Cliente object
+                        QTableWidgetItem* itemNombre = new QTableWidgetItem(newCliente.nombre);
+                        QTableWidgetItem* itemCedula = new QTableWidgetItem(newCliente.cedula);
+                        QTableWidgetItem* itemNumCarros = new QTableWidgetItem(QString::number(newCliente.numCarros));
+                        QTableWidgetItem* itemFechaRegistro = new QTableWidgetItem(newCliente.fechaRegistro);
+                        QTableWidgetItem* itemNumContacto = new QTableWidgetItem(newCliente.numContacto);
 
-        tableWidget.setItem(numRows, 0, itemNombre);
-        tableWidget.setItem(numRows, 1, itemCedula);
-        tableWidget.setItem(numRows, 2, itemNumCarros);
-        tableWidget.setItem(numRows, 3, itemFechaRegistro);
-        tableWidget.setItem(numRows, 4, itemNumContacto);
+                        tableWidget.setItem(numRows, 0, itemNombre);
+                        tableWidget.setItem(numRows, 1, itemCedula);
+                        tableWidget.setItem(numRows, 2, itemNumCarros);
+                        tableWidget.setItem(numRows, 3, itemFechaRegistro);
+                        tableWidget.setItem(numRows, 4, itemNumContacto);
 
-        // Reset the table height based on the number of rows
-        int tableHeight = (numRows + 1) * tableWidget.rowHeight(0) + tableWidget.horizontalHeader()->height() + tableWidget.frameWidth() * 2;
-        tableWidget.setFixedHeight(tableHeight);
-        } });
+                        // Reset the table height based on the number of rows
+                        int tableHeight = (numRows + 1) * tableWidget.rowHeight(0) + tableWidget.horizontalHeader()->height() + tableWidget.frameWidth() * 2;
+                        tableWidget.setFixedHeight(tableHeight);
+                        } });
 
-    // Move the button up and to the right of the table
-    addButton.move(tableWidget.x() + tableWidget.width() - addButton.width(), tableWidget.y() - addButton.height());
+    // Boton de Seleccionar cliente
+    QPushButton selectButton("Seleccionar", &window);
+    selectButton.setGeometry(120, 650, 100, 30);
+    selectButton.setStyleSheet("background-color: blue; color: white;");
+    QObject::connect(&selectButton, &QPushButton::clicked, [&tableWidget]()
+                     {
+                        // Get the selected row
+                        int selectedRow = tableWidget.currentRow();
+                        if (selectedRow >= 0) {
+                            // Get the data from the selected row
+                            QTableWidgetItem* itemNombre = tableWidget.item(selectedRow, 0);
+                            QTableWidgetItem* itemCedula = tableWidget.item(selectedRow, 1);
+                            QTableWidgetItem* itemNumCarros = tableWidget.item(selectedRow, 2);
+                            QTableWidgetItem* itemFechaRegistro = tableWidget.item(selectedRow, 3);
+                            QTableWidgetItem* itemNumContacto = tableWidget.item(selectedRow, 4);
+
+                            // Display the selected data
+                            qDebug() << "Selected Cliente:";
+                            qDebug() << "Nombre: " << itemNombre->text();
+                            qDebug() << "Cedula: " << itemCedula->text();
+                            qDebug() << "Num Carros: " << itemNumCarros->text();
+                            qDebug() << "Fecha Registro: " << itemFechaRegistro->text();
+                            qDebug() << "Num Contacto: " << itemNumContacto->text();
+                        } });
+
+    // boton de eliminar cliente
+    QPushButton deleteButton("Eliminar", &window);
+    deleteButton.setGeometry(230, 650, 100, 30);
+    deleteButton.setStyleSheet("background-color: red; color: white;");
+    QObject::connect(&deleteButton, &QPushButton::clicked, [&tableWidget]()
+                     {
+                        // Get the selected row
+                        int selectedRow = tableWidget.currentRow();
+                        if (selectedRow >= 0) {
+                            // Remove the selected row from the table
+                            tableWidget.removeRow(selectedRow);
+                        } });
+
+    // Mueve los botones hacia arriba y a la derecha de la tabla
+    addButton.move(tableWidget.x() + tableWidget.width() - addButton.width(), 10);
+    selectButton.move(tableWidget.x() + tableWidget.width() - selectButton.width() - addButton.width() - 10, 10);
+    deleteButton.move(tableWidget.x() + tableWidget.width() - deleteButton.width() - selectButton.width() - addButton.width() - 20, 10);
+
 
     window.show();
 
