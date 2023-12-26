@@ -1,3 +1,4 @@
+
 #include <QApplication>
 #include <QWidget>
 #include <QPushButton>
@@ -11,6 +12,9 @@
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QIcon>
+#include <QFile>
+#include <QCoreApplication>
 
 using namespace std;
 
@@ -73,6 +77,13 @@ public:
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    
+    // Colocar el logo de la aplicación
+    QString imagePath = "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/assets/logo500.png";
+    if (!QFile::exists(imagePath)) {
+        qDebug() << "Error: No se encontró el archivo del icono";
+    }
+    app.setWindowIcon(QIcon(imagePath));
 
     QWidget window;
     window.setWindowTitle("Centro de Garantia y Vehiculos");
@@ -92,10 +103,17 @@ int main(int argc, char *argv[])
         window.setGeometry(x, y, windowWidth, windowHeight);
     }
 
+
+/*
+*
+*   TABLA DE CLIENTES
+*
+*/
+
     CustomTableWidget tableWidget(&window);
     tableWidget.setGeometry(10, 50, 963, 600);
 
-    // Example array of Cliente objects
+    // Arreglo clientes ejemplo
     Cliente clientes[] = {
         {"John Doe", "123456789", 2, "2021-01-01", "555-1234"},
         {"Jane Smith", "987654321", 1, "2021-02-15", "555-5678"},
@@ -104,6 +122,10 @@ int main(int argc, char *argv[])
     int clientesLength = sizeof(clientes) / sizeof(clientes[0]);
 
     tableWidget.populateTable(clientes, clientesLength);
+
+    /*
+        Cuadro de busqueda de clientes x nombre
+    */
 
     QLineEdit searchBox(&window);
     searchBox.setGeometry(10, 10, 200, 30);
@@ -115,11 +137,14 @@ int main(int argc, char *argv[])
                             tableWidget.setRowHidden(row, !match);
                         } });
 
-                QPushButton addButton("Agregar", &window);
-                addButton.setGeometry(10, 650, 100, 30);
-                addButton.setStyleSheet("background-color: green; color: white;");
-                QObject::connect(&addButton, &QPushButton::clicked, [&tableWidget]()
-                                 {
+/*
+*Botones (Agregar, Seleccionar, Eliminar)
+*/
+    QPushButton addButton("Agregar", &window);
+    addButton.setGeometry(10, 10, 100, 30);
+    addButton.setStyleSheet("background-color: green; color: white;");
+    QObject::connect(&addButton, &QPushButton::clicked, [&tableWidget]()
+                     {
                         QDialog dialog(nullptr);
                         QFormLayout form(&dialog);
 
@@ -178,12 +203,12 @@ int main(int argc, char *argv[])
                         tableWidget.setFixedHeight(tableHeight);
                         } });
 
-                // Select button for clientes table
-                QPushButton selectButton("Seleccionar", &window);
-                selectButton.setGeometry(120, 650, 100, 30);
-                selectButton.setStyleSheet("background-color: blue; color: white;");
-                QObject::connect(&selectButton, &QPushButton::clicked, [&tableWidget]()
-                                 {
+    // Boton de Seleccionar cliente
+    QPushButton selectButton("Seleccionar", &window);
+    selectButton.setGeometry(120, 650, 100, 30);
+    selectButton.setStyleSheet("background-color: blue; color: white;");
+    QObject::connect(&selectButton, &QPushButton::clicked, [&tableWidget]()
+                     {
                         // Get the selected row
                         int selectedRow = tableWidget.currentRow();
                         if (selectedRow >= 0) {
@@ -203,24 +228,24 @@ int main(int argc, char *argv[])
                             qDebug() << "Num Contacto: " << itemNumContacto->text();
                         } });
 
-                // Delete button for clientes table
-                QPushButton deleteButton("Eliminar", &window);
-                deleteButton.setGeometry(230, 650, 100, 30);
-                deleteButton.setStyleSheet("background-color: red; color: white;");
-                QObject::connect(&deleteButton, &QPushButton::clicked, [&tableWidget]()
-                                 {
+    // boton de eliminar cliente
+    QPushButton deleteButton("Eliminar", &window);
+    deleteButton.setGeometry(230, 650, 100, 30);
+    deleteButton.setStyleSheet("background-color: red; color: white;");
+    QObject::connect(&deleteButton, &QPushButton::clicked, [&tableWidget]()
+                     {
                         // Get the selected row
                         int selectedRow = tableWidget.currentRow();
                         if (selectedRow >= 0) {
                             // Remove the selected row from the table
                             tableWidget.removeRow(selectedRow);
-                        }
-                    });
+                        } });
 
-                // Move the buttons up and to the right of the table
-                addButton.move(tableWidget.x() + tableWidget.width() - addButton.width(), tableWidget.y() - addButton.height());
-                selectButton.move(tableWidget.x() + tableWidget.width() - selectButton.width() - addButton.width() - 10, tableWidget.y() - selectButton.height());
-                deleteButton.move(tableWidget.x() + tableWidget.width() - deleteButton.width() - selectButton.width() - addButton.width() - 20, tableWidget.y() - deleteButton.height());
+    // Mueve los botones hacia arriba y a la derecha de la tabla
+    addButton.move(tableWidget.x() + tableWidget.width() - addButton.width(), 10);
+    selectButton.move(tableWidget.x() + tableWidget.width() - selectButton.width() - addButton.width() - 10, 10);
+    deleteButton.move(tableWidget.x() + tableWidget.width() - deleteButton.width() - selectButton.width() - addButton.width() - 20, 10);
+
 
     window.show();
 
