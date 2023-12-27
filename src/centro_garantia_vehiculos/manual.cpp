@@ -74,6 +74,7 @@ Manual::Manual(QWidget *parent) : QWidget(parent)
 
     CustomTableWidget *tableWidget = new CustomTableWidget(this);
 
+
     // Arreglo clientes ejemplo
     Cliente clientes[] = {
         {"John Doe", "123456789", 2, "2021-01-01", "555-1234"},
