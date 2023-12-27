@@ -1,0 +1,27 @@
+# ninja log v5
+10	58	7254225950152452	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	be5bc019b79e6447
+27	376	7254225211396496	centro_garantia_vehiculos_autogen/timestamp	e813b757d33e464d
+27	376	7254225211396496	centro_garantia_vehiculos_autogen/mocs_compilation.cpp	e813b757d33e464d
+27	376	7254225211396496	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/centro_garantia_vehiculos_autogen/timestamp	e813b757d33e464d
+27	376	7254225211396496	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/centro_garantia_vehiculos_autogen/mocs_compilation.cpp	e813b757d33e464d
+404	4947	7254225257115264	CMakeFiles/centro_garantia_vehiculos.dir/main.cpp.obj	39d3bb188f4a6e71
+1944	2107	7254222130132071	centro_garantia_vehiculos.exe	4ffacf1bedcb5eaf
+1335	4616	7254147147301781	CMakeFiles/centro_garantia_vehiculos.dir/centro_garantia_vehiculos_autogen/mocs_compilation.cpp.obj	33eb1b52c02621f8
+412	5032	7254225258001909	CMakeFiles/centro_garantia_vehiculos.dir/centrogarantiavehiculo.cpp.obj	fb97a6c624227911
+25	515	7254226177541782	build.ninja	d971690a7d7946a4
+147	472	7254222113816174	CMakeFiles/centro_garantia_vehiculos.dir/Cliente.cpp.obj	ae29e051d26a5afe
+11	70	0	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	be5bc019b79e6447
+37	447	7254226188315258	centro_garantia_vehiculos_autogen/timestamp	e813b757d33e464d
+37	447	7254226188315258	centro_garantia_vehiculos_autogen/mocs_compilation.cpp	e813b757d33e464d
+37	447	7254226188315258	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/centro_garantia_vehiculos_autogen/timestamp	e813b757d33e464d
+37	447	7254226188315258	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/centro_garantia_vehiculos_autogen/mocs_compilation.cpp	e813b757d33e464d
+472	4746	7254226231342230	CMakeFiles/centro_garantia_vehiculos.dir/main.cpp.obj	39d3bb188f4a6e71
+482	5464	7254226238046528	CMakeFiles/centro_garantia_vehiculos.dir/centrogarantiavehiculo.cpp.obj	fb97a6c624227911
+10	62	0	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/CMakeFiles/cmake.verify_globs	be5bc019b79e6447
+28	298	7254226736192851	centro_garantia_vehiculos_autogen/timestamp	e813b757d33e464d
+28	298	7254226736192851	centro_garantia_vehiculos_autogen/mocs_compilation.cpp	e813b757d33e464d
+28	298	7254226736192851	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/centro_garantia_vehiculos_autogen/timestamp	e813b757d33e464d
+28	298	7254226736192851	C:/Users/karim/Desktop/taller-mecanico-so/src/build-centro_garantia_vehiculos-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/centro_garantia_vehiculos_autogen/mocs_compilation.cpp	e813b757d33e464d
+325	924	7254226742494257	CMakeFiles/centro_garantia_vehiculos.dir/Cliente.cpp.obj	ae29e051d26a5afe
+333	3942	7254226772666614	CMakeFiles/centro_garantia_vehiculos.dir/centrogarantiavehiculo.cpp.obj	fb97a6c624227911
+3943	4371	7254226776848114	centro_garantia_vehiculos.exe	4ffacf1bedcb5eaf
