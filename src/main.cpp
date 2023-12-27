@@ -8,7 +8,13 @@
 #include <Vehiculo.h>
 #include <SistemaVehiculo.h>
 #include <Pieza.h>
+#include <queue>
+#include <mutex>
+#include <unistd.h>
 using namespace std;
+
+queue<Vehiculo> vehiculos;
+mutex mtx;
 
 #define RANDOM_FUNC rand() % 8 ? FUNCIONA : FALLA
 
@@ -199,22 +205,56 @@ public:
 	}
 };
 
+void *recibirVehiculo(void *arg)
+{
+	TallerMecanico &taller = *(TallerMecanico *)arg;
+	while (true)
+	{
+		{
+			lock_guard<mutex> lock(mtx);
+			if (vehiculos.empty())
+			{
+				continue;
+			}
+			Vehiculo v = vehiculos.front();
+			taller.recibirVehiculo(v);
+			vehiculos.pop();
+		}
+		sleep(1);
+	}
+	return NULL;
+}
+
 int main()
 {
 	TallerMecanico taller = TallerMecanico();
+	// Hilos chambeadores
+	pthread_t hilo1, hilo2;
+	pthread_create(&hilo1, NULL, recibirVehiculo, (void *)&taller);
+	pthread_create(&hilo2, NULL, recibirVehiculo, (void *)&taller);
+
 	cout << "Taller iniciado:\n";
 	while (true)
 	{
-		cout << "1. Nuevo vehículo\n2. Salir\n";
+		cout << "1. Crear 100 vehiculos\n2. Salir\n";
 		int opcion;
 		cin >> opcion;
 		if (opcion == 2)
 			break;
-		cout << "Cedula, nombre, placa:\n";
-		string cedula, nombre, placa;
-		cin >> cedula >> nombre >> placa;
-		Vehiculo v = crearCorolla(cedula, nombre, placa);
-		taller.recibirVehiculo(v);
+		for (int i = 0; i < 100; ++i)
+		{
+			string cedula = "cedula" + to_string(i);
+			string nombre = "nombre" + to_string(i);
+			string placa = "placa" + to_string(i);
+			Vehiculo v = crearCorolla(cedula, nombre, placa);
+			{
+				lock_guard<mutex> lock(mtx);
+				vehiculos.push(v);
+			}
+		}
+		pthread_join(hilo1, NULL);
+		pthread_join(hilo2, NULL);
+
+		return 0;
 	}
-	return 0;
 }
