@@ -111,12 +111,18 @@ public:
         pushButton = new QPushButton(page_2);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(610, 20, 111, 41));
+        pushButton->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 255);\n"
+"color: rgb(255, 255, 255);"));
         pushButton_5 = new QPushButton(page_2);
         pushButton_5->setObjectName("pushButton_5");
         pushButton_5->setGeometry(QRect(850, 20, 111, 41));
+        pushButton_5->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);\n"
+"color: rgb(255, 255, 255);"));
         pushButton_2 = new QPushButton(page_2);
         pushButton_2->setObjectName("pushButton_2");
         pushButton_2->setGeometry(QRect(730, 20, 111, 41));
+        pushButton_2->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 0);\n"
+"color: rgb(255, 255, 255);"));
         stackedWidget->addWidget(page_2);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -158,6 +164,10 @@ public:
         ___qtablewidgetitem3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Fecha de Registro", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = clienteTableWidget->horizontalHeaderItem(4);
         ___qtablewidgetitem4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Contacto", nullptr));
+#if QT_CONFIG(tooltip)
+        lineEdit->setToolTip(QString());
+#endif // QT_CONFIG(tooltip)
+        lineEdit->setPlaceholderText(QCoreApplication::translate("CentroGarantiaVehiculo", "Ingrese el nombre del cliente", nullptr));
         pushButton->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
         pushButton_5->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
         pushButton_2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
