@@ -262,9 +262,9 @@
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Cliente.h",
+			"C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Clases.h",
 			"MU",
-			"EWIEGA46WW/moc_Cliente.cpp",
+			"EWIEGA46WW/moc_Clases.cpp",
 			null
 		],
 		[
@@ -345,7 +345,7 @@
 	"SOURCES" : 
 	[
 		[
-			"C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Cliente.cpp",
+			"C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Clases.cpp",
 			"MU",
 			null
 		],

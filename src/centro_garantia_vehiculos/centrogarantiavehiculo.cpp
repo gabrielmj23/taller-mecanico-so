@@ -10,7 +10,7 @@
 
 #include "centrogarantiavehiculo.h"
 #include "./ui_centrogarantiavehiculo.h"
-#include "Cliente.h"
+#include "Clases.h"
 
 using namespace std;
 
@@ -40,6 +40,11 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     *
     */
 
+    /*
+     * 
+     * pagina 1 de stacked widget
+     */
+
     // Tabla de clientes
     ui->clienteTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -61,7 +66,26 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     }
 
     actItemsTabla(ui->clienteTableWidget);
+
+     /*
+     * pagina 2 de stacked widget
+     */
+
+    //Tabla de vehiculos x cliente
+    ui->vehiculosClienteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 CentroGarantiaVehiculo::~CentroGarantiaVehiculo()
 {
@@ -127,7 +151,9 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
 
         actItemsTabla(ui->clienteTableWidget);
     }
+
 }
+
 
 
 /*

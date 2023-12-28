@@ -19,7 +19,6 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTableWidget>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -31,15 +30,16 @@ public:
     QTabWidget *tabWidget;
     QWidget *tab;
     QStackedWidget *stackedWidget;
-    QWidget *page_2;
-    QTextEdit *textEdit;
-    QPushButton *pushButton_3;
     QWidget *page;
     QTableWidget *clienteTableWidget;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
     QPushButton *pushButton_5;
     QPushButton *pushButton_2;
+    QWidget *page_2;
+    QPushButton *pushButton_3;
+    QTableWidget *vehiculosClienteTable;
+    QWidget *page_3;
     QWidget *tab_2;
     QStatusBar *statusbar;
 
@@ -68,15 +68,6 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
         stackedWidget->setSizePolicy(sizePolicy1);
-        page_2 = new QWidget();
-        page_2->setObjectName("page_2");
-        textEdit = new QTextEdit(page_2);
-        textEdit->setObjectName("textEdit");
-        textEdit->setGeometry(QRect(410, 130, 104, 87));
-        pushButton_3 = new QPushButton(page_2);
-        pushButton_3->setObjectName("pushButton_3");
-        pushButton_3->setGeometry(QRect(20, 20, 111, 41));
-        stackedWidget->addWidget(page_2);
         page = new QWidget();
         page->setObjectName("page");
         clienteTableWidget = new QTableWidget(page);
@@ -105,6 +96,7 @@ public:
 #if QT_CONFIG(accessibility)
         clienteTableWidget->setAccessibleDescription(QString::fromUtf8(""));
 #endif // QT_CONFIG(accessibility)
+        clienteTableWidget->setAlternatingRowColors(false);
         clienteTableWidget->setWordWrap(true);
         clienteTableWidget->horizontalHeader()->setCascadingSectionResizes(false);
         clienteTableWidget->horizontalHeader()->setStretchLastSection(false);
@@ -128,6 +120,31 @@ public:
         pushButton_2->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 0);\n"
 "color: rgb(255, 255, 255);"));
         stackedWidget->addWidget(page);
+        page_2 = new QWidget();
+        page_2->setObjectName("page_2");
+        pushButton_3 = new QPushButton(page_2);
+        pushButton_3->setObjectName("pushButton_3");
+        pushButton_3->setGeometry(QRect(20, 20, 111, 41));
+        vehiculosClienteTable = new QTableWidget(page_2);
+        if (vehiculosClienteTable->columnCount() < 3)
+            vehiculosClienteTable->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        vehiculosClienteTable->setHorizontalHeaderItem(0, __qtablewidgetitem5);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        vehiculosClienteTable->setHorizontalHeaderItem(1, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        vehiculosClienteTable->setHorizontalHeaderItem(2, __qtablewidgetitem7);
+        vehiculosClienteTable->setObjectName("vehiculosClienteTable");
+        vehiculosClienteTable->setGeometry(QRect(20, 90, 941, 600));
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(40);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(vehiculosClienteTable->sizePolicy().hasHeightForWidth());
+        vehiculosClienteTable->setSizePolicy(sizePolicy3);
+        stackedWidget->addWidget(page_2);
+        page_3 = new QWidget();
+        page_3->setObjectName("page_3");
+        stackedWidget->addWidget(page_3);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
@@ -140,7 +157,7 @@ public:
         retranslateUi(CentroGarantiaVehiculo);
 
         tabWidget->setCurrentIndex(0);
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(CentroGarantiaVehiculo);
@@ -149,16 +166,6 @@ public:
     void retranslateUi(QMainWindow *CentroGarantiaVehiculo)
     {
         CentroGarantiaVehiculo->setWindowTitle(QCoreApplication::translate("CentroGarantiaVehiculo", "Centro de Garant\303\255a y Veh\303\255culos", nullptr));
-        textEdit->setHtml(QCoreApplication::translate("CentroGarantiaVehiculo", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">pruba 1</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "< Volver", nullptr));
         QTableWidgetItem *___qtablewidgetitem = clienteTableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Nombre", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = clienteTableWidget->horizontalHeaderItem(1);
@@ -176,6 +183,13 @@ public:
         pushButton->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
         pushButton_5->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
         pushButton_2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "< Volver", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = vehiculosClienteTable->horizontalHeaderItem(0);
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Placa", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = vehiculosClienteTable->horizontalHeaderItem(1);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Ubicaci\303\263n", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = vehiculosClienteTable->horizontalHeaderItem(2);
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Servicios", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CentroGarantiaVehiculo", "Manual", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CentroGarantiaVehiculo", "Otros", nullptr));
     } // retranslateUi

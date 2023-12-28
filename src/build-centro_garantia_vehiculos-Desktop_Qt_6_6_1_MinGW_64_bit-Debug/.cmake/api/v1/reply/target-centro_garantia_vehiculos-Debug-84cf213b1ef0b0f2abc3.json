@@ -552,12 +552,12 @@
 		{
 			"backtrace" : 4,
 			"compileGroupIndex" : 0,
-			"path" : "Cliente.cpp",
+			"path" : "Clases.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 4,
-			"path" : "Cliente.h",
+			"path" : "Clases.h",
 			"sourceGroupIndex" : 1
 		},
 		{

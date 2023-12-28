@@ -19,8 +19,8 @@ set(PROJECT_SOURCES
         centrogarantiavehiculo.cpp
         centrogarantiavehiculo.h
         centrogarantiavehiculo.ui
-        Cliente.cpp
-        Cliente.h
+        Clases.cpp
+        Clases.h
         ${TS_FILES}
 )
 

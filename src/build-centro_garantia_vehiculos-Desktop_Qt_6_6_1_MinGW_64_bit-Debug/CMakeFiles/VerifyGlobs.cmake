@@ -41,7 +41,7 @@ endif()
 # _directory_contents at C:/Qt/6.6.1/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:55 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/*.cpp")
 set(OLD_GLOB
-  "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Cliente.cpp"
+  "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Clases.cpp"
   "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/centrogarantiavehiculo.cpp"
   "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/main.cpp"
   )
@@ -62,7 +62,7 @@ endif()
 # _directory_contents at C:/Qt/6.6.1/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:55 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/*.h")
 set(OLD_GLOB
-  "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Cliente.h"
+  "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/Clases.h"
   "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos/centrogarantiavehiculo.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

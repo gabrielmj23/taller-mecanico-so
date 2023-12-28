@@ -55,9 +55,6 @@ int main(int argc, char *argv[])
         int y = (screenHeight - wHeight) / 2;
         w.setGeometry(x, y, wWidth, wHeight);
     }
-    
-    
-     
 
     w.show();
     return a.exec();
