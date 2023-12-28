@@ -552,12 +552,12 @@
 		{
 			"backtrace" : 4,
 			"compileGroupIndex" : 0,
-			"path" : "C:/Users/karim/Desktop/taller-mecanico-so/src/Cliente.cpp",
+			"path" : "Cliente.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 4,
-			"path" : "C:/Users/karim/Desktop/taller-mecanico-so/src/headers/Cliente.h",
+			"path" : "Cliente.h",
 			"sourceGroupIndex" : 1
 		},
 		{

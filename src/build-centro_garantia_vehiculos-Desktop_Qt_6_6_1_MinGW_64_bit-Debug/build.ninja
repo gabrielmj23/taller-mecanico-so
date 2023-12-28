@@ -192,7 +192,7 @@ build centro_garantia_vehiculos_autogen/timestamp centro_garantia_vehiculos_auto
 #############################################
 # Phony custom command for CMakeFiles\centro_garantia_vehiculos_autogen_timestamp_deps
 
-build CMakeFiles/centro_garantia_vehiculos_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/centro_garantia_vehiculos_autogen_timestamp_deps: phony C$:/Qt/6.6.1/mingw_64/./bin/uic.exe C$:/Qt/6.6.1/mingw_64/./bin/moc.exe C$:/Qt/6.6.1/mingw_64/lib/libQt6Core.a C$:/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a
+build CMakeFiles/centro_garantia_vehiculos_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/centro_garantia_vehiculos_autogen_timestamp_deps: phony C$:/Qt/6.6.1/mingw_64/./bin/uic.exe C$:/Qt/6.6.1/mingw_64/./bin/moc.exe C$:/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.6.1/mingw_64/lib/libQt6Core.a
 
 
 #############################################
