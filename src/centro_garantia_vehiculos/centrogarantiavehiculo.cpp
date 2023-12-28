@@ -130,9 +130,14 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
     }
 }
 
+/**
+ * @brief ** Funcion para buscar clientes en la tabla
+ * 
+ * @param arg1 
+ * @return ** void 
+ */
 void CentroGarantiaVehiculo::on_lineEdit_textChanged(const QString &arg1)
 {
-    qDebug() << "Text changed: ";
     for (int row = 0; row < ui->clienteTableWidget->rowCount(); row++)
     {
         QTableWidgetItem *item = ui->clienteTableWidget->item(row, 0);
@@ -140,3 +145,25 @@ void CentroGarantiaVehiculo::on_lineEdit_textChanged(const QString &arg1)
         ui->clienteTableWidget->setRowHidden(row, !match);
     }
 }
+
+/*
+ *
+ *Boton para eliminar clientes de la tabla
+ *
+ */
+void CentroGarantiaVehiculo::on_pushButton_5_clicked()
+{
+    // Get the current row
+    int row = ui->clienteTableWidget->currentRow();
+
+    // If there is no row selected, return
+    if (row == -1)
+    {
+        qDebug() << "Error: No se ha seleccionado una fila";
+        return;
+    }
+
+    // Remove the row from the table
+    ui->clienteTableWidget->removeRow(row);
+}
+
