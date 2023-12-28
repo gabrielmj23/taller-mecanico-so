@@ -31,9 +31,10 @@ public:
     QTabWidget *tabWidget;
     QWidget *tab;
     QStackedWidget *stackedWidget;
-    QWidget *page;
-    QTextEdit *textEdit;
     QWidget *page_2;
+    QTextEdit *textEdit;
+    QPushButton *pushButton_3;
+    QWidget *page;
     QTableWidget *clienteTableWidget;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
@@ -67,15 +68,18 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
         stackedWidget->setSizePolicy(sizePolicy1);
-        page = new QWidget();
-        page->setObjectName("page");
-        textEdit = new QTextEdit(page);
-        textEdit->setObjectName("textEdit");
-        textEdit->setGeometry(QRect(310, 310, 104, 87));
-        stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
-        clienteTableWidget = new QTableWidget(page_2);
+        textEdit = new QTextEdit(page_2);
+        textEdit->setObjectName("textEdit");
+        textEdit->setGeometry(QRect(410, 130, 104, 87));
+        pushButton_3 = new QPushButton(page_2);
+        pushButton_3->setObjectName("pushButton_3");
+        pushButton_3->setGeometry(QRect(20, 20, 111, 41));
+        stackedWidget->addWidget(page_2);
+        page = new QWidget();
+        page->setObjectName("page");
+        clienteTableWidget = new QTableWidget(page);
         if (clienteTableWidget->columnCount() < 5)
             clienteTableWidget->setColumnCount(5);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
@@ -105,25 +109,25 @@ public:
         clienteTableWidget->horizontalHeader()->setCascadingSectionResizes(false);
         clienteTableWidget->horizontalHeader()->setStretchLastSection(false);
         clienteTableWidget->verticalHeader()->setVisible(false);
-        lineEdit = new QLineEdit(page_2);
+        lineEdit = new QLineEdit(page);
         lineEdit->setObjectName("lineEdit");
         lineEdit->setGeometry(QRect(20, 20, 231, 41));
-        pushButton = new QPushButton(page_2);
+        pushButton = new QPushButton(page);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(610, 20, 111, 41));
         pushButton->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 255);\n"
 "color: rgb(255, 255, 255);"));
-        pushButton_5 = new QPushButton(page_2);
+        pushButton_5 = new QPushButton(page);
         pushButton_5->setObjectName("pushButton_5");
         pushButton_5->setGeometry(QRect(850, 20, 111, 41));
         pushButton_5->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);\n"
 "color: rgb(255, 255, 255);"));
-        pushButton_2 = new QPushButton(page_2);
+        pushButton_2 = new QPushButton(page);
         pushButton_2->setObjectName("pushButton_2");
         pushButton_2->setGeometry(QRect(730, 20, 111, 41));
         pushButton_2->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 0);\n"
 "color: rgb(255, 255, 255);"));
-        stackedWidget->addWidget(page_2);
+        stackedWidget->addWidget(page);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
@@ -136,7 +140,7 @@ public:
         retranslateUi(CentroGarantiaVehiculo);
 
         tabWidget->setCurrentIndex(0);
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(CentroGarantiaVehiculo);
@@ -154,6 +158,7 @@ public:
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">pruba 1</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "< Volver", nullptr));
         QTableWidgetItem *___qtablewidgetitem = clienteTableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Nombre", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = clienteTableWidget->horizontalHeaderItem(1);

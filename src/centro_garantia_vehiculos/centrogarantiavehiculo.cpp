@@ -14,7 +14,7 @@
 
 using namespace std;
 
-//actualiza las propiedades de los items de la tabla (centrar y no editable)
+// actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
 {
     // Los items no son editables y están centrados
@@ -62,7 +62,6 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
 
     actItemsTabla(ui->clienteTableWidget);
 }
-
 
 CentroGarantiaVehiculo::~CentroGarantiaVehiculo()
 {
@@ -125,16 +124,30 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
         ui->clienteTableWidget->setItem(numRows, 2, itemNumCarros);
         ui->clienteTableWidget->setItem(numRows, 3, itemFechaRegistro);
         ui->clienteTableWidget->setItem(numRows, 4, itemNumContacto);
-        
+
         actItemsTabla(ui->clienteTableWidget);
     }
 }
 
+
+/*
+ *
+ *************** TAB MANUAL *************** 
+ * 
+*/
+
+/*
+ * 
+ *************** STACKED WIDGET CLIENTES*************** 
+ * 
+*/
+
+
 /**
  * @brief ** Funcion para buscar clientes en la tabla
- * 
- * @param arg1 
- * @return ** void 
+ *
+ * @param arg1
+ * @return ** void
  */
 void CentroGarantiaVehiculo::on_lineEdit_textChanged(const QString &arg1)
 {
@@ -165,5 +178,48 @@ void CentroGarantiaVehiculo::on_pushButton_5_clicked()
 
     // Remove the row from the table
     ui->clienteTableWidget->removeRow(row);
+}
+
+/*
+ *
+ *Boton que permite seleccionar un cliente de la tabla y ver sus vehiculos
+ *
+ */
+
+void CentroGarantiaVehiculo::on_pushButton_clicked()
+{
+    // Get the current row
+    int row = ui->clienteTableWidget->currentRow();
+
+    // If there is no row selected, return
+    if (row == -1)
+    {
+        qDebug() << "Error: No se ha seleccionado una fila";
+        return;
+    }
+
+    // Get the cliente's cedula from the selected row
+    QTableWidgetItem *item = ui->clienteTableWidget->item(row, 1);
+    QString clienteCedula = item->text();
+
+    ui->stackedWidget->setCurrentWidget(ui->page_2);
+}
+
+
+
+/*
+ *
+ *************** STACKED WIDGET VEHICULOS X CLIENTE*************** 
+ * 
+*/
+
+/*
+ *
+ *Boton para regresar a stacked widget clientes
+ *
+ */
+void CentroGarantiaVehiculo::on_pushButton_3_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page);
 }
 

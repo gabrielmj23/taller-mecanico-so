@@ -52,14 +52,14 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <widget class="QWidget" name="page">
+      <widget class="QWidget" name="page_2">
        <widget class="QTextEdit" name="textEdit">
         <property name="geometry">
          <rect>
-          <x>310</x>
-          <y>310</y>
+          <x>410</x>
+          <y>130</y>
           <width>104</width>
           <height>87</height>
          </rect>
@@ -76,8 +76,21 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt; Volver</string>
+        </property>
+       </widget>
       </widget>
-      <widget class="QWidget" name="page_2">
+      <widget class="QWidget" name="page">
        <widget class="QTableWidget" name="clienteTableWidget">
         <property name="geometry">
          <rect>
