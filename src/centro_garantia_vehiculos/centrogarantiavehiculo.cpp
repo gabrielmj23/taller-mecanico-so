@@ -14,6 +14,21 @@
 
 using namespace std;
 
+//actualiza las propiedades de los items de la tabla (centrar y no editable)
+void actItemsTabla(QTableWidget *tableWidget)
+{
+    // Los items no son editables y están centrados
+    for (int i = 0; i < tableWidget->rowCount(); i++)
+    {
+        for (int j = 0; j < tableWidget->columnCount(); j++)
+        {
+            QTableWidgetItem *item = tableWidget->item(i, j);
+            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+            item->setTextAlignment(Qt::AlignCenter);
+        }
+    }
+}
+
 CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::CentroGarantiaVehiculo)
 {
@@ -43,16 +58,11 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
         ui->clienteTableWidget->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(clientes[i].getFechaRegistro())));
         ui->clienteTableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos())));
         ui->clienteTableWidget->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
-
-        // Los items no son editables y estan centrados
-        for (int j = 0; j < ui->clienteTableWidget->columnCount(); j++)
-        {
-            QTableWidgetItem *item = ui->clienteTableWidget->item(i, j);
-            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-            item->setTextAlignment(Qt::AlignCenter);
-        }
     }
+
+    actItemsTabla(ui->clienteTableWidget);
 }
+
 
 CentroGarantiaVehiculo::~CentroGarantiaVehiculo()
 {
@@ -115,11 +125,14 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
         ui->clienteTableWidget->setItem(numRows, 2, itemNumCarros);
         ui->clienteTableWidget->setItem(numRows, 3, itemFechaRegistro);
         ui->clienteTableWidget->setItem(numRows, 4, itemNumContacto);
+        
+        actItemsTabla(ui->clienteTableWidget);
     }
 }
 
 void CentroGarantiaVehiculo::on_lineEdit_textChanged(const QString &arg1)
 {
+    qDebug() << "Text changed: ";
     for (int row = 0; row < ui->clienteTableWidget->rowCount(); row++)
     {
         QTableWidgetItem *item = ui->clienteTableWidget->item(row, 0);

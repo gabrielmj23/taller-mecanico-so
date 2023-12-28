@@ -20,8 +20,6 @@ public:
 private slots:
     void on_pushButton_2_clicked();
 
-    void on_agregarPButton_clicked();
-
     void on_lineEdit_textChanged(const QString &arg1);
 
 private:
