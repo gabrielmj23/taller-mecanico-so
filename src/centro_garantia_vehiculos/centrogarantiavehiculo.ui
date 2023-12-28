@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>983</width>
+    <height>738</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,9 +19,15 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>801</width>
-      <height>601</height>
+      <width>983</width>
+      <height>738</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -35,9 +41,15 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>801</width>
-        <height>571</height>
+        <width>981</width>
+        <height>701</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="currentIndex">
        <number>1</number>
@@ -66,35 +78,113 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </widget>
       </widget>
       <widget class="QWidget" name="page_2">
-       <widget class="QTableWidget" name="tableWidget">
+       <widget class="QTableWidget" name="clienteTableWidget">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>100</y>
-          <width>551</width>
-          <height>331</height>
+          <x>20</x>
+          <y>90</y>
+          <width>941</width>
+          <height>600</height>
          </rect>
         </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string notr="true"/>
+        </property>
+        <property name="accessibleDescription">
+         <string notr="true"/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>Nombre</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>Cedula</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>Número de Carros</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>New Column</string>
+          <string>Fecha de Registro</string>
          </property>
         </column>
+        <column>
+         <property name="text">
+          <string>Número de Contacto</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>231</width>
+          <height>41</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>610</x>
+          <y>20</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Seleccionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>20</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Eliminar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>20</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Agregar</string>
+        </property>
        </widget>
       </widget>
      </widget>

@@ -12,7 +12,9 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -32,7 +34,11 @@ public:
     QWidget *page;
     QTextEdit *textEdit;
     QWidget *page_2;
-    QTableWidget *tableWidget;
+    QTableWidget *clienteTableWidget;
+    QLineEdit *lineEdit;
+    QPushButton *pushButton;
+    QPushButton *pushButton_5;
+    QPushButton *pushButton_2;
     QWidget *tab_2;
     QStatusBar *statusbar;
 
@@ -40,17 +46,27 @@ public:
     {
         if (CentroGarantiaVehiculo->objectName().isEmpty())
             CentroGarantiaVehiculo->setObjectName("CentroGarantiaVehiculo");
-        CentroGarantiaVehiculo->resize(800, 600);
+        CentroGarantiaVehiculo->resize(983, 738);
         centralwidget = new QWidget(CentroGarantiaVehiculo);
         centralwidget->setObjectName("centralwidget");
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(0, 0, 801, 601));
+        tabWidget->setGeometry(QRect(0, 0, 983, 738));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
+        tabWidget->setSizePolicy(sizePolicy);
         tab = new QWidget();
         tab->setObjectName("tab");
         stackedWidget = new QStackedWidget(tab);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(0, 0, 801, 571));
+        stackedWidget->setGeometry(QRect(0, 0, 981, 701));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(stackedWidget->sizePolicy().hasHeightForWidth());
+        stackedWidget->setSizePolicy(sizePolicy1);
         page = new QWidget();
         page->setObjectName("page");
         textEdit = new QTextEdit(page);
@@ -59,19 +75,48 @@ public:
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
-        tableWidget = new QTableWidget(page_2);
-        if (tableWidget->columnCount() < 4)
-            tableWidget->setColumnCount(4);
+        clienteTableWidget = new QTableWidget(page_2);
+        if (clienteTableWidget->columnCount() < 5)
+            clienteTableWidget->setColumnCount(5);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        clienteTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        clienteTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        clienteTableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
-        tableWidget->setObjectName("tableWidget");
-        tableWidget->setGeometry(QRect(60, 100, 551, 331));
+        clienteTableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        clienteTableWidget->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        clienteTableWidget->setObjectName("clienteTableWidget");
+        clienteTableWidget->setGeometry(QRect(20, 90, 941, 600));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(clienteTableWidget->sizePolicy().hasHeightForWidth());
+        clienteTableWidget->setSizePolicy(sizePolicy2);
+#if QT_CONFIG(accessibility)
+        clienteTableWidget->setAccessibleName(QString::fromUtf8(""));
+#endif // QT_CONFIG(accessibility)
+#if QT_CONFIG(accessibility)
+        clienteTableWidget->setAccessibleDescription(QString::fromUtf8(""));
+#endif // QT_CONFIG(accessibility)
+        clienteTableWidget->setWordWrap(true);
+        clienteTableWidget->horizontalHeader()->setCascadingSectionResizes(false);
+        clienteTableWidget->horizontalHeader()->setStretchLastSection(false);
+        clienteTableWidget->verticalHeader()->setVisible(false);
+        lineEdit = new QLineEdit(page_2);
+        lineEdit->setObjectName("lineEdit");
+        lineEdit->setGeometry(QRect(20, 20, 231, 41));
+        pushButton = new QPushButton(page_2);
+        pushButton->setObjectName("pushButton");
+        pushButton->setGeometry(QRect(610, 20, 111, 41));
+        pushButton_5 = new QPushButton(page_2);
+        pushButton_5->setObjectName("pushButton_5");
+        pushButton_5->setGeometry(QRect(850, 20, 111, 41));
+        pushButton_2 = new QPushButton(page_2);
+        pushButton_2->setObjectName("pushButton_2");
+        pushButton_2->setGeometry(QRect(730, 20, 111, 41));
         stackedWidget->addWidget(page_2);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -103,14 +148,19 @@ public:
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">pruba 1</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
-        QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "New Column", nullptr));
-        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "New Column", nullptr));
-        QTableWidgetItem *___qtablewidgetitem2 = tableWidget->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "New Column", nullptr));
-        QTableWidgetItem *___qtablewidgetitem3 = tableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "New Column", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = clienteTableWidget->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Nombre", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = clienteTableWidget->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Cedula", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = clienteTableWidget->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Carros", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = clienteTableWidget->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Fecha de Registro", nullptr));
+        QTableWidgetItem *___qtablewidgetitem4 = clienteTableWidget->horizontalHeaderItem(4);
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Contacto", nullptr));
+        pushButton->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
+        pushButton_5->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CentroGarantiaVehiculo", "Manual", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CentroGarantiaVehiculo", "Otros", nullptr));
     } // retranslateUi

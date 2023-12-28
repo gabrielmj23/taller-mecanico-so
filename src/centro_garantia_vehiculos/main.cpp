@@ -6,8 +6,7 @@
 #include <QScreen>
 #include <QFile>
 #include <QDebug>
-
-#include "Cliente.h"
+#include <QHeaderView>
 
 
 
@@ -56,17 +55,9 @@ int main(int argc, char *argv[])
         int y = (screenHeight - wHeight) / 2;
         w.setGeometry(x, y, wWidth, wHeight);
     }
-
-    // Create an example Cliente object
-    Cliente exampleCliente("Example Name", "Example Cedula", "Example FechaRegistro", "Example NumContacto");
-        // Log the example Cliente object
-    qDebug() << "Cliente nombre:" << QString::fromStdString(exampleCliente.getNombre());
-    qDebug() << "Cliente cedula:" << QString::fromStdString(exampleCliente.getCedula());
-    qDebug() << "Cliente fechaRegistro:" << QString::fromStdString(exampleCliente.getFechaRegistro());
-    qDebug() << "Cliente numContacto:" << QString::fromStdString(exampleCliente.getNumContacto());
-    qDebug() << "Cliente numVehiculos:" << exampleCliente.getNumVehiculos();
     
-
+    
+     
 
     w.show();
     return a.exec();
