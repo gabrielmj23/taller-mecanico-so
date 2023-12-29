@@ -221,6 +221,7 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
         if (cliente.getCedula().compare(cedula.toStdString()) == 0)
         {
 
+            std::vector<Vehiculo>& vehiculos = cliente.getVehiculos();
 
             
             // // Clear the existing items in the table
