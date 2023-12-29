@@ -7,12 +7,20 @@
 #include <QTableWidgetItem>
 #include <QDebug>
 #include <QDate>
+#include <QString>
 
 #include "centrogarantiavehiculo.h"
 #include "./ui_centrogarantiavehiculo.h"
 #include "Clases.h"
 
 using namespace std;
+
+// Arreglo clientes ejemplo
+Cliente clientes[] = {
+    {"John Doe", "123456789", "01-01-2021", "555-1234"},
+    {"Jane Smith", "987654321", "15-02-2021", "555-5678"},
+    {"Alice Johnson", "456789123", "10-03-2021", "555-9012"}};
+
 
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -41,18 +49,12 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     */
 
     /*
-     * 
+     *
      * pagina 1 de stacked widget
      */
 
     // Tabla de clientes
     ui->clienteTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    // Arreglo clientes ejemplo
-    Cliente clientes[] = {
-        {"John Doe", "123456789", "01-01-2021", "555-1234"},
-        {"Jane Smith", "987654321", "15-02-2021", "555-5678"},
-        {"Alice Johnson", "456789123", "10-03-2021", "555-9012"}};
 
     // Agregar clientes a la tabla
     for (int i = 0; i < 3; i++)
@@ -67,25 +69,14 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
 
     actItemsTabla(ui->clienteTableWidget);
 
-     /*
+    /*
      * pagina 2 de stacked widget
      */
 
-    //Tabla de vehiculos x cliente
+    // Tabla de vehiculos x cliente
     ui->vehiculosClienteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 CentroGarantiaVehiculo::~CentroGarantiaVehiculo()
 {
@@ -151,23 +142,19 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
 
         actItemsTabla(ui->clienteTableWidget);
     }
-
 }
-
-
 
 /*
  *
- *************** TAB MANUAL *************** 
- * 
-*/
+ *************** TAB MANUAL ***************
+ *
+ */
 
 /*
- * 
- *************** STACKED WIDGET CLIENTES*************** 
- * 
-*/
-
+ *
+ *************** STACKED WIDGET CLIENTES***************
+ *
+ */
 
 /**
  * @brief ** Funcion para buscar clientes en la tabla
@@ -225,19 +212,50 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
     }
 
     // Get the cliente's cedula from the selected row
-    QTableWidgetItem *item = ui->clienteTableWidget->item(row, 1);
-    QString clienteCedula = item->text();
+    QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 0);
+    QString cedula = cedulaItem->text();
 
-    ui->stackedWidget->setCurrentWidget(ui->page_2);
+    // Search for the cliente in the array clientes
+    for (Cliente &cliente : clientes)
+    {
+        if (cliente.getCedula().compare(cedula.toStdString()) == 0)
+        {
+
+
+            
+            // // Clear the existing items in the table
+            // ui->vehiculosClienteTable->setRowCount(0);
+
+            // // Insert the vehiculos into the table
+            // for (int i = 0; i < vehiculos.size(); i++)
+            // {
+            //     const Vehiculo &vehiculo = vehiculos[i];
+
+            //     // Insert a new row at the end of the table
+            //     int numRows = ui->vehiculosClienteTable->rowCount();
+            //     ui->vehiculosClienteTable->insertRow(numRows);
+
+            //     // Populate the table with the data from the Vehiculo object
+            //     QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(vehiculo.getPlaca()));
+            //     string ubicacion = vehiculo.getUbicacion() ? "Dentro del Taller" : "Fuera del Taller";
+            //     QTableWidgetItem *itemUbicacion = new QTableWidgetItem(QString::fromStdString(ubicacion));
+            //     QTableWidgetItem *itemNroServicios = new QTableWidgetItem(QString::number(vehiculo.getNumServicios()));
+
+            //     ui->vehiculosClienteTable->setItem(numRows, 0, itemPlaca);
+            //     ui->vehiculosClienteTable->setItem(numRows, 1, itemUbicacion);
+            //     ui->vehiculosClienteTable->setItem(numRows, 2, itemNroServicios);
+            // }
+
+            break;
+        }
+    }
 }
-
-
 
 /*
  *
- *************** STACKED WIDGET VEHICULOS X CLIENTE*************** 
- * 
-*/
+ *************** STACKED WIDGET VEHICULOS X CLIENTE***************
+ *
+ */
 
 /*
  *
@@ -248,4 +266,3 @@ void CentroGarantiaVehiculo::on_pushButton_3_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page);
 }
-

@@ -40,6 +40,10 @@ int Cliente::getNumVehiculos() {
     return vehiculos.size();
 }
 
+void Cliente::agregarVehiculo(Vehiculo vehiculo) {
+    vehiculos.push_back(vehiculo);
+}
+
 
 /**
  * @brief Construct a new Vehiculo:: Vehiculo object
@@ -71,6 +75,8 @@ double Servicio::getKmIngreso() {
     return this->kmIngreso;
 }
 
+
+
 /**
  * @brief Construct a new Vehiculo:: Vehiculo object
  * 
@@ -89,8 +95,8 @@ string Vehiculo::getPlaca() {
     return this->placa;
 }
 
-string Vehiculo::getUbicacion() {
-   this->ubicacion ? "Dentro del Taller" : "Fuera del Taller";
+bool Vehiculo::getUbicacion() {
+    return this->ubicacion;
 }
 
 vector<Servicio> *Vehiculo::getServicios() {
@@ -100,3 +106,8 @@ vector<Servicio> *Vehiculo::getServicios() {
 int Vehiculo::getNumServicios() {
     return servicios.size();
 }
+
+void Vehiculo::agregarServicio(Servicio servicio) {
+    servicios.push_back(servicio);
+}
+

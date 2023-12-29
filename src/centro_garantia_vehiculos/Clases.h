@@ -28,10 +28,11 @@ class Vehiculo{
     public:
         Vehiculo(string placa, bool ubicacion);
         string getPlaca();
-        string getUbicacion();
+        bool getUbicacion();
         vector<Servicio> *getServicios();
         int getNumServicios();
         void setUbicacion(bool ubicacion);
+        void agregarServicio(Servicio servicio);
         
 };
 
@@ -52,4 +53,5 @@ public:
     string getNumContacto();
     vector<Vehiculo> *getVehiculos();
     int getNumVehiculos();
+    void agregarVehiculo(Vehiculo vehiculo);
 };
