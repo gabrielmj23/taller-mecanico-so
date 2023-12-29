@@ -103,12 +103,12 @@
         </column>
         <column>
          <property name="text">
-          <string>Número de Carros</string>
+          <string>Fecha de Registro</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Fecha de Registro</string>
+          <string>Número de Carros</string>
          </property>
         </column>
         <column>

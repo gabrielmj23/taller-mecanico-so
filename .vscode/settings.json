@@ -49,5 +49,6 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "C:/Users/karim/Desktop/taller-mecanico-so/src/centro_garantia_vehiculos"
 }

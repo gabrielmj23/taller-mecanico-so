@@ -4,16 +4,16 @@
 
 using namespace std;
 
-
-
 class Servicio {
     private:
+        string placa;
         string fechaIni;
         string fechaFin;
         string razon;
         double kmIngreso;
     public:
-        Servicio(string fechaIni, string fechaFin, string razon, double kmIngreso);
+        Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso);
+        string getPlaca();
         string getFechaIni();
         string getFechaFin();
         string getRazon();
@@ -22,18 +22,15 @@ class Servicio {
 
 class Vehiculo{
     private:
+        string cedulaCliente;
         string placa;
         bool ubicacion;
-        vector<Servicio> servicios;
     public:
-        Vehiculo(string placa, bool ubicacion);
+        Vehiculo(string cedulaCliente, string placa, bool ubicacion);
+        string getCedulaCliente();
         string getPlaca();
-        bool getUbicacion();
-        vector<Servicio> *getServicios();
-        int getNumServicios();
+        string getUbicacion();
         void setUbicacion(bool ubicacion);
-        void agregarServicio(Servicio servicio);
-        
 };
 
 class Cliente
@@ -43,7 +40,6 @@ private:
     string cedula;
     string fechaRegistro;
     string numContacto;
-    vector<Vehiculo> vehiculos;
 
 public:
     Cliente(string nombre, string cedula, string fechaRegistro, string numContacto);
@@ -51,7 +47,5 @@ public:
     string getCedula();
     string getFechaRegistro();
     string getNumContacto();
-    vector<Vehiculo> *getVehiculos();
-    int getNumVehiculos();
-    void agregarVehiculo(Vehiculo vehiculo);
+    int getNumVehiculos(Vehiculo* vehiculos, int tamanio); 
 };

@@ -15,12 +15,21 @@
 
 using namespace std;
 
+// Ejemplo de Vehiculos
+Vehiculo vehiculos[] = {
+    {"123456789", "ABC123", true},
+    {"987654321", "DEF456", false},
+    {"456789123", "GHI789", true},
+    {"456789124", "GHI788", true},
+    {"456789123", "GHI777", false}};
+
+int numVehiculos = sizeof(vehiculos) / sizeof(vehiculos[0]);
+
 // Arreglo clientes ejemplo
 Cliente clientes[] = {
     {"John Doe", "123456789", "01-01-2021", "555-1234"},
     {"Jane Smith", "987654321", "15-02-2021", "555-5678"},
     {"Alice Johnson", "456789123", "10-03-2021", "555-9012"}};
-
 
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -63,7 +72,7 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
         ui->clienteTableWidget->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(clientes[i].getNombre())));
         ui->clienteTableWidget->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(clientes[i].getCedula())));
         ui->clienteTableWidget->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(clientes[i].getFechaRegistro())));
-        ui->clienteTableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos())));
+        ui->clienteTableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculos, numVehiculos))));
         ui->clienteTableWidget->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
     }
 
@@ -75,7 +84,6 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
 
     // Tabla de vehiculos x cliente
     ui->vehiculosClienteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
 }
 
 CentroGarantiaVehiculo::~CentroGarantiaVehiculo()
@@ -130,7 +138,7 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
         // Populate the table with the data from the new Cliente object
         QTableWidgetItem *itemNombre = new QTableWidgetItem(QString::fromStdString(newCliente.getNombre()));
         QTableWidgetItem *itemCedula = new QTableWidgetItem(QString::fromStdString(newCliente.getCedula()));
-        QTableWidgetItem *itemNumCarros = new QTableWidgetItem(QString::number(newCliente.getNumVehiculos()));
+        QTableWidgetItem *itemNumCarros = new QTableWidgetItem(QString::number(newCliente.getNumVehiculos(vehiculos, numVehiculos)));
         QTableWidgetItem *itemFechaRegistro = new QTableWidgetItem(QString::fromStdString(newCliente.getFechaRegistro()));
         QTableWidgetItem *itemNumContacto = new QTableWidgetItem(QString::fromStdString(newCliente.getNumContacto()));
 
@@ -211,43 +219,44 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
         return;
     }
 
+    ui->stackedWidget->setCurrentWidget(ui->page_2);
     // Get the cliente's cedula from the selected row
-    QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 0);
+    QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 1);
     QString cedula = cedulaItem->text();
+    qDebug() << "Cedula: " << cedula;
 
-    // Search for the cliente in the array clientes
-    for (Cliente &cliente : clientes)
+    // Limpiar la tabla de vehículos del cliente
+    ui->vehiculosClienteTable->clearContents();
+    ui->vehiculosClienteTable->setRowCount(0);
+
+    // Iterar en el arreglo de vehículos
+    for (Vehiculo vehiculo : vehiculos)
+      
     {
-        if (cliente.getCedula().compare(cedula.toStdString()) == 0)
+
+        // Verificar si el vehículo tiene la misma cédula del cliente
+        if (vehiculo.getCedulaCliente().compare(cedula.toStdString()) == 0)
         {
+            qDebug() << "Vehiculo encontrado";
+            // Obtener la información del vehículo
+            string placa = vehiculo.getPlaca();
+            string dentroTaller = vehiculo.getUbicacion();
+            int numServicios = 0;
 
-            std::vector<Vehiculo>& vehiculos = cliente.getVehiculos();
+            // Agregar una nueva fila a la tabla de vehículos del cliente
+            int numRows = ui->vehiculosClienteTable->rowCount();
+            ui->vehiculosClienteTable->insertRow(numRows);
 
-            
-            // // Clear the existing items in the table
-            // ui->vehiculosClienteTable->setRowCount(0);
+            // Mostrar la información del vehículo en la tabla
+            QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(placa));
+            QTableWidgetItem *itemDentroTaller = new QTableWidgetItem(QString::fromStdString(dentroTaller));
+            QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(numServicios));
 
-            // // Insert the vehiculos into the table
-            // for (int i = 0; i < vehiculos.size(); i++)
-            // {
-            //     const Vehiculo &vehiculo = vehiculos[i];
+            ui->vehiculosClienteTable->setItem(numRows, 0, itemPlaca);
+            ui->vehiculosClienteTable->setItem(numRows, 1, itemDentroTaller);
+            ui->vehiculosClienteTable->setItem(numRows, 2, itemNumServicios);
 
-            //     // Insert a new row at the end of the table
-            //     int numRows = ui->vehiculosClienteTable->rowCount();
-            //     ui->vehiculosClienteTable->insertRow(numRows);
-
-            //     // Populate the table with the data from the Vehiculo object
-            //     QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(vehiculo.getPlaca()));
-            //     string ubicacion = vehiculo.getUbicacion() ? "Dentro del Taller" : "Fuera del Taller";
-            //     QTableWidgetItem *itemUbicacion = new QTableWidgetItem(QString::fromStdString(ubicacion));
-            //     QTableWidgetItem *itemNroServicios = new QTableWidgetItem(QString::number(vehiculo.getNumServicios()));
-
-            //     ui->vehiculosClienteTable->setItem(numRows, 0, itemPlaca);
-            //     ui->vehiculosClienteTable->setItem(numRows, 1, itemUbicacion);
-            //     ui->vehiculosClienteTable->setItem(numRows, 2, itemNroServicios);
-            // }
-
-            break;
+            actItemsTabla(ui->vehiculosClienteTable);
         }
     }
 }
