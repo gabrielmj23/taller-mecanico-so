@@ -157,7 +157,7 @@ public:
         retranslateUi(CentroGarantiaVehiculo);
 
         tabWidget->setCurrentIndex(0);
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(CentroGarantiaVehiculo);
@@ -171,9 +171,9 @@ public:
         QTableWidgetItem *___qtablewidgetitem1 = clienteTableWidget->horizontalHeaderItem(1);
         ___qtablewidgetitem1->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Cedula", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = clienteTableWidget->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Carros", nullptr));
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Fecha de Registro", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = clienteTableWidget->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Fecha de Registro", nullptr));
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Carros", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = clienteTableWidget->horizontalHeaderItem(4);
         ___qtablewidgetitem4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Contacto", nullptr));
 #if QT_CONFIG(tooltip)
