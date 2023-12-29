@@ -15,6 +15,16 @@
 
 using namespace std;
 
+//Ejemplo Servicios
+Servicio servicios[] = {
+    {"ABC123", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
+    {"DEF456", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
+    {"GHI789", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
+    {"GHI777", "01-06-2021", "02-07-2021", "Cambio de aceite", 2000},
+    {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000}
+    };
+int  numServicios = sizeof(servicios) / sizeof(servicios[0]);
+
 // Ejemplo de Vehiculos
 Vehiculo vehiculos[] = {
     {"123456789", "ABC123", true},
@@ -223,7 +233,6 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
     // Get the cliente's cedula from the selected row
     QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 1);
     QString cedula = cedulaItem->text();
-    qDebug() << "Cedula: " << cedula;
 
     // Limpiar la tabla de vehículos del cliente
     ui->vehiculosClienteTable->clearContents();
@@ -237,11 +246,9 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
         // Verificar si el vehículo tiene la misma cédula del cliente
         if (vehiculo.getCedulaCliente().compare(cedula.toStdString()) == 0)
         {
-            qDebug() << "Vehiculo encontrado";
             // Obtener la información del vehículo
             string placa = vehiculo.getPlaca();
             string dentroTaller = vehiculo.getUbicacion();
-            int numServicios = 0;
 
             // Agregar una nueva fila a la tabla de vehículos del cliente
             int numRows = ui->vehiculosClienteTable->rowCount();
@@ -250,7 +257,7 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
             // Mostrar la información del vehículo en la tabla
             QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(placa));
             QTableWidgetItem *itemDentroTaller = new QTableWidgetItem(QString::fromStdString(dentroTaller));
-            QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(numServicios));
+            QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(vehiculo.getNumServicios(servicios, numServicios)));
 
             ui->vehiculosClienteTable->setItem(numRows, 0, itemPlaca);
             ui->vehiculosClienteTable->setItem(numRows, 1, itemDentroTaller);
