@@ -68,16 +68,16 @@ int Cliente::getNumVehiculos(Vehiculo* vehiculos, int tamanio)
  */
 Servicio::Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso)
 {
-    this->placa = placa;
+    this->placaVehiculo = placa;
     this->fechaIni = fechaIni;
     this->fechaFin = fechaFin;
     this->razon = razon;
     this->kmIngreso = kmIngreso;
 }
 
-string Servicio::getPlaca()
+string Servicio::getPlacaVehiculo()
 {
-    return this->placa;
+    return this->placaVehiculo;
 }
 
 string Servicio::getFechaIni()
@@ -127,4 +127,21 @@ string Vehiculo::getPlaca()
 string Vehiculo::getUbicacion()
 {
    return ubicacion? "Dentro del Taller" : "Fuera del Taller";
+}
+
+int Vehiculo::getNumServicios(Servicio* servicios, int tamanio)
+{
+    int c = 0;
+
+    for (int i = 0; i < tamanio; i++)
+    {
+        Servicio servicio = servicios[i];
+
+        if (servicio.getPlacaVehiculo().compare(this->placa) == 0)
+        {
+            c++;
+        }
+    }
+
+    return c;
 }

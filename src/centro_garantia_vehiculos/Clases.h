@@ -6,14 +6,14 @@ using namespace std;
 
 class Servicio {
     private:
-        string placa;
+        string placaVehiculo;
         string fechaIni;
         string fechaFin;
         string razon;
         double kmIngreso;
     public:
         Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso);
-        string getPlaca();
+        string getPlacaVehiculo();
         string getFechaIni();
         string getFechaFin();
         string getRazon();
@@ -31,6 +31,7 @@ class Vehiculo{
         string getPlaca();
         string getUbicacion();
         void setUbicacion(bool ubicacion);
+        int getNumServicios(Servicio* servicios, int tamanio);
 };
 
 class Cliente
