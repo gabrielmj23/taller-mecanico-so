@@ -44,6 +44,9 @@ public:
     QTableWidget *vehiculosClienteTable;
     QLabel *label;
     QDateTimeEdit *dateTimeEdit;
+    QPushButton *pushButton_4;
+    QPushButton *pushButton_6;
+    QPushButton *pushButton_7;
     QWidget *page_3;
     QWidget *tab_2;
     QDateTimeEdit *dateTimeEdit_2;
@@ -145,15 +148,16 @@ public:
         QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
         vehiculosClienteTable->setHorizontalHeaderItem(2, __qtablewidgetitem7);
         vehiculosClienteTable->setObjectName("vehiculosClienteTable");
-        vehiculosClienteTable->setGeometry(QRect(20, 119, 941, 561));
+        vehiculosClienteTable->setGeometry(QRect(20, 129, 941, 551));
         QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy3.setHorizontalStretch(40);
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(vehiculosClienteTable->sizePolicy().hasHeightForWidth());
         vehiculosClienteTable->setSizePolicy(sizePolicy3);
+        vehiculosClienteTable->verticalHeader()->setHighlightSections(false);
         label = new QLabel(page_2);
         label->setObjectName("label");
-        label->setGeometry(QRect(20, 60, 531, 41));
+        label->setGeometry(QRect(20, 70, 531, 41));
         QFont font;
         font.setPointSize(16);
         font.setBold(true);
@@ -162,6 +166,21 @@ public:
         dateTimeEdit->setObjectName("dateTimeEdit");
         dateTimeEdit->setGeometry(QRect(770, 10, 194, 41));
         dateTimeEdit->setReadOnly(true);
+        pushButton_4 = new QPushButton(page_2);
+        pushButton_4->setObjectName("pushButton_4");
+        pushButton_4->setGeometry(QRect(590, 70, 111, 41));
+        pushButton_4->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 255);\n"
+"color: rgb(255, 255, 255);"));
+        pushButton_6 = new QPushButton(page_2);
+        pushButton_6->setObjectName("pushButton_6");
+        pushButton_6->setGeometry(QRect(850, 70, 111, 41));
+        pushButton_6->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);\n"
+"color: rgb(255, 255, 255);"));
+        pushButton_7 = new QPushButton(page_2);
+        pushButton_7->setObjectName("pushButton_7");
+        pushButton_7->setGeometry(QRect(720, 70, 111, 41));
+        pushButton_7->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 0);\n"
+"color: rgb(255, 255, 255);"));
         stackedWidget->addWidget(page_2);
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
@@ -218,6 +237,9 @@ public:
         ___qtablewidgetitem7->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Servicios", nullptr));
         label->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Lista de Vehiculos de ", nullptr));
         dateTimeEdit->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
+        pushButton_4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
+        pushButton_6->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
+        pushButton_7->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CentroGarantiaVehiculo", "Manual", nullptr));
         dateTimeEdit_2->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CentroGarantiaVehiculo", "Otros", nullptr));

@@ -233,10 +233,18 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
     // Get the cliente's cedula from the selected row
     QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 1);
     QString cedula = cedulaItem->text();
+    QTableWidgetItem *nombreItem = ui->clienteTableWidget->item(row, 0);
+    QString nombre = nombreItem->text();
+
+    // Set the label to the cliente's name
+    ui->label->setText("Vehiculos de " + nombre);
 
     // Limpiar la tabla de vehículos del cliente
     ui->vehiculosClienteTable->clearContents();
+    
     ui->vehiculosClienteTable->setRowCount(0);
+
+   
 
     // Iterar en el arreglo de vehículos
     for (Vehiculo vehiculo : vehiculos)
@@ -266,6 +274,7 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
             actItemsTabla(ui->vehiculosClienteTable);
         }
     }
+     ui->vehiculosClienteTable->verticalHeader()->setVisible(false);
 }
 
 /*
