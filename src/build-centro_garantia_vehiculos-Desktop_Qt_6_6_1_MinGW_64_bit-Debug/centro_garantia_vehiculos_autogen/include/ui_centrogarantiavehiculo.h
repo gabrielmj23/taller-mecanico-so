@@ -11,7 +11,9 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -36,11 +38,15 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_5;
     QPushButton *pushButton_2;
+    QDateTimeEdit *dateTimeEdit_3;
     QWidget *page_2;
     QPushButton *pushButton_3;
     QTableWidget *vehiculosClienteTable;
+    QLabel *label;
+    QDateTimeEdit *dateTimeEdit;
     QWidget *page_3;
     QWidget *tab_2;
+    QDateTimeEdit *dateTimeEdit_2;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *CentroGarantiaVehiculo)
@@ -52,7 +58,7 @@ public:
         centralwidget->setObjectName("centralwidget");
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(0, 0, 983, 738));
+        tabWidget->setGeometry(QRect(0, -3, 983, 741));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -84,7 +90,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
         clienteTableWidget->setHorizontalHeaderItem(4, __qtablewidgetitem4);
         clienteTableWidget->setObjectName("clienteTableWidget");
-        clienteTableWidget->setGeometry(QRect(20, 90, 941, 600));
+        clienteTableWidget->setGeometry(QRect(20, 129, 941, 551));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
@@ -103,28 +109,32 @@ public:
         clienteTableWidget->verticalHeader()->setVisible(false);
         lineEdit = new QLineEdit(page);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(20, 20, 231, 41));
+        lineEdit->setGeometry(QRect(20, 70, 231, 41));
         pushButton = new QPushButton(page);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(610, 20, 111, 41));
+        pushButton->setGeometry(QRect(590, 70, 111, 41));
         pushButton->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 255);\n"
 "color: rgb(255, 255, 255);"));
         pushButton_5 = new QPushButton(page);
         pushButton_5->setObjectName("pushButton_5");
-        pushButton_5->setGeometry(QRect(850, 20, 111, 41));
+        pushButton_5->setGeometry(QRect(850, 70, 111, 41));
         pushButton_5->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);\n"
 "color: rgb(255, 255, 255);"));
         pushButton_2 = new QPushButton(page);
         pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(730, 20, 111, 41));
+        pushButton_2->setGeometry(QRect(720, 70, 111, 41));
         pushButton_2->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 0);\n"
 "color: rgb(255, 255, 255);"));
+        dateTimeEdit_3 = new QDateTimeEdit(page);
+        dateTimeEdit_3->setObjectName("dateTimeEdit_3");
+        dateTimeEdit_3->setGeometry(QRect(770, 10, 194, 41));
+        dateTimeEdit_3->setReadOnly(true);
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
         pushButton_3 = new QPushButton(page_2);
         pushButton_3->setObjectName("pushButton_3");
-        pushButton_3->setGeometry(QRect(20, 20, 111, 41));
+        pushButton_3->setGeometry(QRect(20, 10, 111, 41));
         vehiculosClienteTable = new QTableWidget(page_2);
         if (vehiculosClienteTable->columnCount() < 3)
             vehiculosClienteTable->setColumnCount(3);
@@ -135,12 +145,23 @@ public:
         QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
         vehiculosClienteTable->setHorizontalHeaderItem(2, __qtablewidgetitem7);
         vehiculosClienteTable->setObjectName("vehiculosClienteTable");
-        vehiculosClienteTable->setGeometry(QRect(20, 90, 941, 600));
+        vehiculosClienteTable->setGeometry(QRect(20, 119, 941, 561));
         QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy3.setHorizontalStretch(40);
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(vehiculosClienteTable->sizePolicy().hasHeightForWidth());
         vehiculosClienteTable->setSizePolicy(sizePolicy3);
+        label = new QLabel(page_2);
+        label->setObjectName("label");
+        label->setGeometry(QRect(20, 60, 531, 41));
+        QFont font;
+        font.setPointSize(16);
+        font.setBold(true);
+        label->setFont(font);
+        dateTimeEdit = new QDateTimeEdit(page_2);
+        dateTimeEdit->setObjectName("dateTimeEdit");
+        dateTimeEdit->setGeometry(QRect(770, 10, 194, 41));
+        dateTimeEdit->setReadOnly(true);
         stackedWidget->addWidget(page_2);
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
@@ -148,6 +169,10 @@ public:
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
+        dateTimeEdit_2 = new QDateTimeEdit(tab_2);
+        dateTimeEdit_2->setObjectName("dateTimeEdit_2");
+        dateTimeEdit_2->setGeometry(QRect(770, 10, 194, 41));
+        dateTimeEdit_2->setReadOnly(true);
         tabWidget->addTab(tab_2, QString());
         CentroGarantiaVehiculo->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(CentroGarantiaVehiculo);
@@ -183,6 +208,7 @@ public:
         pushButton->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
         pushButton_5->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
         pushButton_2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
+        dateTimeEdit_3->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
         pushButton_3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "< Volver", nullptr));
         QTableWidgetItem *___qtablewidgetitem5 = vehiculosClienteTable->horizontalHeaderItem(0);
         ___qtablewidgetitem5->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Placa", nullptr));
@@ -190,7 +216,10 @@ public:
         ___qtablewidgetitem6->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Ubicaci\303\263n", nullptr));
         QTableWidgetItem *___qtablewidgetitem7 = vehiculosClienteTable->horizontalHeaderItem(2);
         ___qtablewidgetitem7->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Servicios", nullptr));
+        label->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Lista de Vehiculos de ", nullptr));
+        dateTimeEdit->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CentroGarantiaVehiculo", "Manual", nullptr));
+        dateTimeEdit_2->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CentroGarantiaVehiculo", "Otros", nullptr));
     } // retranslateUi
 

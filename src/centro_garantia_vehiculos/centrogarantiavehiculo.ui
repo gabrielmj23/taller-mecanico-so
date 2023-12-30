@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>-3</y>
       <width>983</width>
-      <height>738</height>
+      <height>741</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -52,16 +52,16 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QTableWidget" name="clienteTableWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>90</y>
+          <y>129</y>
           <width>941</width>
-          <height>600</height>
+          <height>551</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -121,7 +121,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>20</y>
+          <y>70</y>
           <width>231</width>
           <height>41</height>
          </rect>
@@ -136,8 +136,8 @@
        <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
-          <x>610</x>
-          <y>20</y>
+          <x>590</x>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -154,7 +154,7 @@ color: rgb(255, 255, 255);</string>
         <property name="geometry">
          <rect>
           <x>850</x>
-          <y>20</y>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -170,8 +170,8 @@ color: rgb(255, 255, 255);</string>
        <widget class="QPushButton" name="pushButton_2">
         <property name="geometry">
          <rect>
-          <x>730</x>
-          <y>20</y>
+          <x>720</x>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -184,13 +184,29 @@ color: rgb(255, 255, 255);</string>
          <string>Agregar</string>
         </property>
        </widget>
+       <widget class="QDateTimeEdit" name="dateTimeEdit_3">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>10</y>
+          <width>194</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="displayFormat">
+         <string>d/M/yyyy h:mm AP</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="page_2">
        <widget class="QPushButton" name="pushButton_3">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>20</y>
+          <y>10</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -203,9 +219,9 @@ color: rgb(255, 255, 255);</string>
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>90</y>
+          <y>119</y>
           <width>941</width>
-          <height>600</height>
+          <height>561</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -230,6 +246,41 @@ color: rgb(255, 255, 255);</string>
          </property>
         </column>
        </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>531</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Lista de Vehiculos de </string>
+        </property>
+       </widget>
+       <widget class="QDateTimeEdit" name="dateTimeEdit">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>10</y>
+          <width>194</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="displayFormat">
+         <string>d/M/yyyy h:mm AP</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="page_3"/>
      </widget>
@@ -238,6 +289,22 @@ color: rgb(255, 255, 255);</string>
      <attribute name="title">
       <string>Otros</string>
      </attribute>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>10</y>
+        <width>194</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="displayFormat">
+       <string>d/M/yyyy h:mm AP</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
