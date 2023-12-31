@@ -52,7 +52,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QTableWidget" name="clienteTableWidget">
@@ -336,7 +336,76 @@ color: rgb(255, 255, 255);</string>
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="page_3"/>
+      <widget class="QWidget" name="page_3">
+       <widget class="QDateTimeEdit" name="dateTimeEdit_4">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>10</y>
+          <width>194</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="displayFormat">
+         <string>d/M/yyyy h:mm AP</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt; Volver</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="vehiculosClienteTable_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>129</y>
+          <width>941</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>40</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Fecha de Ingreso</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fecha de Egreso</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Razón</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Kilometraje de Ingreso</string>
+         </property>
+        </column>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">

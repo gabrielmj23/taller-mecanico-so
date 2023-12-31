@@ -48,6 +48,9 @@ public:
     QPushButton *pushButton_6;
     QPushButton *pushButton_7;
     QWidget *page_3;
+    QDateTimeEdit *dateTimeEdit_4;
+    QPushButton *pushButton_8;
+    QTableWidget *vehiculosClienteTable_2;
     QWidget *tab_2;
     QDateTimeEdit *dateTimeEdit_2;
     QStatusBar *statusbar;
@@ -184,6 +187,29 @@ public:
         stackedWidget->addWidget(page_2);
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
+        dateTimeEdit_4 = new QDateTimeEdit(page_3);
+        dateTimeEdit_4->setObjectName("dateTimeEdit_4");
+        dateTimeEdit_4->setGeometry(QRect(770, 10, 194, 41));
+        dateTimeEdit_4->setReadOnly(true);
+        pushButton_8 = new QPushButton(page_3);
+        pushButton_8->setObjectName("pushButton_8");
+        pushButton_8->setGeometry(QRect(20, 10, 111, 41));
+        vehiculosClienteTable_2 = new QTableWidget(page_3);
+        if (vehiculosClienteTable_2->columnCount() < 4)
+            vehiculosClienteTable_2->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
+        vehiculosClienteTable_2->setHorizontalHeaderItem(0, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        vehiculosClienteTable_2->setHorizontalHeaderItem(1, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        vehiculosClienteTable_2->setHorizontalHeaderItem(2, __qtablewidgetitem10);
+        QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
+        vehiculosClienteTable_2->setHorizontalHeaderItem(3, __qtablewidgetitem11);
+        vehiculosClienteTable_2->setObjectName("vehiculosClienteTable_2");
+        vehiculosClienteTable_2->setGeometry(QRect(20, 129, 941, 551));
+        sizePolicy3.setHeightForWidth(vehiculosClienteTable_2->sizePolicy().hasHeightForWidth());
+        vehiculosClienteTable_2->setSizePolicy(sizePolicy3);
+        vehiculosClienteTable_2->verticalHeader()->setHighlightSections(false);
         stackedWidget->addWidget(page_3);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -201,7 +227,7 @@ public:
         retranslateUi(CentroGarantiaVehiculo);
 
         tabWidget->setCurrentIndex(0);
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(CentroGarantiaVehiculo);
@@ -240,6 +266,16 @@ public:
         pushButton_4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
         pushButton_6->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
         pushButton_7->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
+        dateTimeEdit_4->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
+        pushButton_8->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "< Volver", nullptr));
+        QTableWidgetItem *___qtablewidgetitem8 = vehiculosClienteTable_2->horizontalHeaderItem(0);
+        ___qtablewidgetitem8->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Fecha de Ingreso", nullptr));
+        QTableWidgetItem *___qtablewidgetitem9 = vehiculosClienteTable_2->horizontalHeaderItem(1);
+        ___qtablewidgetitem9->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Fecha de Egreso", nullptr));
+        QTableWidgetItem *___qtablewidgetitem10 = vehiculosClienteTable_2->horizontalHeaderItem(2);
+        ___qtablewidgetitem10->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Raz\303\263n", nullptr));
+        QTableWidgetItem *___qtablewidgetitem11 = vehiculosClienteTable_2->horizontalHeaderItem(3);
+        ___qtablewidgetitem11->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Kilometraje de Ingreso", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CentroGarantiaVehiculo", "Manual", nullptr));
         dateTimeEdit_2->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CentroGarantiaVehiculo", "Otros", nullptr));

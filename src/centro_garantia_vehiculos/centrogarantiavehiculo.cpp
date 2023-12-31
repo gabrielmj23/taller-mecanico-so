@@ -370,3 +370,9 @@ void CentroGarantiaVehiculo::on_pushButton_6_clicked()
     ui->vehiculosClienteTable->removeRow(row);
 }
 
+
+void CentroGarantiaVehiculo::on_pushButton_8_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page_2);
+}
+
