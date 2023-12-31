@@ -36,6 +36,10 @@ private slots:
 
     void on_pushButton_12_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_9_clicked();
+
 private:
     Ui::CentroGarantiaVehiculo *ui;
 };

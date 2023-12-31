@@ -4,34 +4,44 @@
 
 using namespace std;
 
-class Servicio {
-    private:
-        string placaVehiculo;
-        string fechaIni;
-        string fechaFin;
-        string razon;
-        double kmIngreso;
-    public:
-        Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso);
-        string getPlacaVehiculo();
-        string getFechaIni();
-        string getFechaFin();
-        string getRazon();
-        double getKmIngreso();
+class Servicio
+{
+private:
+    static int nextID; // Esta será compartida por todos los objetos de la clase
+    int id;            // Esta será única para cada objeto
+    string placaVehiculo;
+    string fechaIni;
+    string fechaFin;
+    string razon;
+    double kmIngreso;
+
+public:
+    Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso);
+    ~Servicio();
+    string getPlacaVehiculo();
+    string getFechaIni();
+    string getFechaFin();
+    string getRazon();
+    double getKmIngreso();
+    int getId();
+    static void decrementarId() { --nextID; }
 };
 
-class Vehiculo{
-    private:
-        string cedulaCliente;
-        string placa;
-        bool ubicacion;
-    public:
-        Vehiculo(string cedulaCliente, string placa, bool ubicacion);
-        string getCedulaCliente();
-        string getPlaca();
-        string getUbicacion();
-        void setUbicacion(bool ubicacion);
-        int getNumServicios(Servicio* servicios, int tamanio);
+class Vehiculo
+{
+private:
+    string cedulaCliente;
+    string placa;
+    bool ubicacion;
+    vector<Servicio> servicios;
+
+public:
+    Vehiculo(string cedulaCliente, string placa, bool ubicacion);
+    string getCedulaCliente();
+    string getPlaca();
+    string getUbicacion();
+    void setUbicacion(bool ubicacion);
+    int getNumServicios(vector<Servicio> servicios);
 };
 
 class Cliente
@@ -48,5 +58,5 @@ public:
     string getCedula();
     string getFechaRegistro();
     string getNumContacto();
-    int getNumVehiculos(Vehiculo* vehiculos, int tamanio); 
+    int getNumVehiculos(vector<Vehiculo> vehiculos);
 };

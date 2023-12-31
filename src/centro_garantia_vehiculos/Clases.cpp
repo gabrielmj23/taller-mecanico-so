@@ -40,13 +40,13 @@ string Cliente::getNumContacto()
 }
 
 // cuenta la cantidad de vehiculos de un cliente de un arreglo de vehiculos dado
-int Cliente::getNumVehiculos(Vehiculo* vehiculos, int tamanio)
+int Cliente::getNumVehiculos(vector<Vehiculo> vehiculos)
 {
     
     int c = 0;
 
 
-    for (int i = 0; i < tamanio; i++)
+    for (int i = 0; i < vehiculos.size(); i++)
     {
         Vehiculo vehiculo = vehiculos[i];
 
@@ -59,6 +59,7 @@ int Cliente::getNumVehiculos(Vehiculo* vehiculos, int tamanio)
     return c;
 }
 
+
 /**
  * @brief Construct a new Vehiculo:: Vehiculo object
  *
@@ -66,13 +67,20 @@ int Cliente::getNumVehiculos(Vehiculo* vehiculos, int tamanio)
  * @param placa
  * @param ubicacion
  */
-Servicio::Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso)
+
+int Servicio::nextID = 1;
+
+Servicio::Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso) 
+    : id(nextID++), placaVehiculo(placa), fechaIni(fechaIni), fechaFin(fechaFin), razon(razon), kmIngreso(kmIngreso) {}
+Servicio::~Servicio()
 {
-    this->placaVehiculo = placa;
-    this->fechaIni = fechaIni;
-    this->fechaFin = fechaFin;
-    this->razon = razon;
-    this->kmIngreso = kmIngreso;
+    decrementarId();
+}
+
+
+int Servicio::getId()
+{
+    return this->id;
 }
 
 string Servicio::getPlacaVehiculo()
@@ -113,6 +121,7 @@ Vehiculo::Vehiculo(string cedulaCliente, string placa, bool ubicacion)
     this->cedulaCliente = cedulaCliente;
     this->placa = placa;
     this->ubicacion = ubicacion;
+    this->servicios = vector<Servicio>();
 }
 
 string Vehiculo::getCedulaCliente()
@@ -129,13 +138,13 @@ string Vehiculo::getUbicacion()
    return ubicacion? "Dentro del Taller" : "Fuera del Taller";
 }
 
-int Vehiculo::getNumServicios(Servicio* servicios, int tamanio)
+int Vehiculo::getNumServicios(vector<Servicio> servicios)
 {
 
 
     int c = 0;
 
-    for (int i = 0; i < tamanio; i++)
+    for (int i = 0; i < servicios.size(); i++)
     {
         Servicio servicio = servicios[i];
 
@@ -147,3 +156,5 @@ int Vehiculo::getNumServicios(Servicio* servicios, int tamanio)
 
     return c;
 }
+
+
