@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>-3</y>
       <width>983</width>
-      <height>738</height>
+      <height>741</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -59,9 +59,9 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>90</y>
+          <y>129</y>
           <width>941</width>
-          <height>600</height>
+          <height>551</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -121,7 +121,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>20</y>
+          <y>70</y>
           <width>231</width>
           <height>41</height>
          </rect>
@@ -136,8 +136,8 @@
        <widget class="QPushButton" name="pushButton">
         <property name="geometry">
          <rect>
-          <x>610</x>
-          <y>20</y>
+          <x>590</x>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -154,7 +154,7 @@ color: rgb(255, 255, 255);</string>
         <property name="geometry">
          <rect>
           <x>850</x>
-          <y>20</y>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -170,8 +170,8 @@ color: rgb(255, 255, 255);</string>
        <widget class="QPushButton" name="pushButton_2">
         <property name="geometry">
          <rect>
-          <x>730</x>
-          <y>20</y>
+          <x>720</x>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -184,13 +184,29 @@ color: rgb(255, 255, 255);</string>
          <string>Agregar</string>
         </property>
        </widget>
+       <widget class="QDateTimeEdit" name="dateTimeEdit_3">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>10</y>
+          <width>194</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="displayFormat">
+         <string>d/M/yyyy h:mm AP</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="page_2">
        <widget class="QPushButton" name="pushButton_3">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>20</y>
+          <y>10</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -203,9 +219,9 @@ color: rgb(255, 255, 255);</string>
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>90</y>
+          <y>129</y>
           <width>941</width>
-          <height>600</height>
+          <height>551</height>
          </rect>
         </property>
         <property name="sizePolicy">
@@ -214,6 +230,9 @@ color: rgb(255, 255, 255);</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
         <column>
          <property name="text">
           <string>Número de Placa</string>
@@ -230,14 +249,402 @@ color: rgb(255, 255, 255);</string>
          </property>
         </column>
        </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>70</y>
+          <width>531</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Vehiculos de </string>
+        </property>
+       </widget>
+       <widget class="QDateTimeEdit" name="dateTimeEdit">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>10</y>
+          <width>194</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="displayFormat">
+         <string>d/M/yyyy h:mm AP</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="geometry">
+         <rect>
+          <x>590</x>
+          <y>70</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 0, 255);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Seleccionar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>70</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 0, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Eliminar</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="geometry">
+         <rect>
+          <x>720</x>
+          <y>70</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Agregar</string>
+        </property>
+       </widget>
       </widget>
-      <widget class="QWidget" name="page_3"/>
+      <widget class="QWidget" name="page_3">
+       <widget class="QDateTimeEdit" name="dateTimeEdit_4">
+        <property name="geometry">
+         <rect>
+          <x>770</x>
+          <y>10</y>
+          <width>194</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="displayFormat">
+         <string>d/M/yyyy h:mm AP</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt; Volver</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="serviciosTable">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>129</y>
+          <width>941</width>
+          <height>551</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>40</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Fecha de Ingreso</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Fecha de Egreso</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Razón</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Kilometraje de Ingreso</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="pushButton_9">
+        <property name="geometry">
+         <rect>
+          <x>850</x>
+          <y>70</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(255, 255, 255);</string>
+        </property>
+        <property name="text">
+         <string>Reportar Falla</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>70</y>
+          <width>531</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Servicios al Vehículo de Placa </string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>Otros</string>
      </attribute>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>10</y>
+        <width>194</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="displayFormat">
+       <string>d/M/yyyy h:mm AP</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_12">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>120</y>
+        <width>181</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>170</red>
+            <green>0</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(170, 0, 255);</string>
+      </property>
+      <property name="text">
+       <string>GENERAR</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>70</y>
+        <width>621</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Presione el botón para generar datos aleatorios</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>290</y>
+        <width>621</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Velocidad de Tiempo</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>360</y>
+        <width>160</width>
+        <height>42</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
