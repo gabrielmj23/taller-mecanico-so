@@ -9,11 +9,11 @@
 #include <QDate>
 #include <QString>
 
+
 #include "centrogarantiavehiculo.h"
 #include "./ui_centrogarantiavehiculo.h"
 #include "Clases.h"
 
-using namespace std;
 
 //variables globales
 
