@@ -17,6 +17,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
@@ -51,8 +52,16 @@ public:
     QDateTimeEdit *dateTimeEdit_4;
     QPushButton *pushButton_8;
     QTableWidget *vehiculosClienteTable_2;
+    QPushButton *pushButton_9;
+    QPushButton *pushButton_10;
+    QPushButton *pushButton_11;
+    QLabel *label_2;
     QWidget *tab_2;
     QDateTimeEdit *dateTimeEdit_2;
+    QPushButton *pushButton_12;
+    QLabel *label_3;
+    QLabel *label_4;
+    QSlider *horizontalSlider;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *CentroGarantiaVehiculo)
@@ -210,6 +219,25 @@ public:
         sizePolicy3.setHeightForWidth(vehiculosClienteTable_2->sizePolicy().hasHeightForWidth());
         vehiculosClienteTable_2->setSizePolicy(sizePolicy3);
         vehiculosClienteTable_2->verticalHeader()->setHighlightSections(false);
+        pushButton_9 = new QPushButton(page_3);
+        pushButton_9->setObjectName("pushButton_9");
+        pushButton_9->setGeometry(QRect(720, 70, 111, 41));
+        pushButton_9->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 170, 0);\n"
+"color: rgb(255, 255, 255);"));
+        pushButton_10 = new QPushButton(page_3);
+        pushButton_10->setObjectName("pushButton_10");
+        pushButton_10->setGeometry(QRect(590, 70, 111, 41));
+        pushButton_10->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 255);\n"
+"color: rgb(255, 255, 255);"));
+        pushButton_11 = new QPushButton(page_3);
+        pushButton_11->setObjectName("pushButton_11");
+        pushButton_11->setGeometry(QRect(850, 70, 111, 41));
+        pushButton_11->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 0);\n"
+"color: rgb(255, 255, 255);"));
+        label_2 = new QLabel(page_3);
+        label_2->setObjectName("label_2");
+        label_2->setGeometry(QRect(20, 70, 531, 41));
+        label_2->setFont(font);
         stackedWidget->addWidget(page_3);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -218,6 +246,42 @@ public:
         dateTimeEdit_2->setObjectName("dateTimeEdit_2");
         dateTimeEdit_2->setGeometry(QRect(770, 10, 194, 41));
         dateTimeEdit_2->setReadOnly(true);
+        pushButton_12 = new QPushButton(tab_2);
+        pushButton_12->setObjectName("pushButton_12");
+        pushButton_12->setGeometry(QRect(370, 120, 181, 111));
+        QPalette palette;
+        QBrush brush(QColor(170, 0, 255, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Button, brush);
+        QBrush brush1(QColor(255, 255, 255, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
+        palette.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Button, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        pushButton_12->setPalette(palette);
+        QFont font1;
+        font1.setBold(true);
+        pushButton_12->setFont(font1);
+        pushButton_12->setStyleSheet(QString::fromUtf8("background-color: rgb(170, 0, 255);"));
+        label_3 = new QLabel(tab_2);
+        label_3->setObjectName("label_3");
+        label_3->setGeometry(QRect(20, 70, 621, 41));
+        label_3->setFont(font);
+        label_4 = new QLabel(tab_2);
+        label_4->setObjectName("label_4");
+        label_4->setGeometry(QRect(10, 290, 621, 41));
+        label_4->setFont(font);
+        horizontalSlider = new QSlider(tab_2);
+        horizontalSlider->setObjectName("horizontalSlider");
+        horizontalSlider->setGeometry(QRect(370, 360, 160, 42));
+        horizontalSlider->setOrientation(Qt::Horizontal);
         tabWidget->addTab(tab_2, QString());
         CentroGarantiaVehiculo->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(CentroGarantiaVehiculo);
@@ -226,7 +290,7 @@ public:
 
         retranslateUi(CentroGarantiaVehiculo);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
         stackedWidget->setCurrentIndex(2);
 
 
@@ -261,7 +325,7 @@ public:
         ___qtablewidgetitem6->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Ubicaci\303\263n", nullptr));
         QTableWidgetItem *___qtablewidgetitem7 = vehiculosClienteTable->horizontalHeaderItem(2);
         ___qtablewidgetitem7->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "N\303\272mero de Servicios", nullptr));
-        label->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Lista de Vehiculos de ", nullptr));
+        label->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Vehiculos de ", nullptr));
         dateTimeEdit->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
         pushButton_4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
         pushButton_6->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
@@ -276,8 +340,15 @@ public:
         ___qtablewidgetitem10->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Raz\303\263n", nullptr));
         QTableWidgetItem *___qtablewidgetitem11 = vehiculosClienteTable_2->horizontalHeaderItem(3);
         ___qtablewidgetitem11->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Kilometraje de Ingreso", nullptr));
+        pushButton_9->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Agregar", nullptr));
+        pushButton_10->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Seleccionar", nullptr));
+        pushButton_11->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Eliminar", nullptr));
+        label_2->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Servicios al Veh\303\255culo de Placa ", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("CentroGarantiaVehiculo", "Manual", nullptr));
         dateTimeEdit_2->setDisplayFormat(QCoreApplication::translate("CentroGarantiaVehiculo", "d/M/yyyy h:mm AP", nullptr));
+        pushButton_12->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "GENERAR", nullptr));
+        label_3->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Presione el bot\303\263n para generar datos aleatorios", nullptr));
+        label_4->setText(QCoreApplication::translate("CentroGarantiaVehiculo", "Velocidad de Tiempo", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("CentroGarantiaVehiculo", "Otros", nullptr));
     } // retranslateUi
 

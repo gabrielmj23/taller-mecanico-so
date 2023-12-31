@@ -376,3 +376,27 @@ void CentroGarantiaVehiculo::on_pushButton_8_clicked()
     ui->stackedWidget->setCurrentWidget(ui->page_2);
 }
 
+
+/*
+ *
+ *************** TAB MENU OTROS***************
+ *
+ */
+
+
+void CentroGarantiaVehiculo::on_pushButton_12_clicked()
+{
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+    if (button)
+    {
+        if (button->text() == "GENERAR")
+        {
+            button->setText("GENERANDO ...");
+        }
+        else if (button->text() == "GENERANDO ...")
+        {
+            button->setText("GENERAR");
+        }
+    }
+}
+
