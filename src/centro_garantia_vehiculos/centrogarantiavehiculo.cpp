@@ -15,6 +15,10 @@
 
 using namespace std;
 
+//variables globales
+
+string cedulaActual = "";
+
 //Ejemplo Servicios
 Servicio servicios[] = {
     {"ABC123", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
@@ -40,6 +44,8 @@ Cliente clientes[] = {
     {"John Doe", "123456789", "01-01-2021", "555-1234"},
     {"Jane Smith", "987654321", "15-02-2021", "555-5678"},
     {"Alice Johnson", "456789123", "10-03-2021", "555-9012"}};
+
+
 
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -233,6 +239,7 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
     // Get the cliente's cedula from the selected row
     QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 1);
     QString cedula = cedulaItem->text();
+    cedulaActual = cedula.toStdString();
     QTableWidgetItem *nombreItem = ui->clienteTableWidget->item(row, 0);
     QString nombre = nombreItem->text();
 
@@ -292,3 +299,74 @@ void CentroGarantiaVehiculo::on_pushButton_3_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page);
 }
+
+void CentroGarantiaVehiculo::on_pushButton_7_clicked()
+{
+
+    QDialog dialog(nullptr);
+    QFormLayout form(&dialog);
+
+    QLineEdit *lineEditPlaca = new QLineEdit(&dialog);
+    form.addRow("Numero de Placa:", lineEditPlaca);
+ 
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+
+    QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QString placa = lineEditPlaca->text();
+
+        if (placa == "")
+        {
+            qDebug() << "Error: No se puede dejar campos vacios";
+            return;
+        }
+        
+        
+        // Create a new Vehiculo object
+        Vehiculo newVehiculo(cedulaActual, placa.toStdString(), false);
+
+
+
+        // Get the current number of rows in the table
+        int numRows = ui->vehiculosClienteTable->rowCount();
+
+        // Insert a new row at the end of the table
+        ui->vehiculosClienteTable->insertRow(numRows);
+
+        // Populate the table with the data from the new Cliente object
+            // Mostrar la información del vehículo en la tabla
+            QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(newVehiculo.getPlaca()));
+            QTableWidgetItem *itemDentroTaller = new QTableWidgetItem(QString::fromStdString(newVehiculo.getUbicacion()));
+            QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(newVehiculo.getNumServicios(servicios, numServicios)));
+
+            ui->vehiculosClienteTable->setItem(numRows, 0, itemPlaca);
+            ui->vehiculosClienteTable->setItem(numRows, 1, itemDentroTaller);
+            ui->vehiculosClienteTable->setItem(numRows, 2, itemNumServicios);
+
+        actItemsTabla(ui->vehiculosClienteTable);
+    }
+}
+
+
+
+void CentroGarantiaVehiculo::on_pushButton_6_clicked()
+{
+    // Get the current row
+    int row = ui->vehiculosClienteTable->currentRow();
+
+    // If there is no row selected, return
+    if (row == -1)
+    {
+        qDebug() << "Error: No se ha seleccionado una fila";
+        return;
+    }
+
+    // Remove the row from the table
+    ui->vehiculosClienteTable->removeRow(row);
+}
+

@@ -132,6 +132,7 @@ string Vehiculo::getUbicacion()
 int Vehiculo::getNumServicios(Servicio* servicios, int tamanio)
 {
 
+
     int c = 0;
 
     for (int i = 0; i < tamanio; i++)
