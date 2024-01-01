@@ -12,8 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,26 +22,37 @@ class Ui_Taller
 {
 public:
     QWidget *centralwidget;
-    QMenuBar *menubar;
+    QTabWidget *tabWidget;
+    QWidget *tab;
+    QWidget *tab_2;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *Taller)
     {
         if (Taller->objectName().isEmpty())
             Taller->setObjectName("Taller");
-        Taller->resize(800, 600);
+        Taller->resize(983, 738);
         centralwidget = new QWidget(Taller);
         centralwidget->setObjectName("centralwidget");
+        tabWidget = new QTabWidget(centralwidget);
+        tabWidget->setObjectName("tabWidget");
+        tabWidget->setGeometry(QRect(0, 0, 983, 738));
+        tabWidget->setTabPosition(QTabWidget::West);
+        tab = new QWidget();
+        tab->setObjectName("tab");
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName("tab_2");
+        tabWidget->addTab(tab_2, QString());
         Taller->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(Taller);
-        menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 26));
-        Taller->setMenuBar(menubar);
         statusbar = new QStatusBar(Taller);
         statusbar->setObjectName("statusbar");
         Taller->setStatusBar(statusbar);
 
         retranslateUi(Taller);
+
+        tabWidget->setCurrentIndex(1);
+
 
         QMetaObject::connectSlotsByName(Taller);
     } // setupUi
@@ -49,6 +60,8 @@ public:
     void retranslateUi(QMainWindow *Taller)
     {
         Taller->setWindowTitle(QCoreApplication::translate("Taller", "Taller", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Taller", "Tab 1", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Taller", "Tab 2", nullptr));
     } // retranslateUi
 
 };
