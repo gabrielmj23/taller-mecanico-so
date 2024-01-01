@@ -37,7 +37,12 @@ public:
         tabWidget = new QTabWidget(centralwidget);
         tabWidget->setObjectName("tabWidget");
         tabWidget->setGeometry(QRect(0, 0, 983, 738));
+        tabWidget->setContextMenuPolicy(Qt::DefaultContextMenu);
+        tabWidget->setLayoutDirection(Qt::LeftToRight);
         tabWidget->setTabPosition(QTabWidget::West);
+        tabWidget->setTabShape(QTabWidget::Rounded);
+        tabWidget->setElideMode(Qt::ElideLeft);
+        tabWidget->setDocumentMode(false);
         tab = new QWidget();
         tab->setObjectName("tab");
         tabWidget->addTab(tab, QString());
@@ -51,7 +56,7 @@ public:
 
         retranslateUi(Taller);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Taller);

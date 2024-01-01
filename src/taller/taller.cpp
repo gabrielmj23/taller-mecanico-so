@@ -8,6 +8,16 @@ Taller::Taller(QWidget *parent)
     ui->setupUi(this);
 }
 
+Ui::Taller* Taller::getUi() const
+{
+    return ui;
+}
+
+
+
+    
+
+
 Taller::~Taller()
 {
     delete ui;

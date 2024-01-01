@@ -1,4 +1,5 @@
 #include "taller.h"
+#include "ui_taller.h" // Include the header file that defines the Ui::Taller class
 
 #include <QApplication>
 #include <QLocale>
@@ -6,6 +7,9 @@
 #include <QFile>
 #include <QScreen>
 #include <QString>
+#include <QLabel>
+#include <QWidget>
+#include <QTabBar>
 
 int main(int argc, char *argv[])
 {
@@ -13,9 +17,11 @@ int main(int argc, char *argv[])
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
+    for (const QString &locale : uiLanguages)
+    {
         const QString baseName = "taller_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
+        if (translator.load(":/i18n/" + baseName))
+        {
             a.installTranslator(&translator);
             break;
         }
@@ -50,6 +56,22 @@ int main(int argc, char *argv[])
         int y = (screenHeight - wHeight) / 2;
         w.setGeometry(x, y, wWidth, wHeight);
     }
+
+    // Access the UI
+    Ui::Taller *ui = w.getUi();
+    // Now you can use the `ui` pointer to interact with the UI elements
+
+    // Set the title text of each tab to be horizontal
+    for (int i = 0; i < ui->tabWidget->count(); i++)
+    {
+        QWidget *tabWidget = ui->tabWidget->widget(i);
+        QLabel *titleLabel = new QLabel(ui->tabWidget->tabText(i));
+        titleLabel->setAlignment(Qt::AlignHCenter);
+        ui->tabWidget->setTabText(i, "");
+        ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
+    }
+    // Show the main window
     w.show();
+
     return a.exec();
 }

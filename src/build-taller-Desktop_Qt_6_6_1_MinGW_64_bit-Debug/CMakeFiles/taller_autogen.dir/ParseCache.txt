@@ -349,5 +349,6 @@ C:/Users/karim/Desktop/taller-mecanico-so/src/taller/taller.h
  mdp:C:/Users/karim/Desktop/taller-mecanico-so/src/build-taller-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/taller_autogen/moc_predefs.h
  mdp:C:/Users/karim/Desktop/taller-mecanico-so/src/taller/taller.h
 C:/Users/karim/Desktop/taller-mecanico-so/src/taller/main.cpp
+ uic:ui_taller.h
 C:/Users/karim/Desktop/taller-mecanico-so/src/taller/taller.cpp
  uic:./ui_taller.h
