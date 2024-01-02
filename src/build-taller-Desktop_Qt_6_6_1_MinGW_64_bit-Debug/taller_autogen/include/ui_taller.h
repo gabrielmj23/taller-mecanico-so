@@ -13,10 +13,12 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDateTimeEdit>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -31,6 +33,8 @@ public:
     QLabel *label_4;
     QLabel *label_5;
     QLabel *label_6;
+    QTableWidget *tablaClienteVehiculo;
+    QLabel *label_8;
     QWidget *tab_2;
     QWidget *tab_3;
     QWidget *tab_4;
@@ -123,6 +127,29 @@ public:
         label_6->setFrameShadow(QFrame::Raised);
         label_6->setAlignment(Qt::AlignCenter);
         label_6->setWordWrap(true);
+        tablaClienteVehiculo = new QTableWidget(tab);
+        if (tablaClienteVehiculo->columnCount() < 4)
+            tablaClienteVehiculo->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tablaClienteVehiculo->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tablaClienteVehiculo->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        tablaClienteVehiculo->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        tablaClienteVehiculo->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        tablaClienteVehiculo->setObjectName("tablaClienteVehiculo");
+        tablaClienteVehiculo->setGeometry(QRect(10, 180, 841, 192));
+        label_8 = new QLabel(tab);
+        label_8->setObjectName("label_8");
+        label_8->setGeometry(QRect(10, 120, 841, 41));
+        QFont font1;
+        font1.setPointSize(18);
+        font1.setBold(true);
+        label_8->setFont(font1);
+        label_8->setStyleSheet(QString::fromUtf8(""));
+        label_8->setLocale(QLocale(QLocale::Spanish, QLocale::Venezuela));
+        label_8->setAlignment(Qt::AlignCenter);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
@@ -164,10 +191,10 @@ public:
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(0, 10, 981, 41));
-        QFont font1;
-        font1.setPointSize(22);
-        font1.setBold(true);
-        label_2->setFont(font1);
+        QFont font2;
+        font2.setPointSize(22);
+        font2.setBold(true);
+        label_2->setFont(font2);
         label_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         label_2->setLocale(QLocale(QLocale::Spanish, QLocale::Venezuela));
         label_2->setAlignment(Qt::AlignCenter);
@@ -178,7 +205,7 @@ public:
 
         retranslateUi(Taller);
 
-        tabWidget->setCurrentIndex(5);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Taller);
@@ -191,6 +218,15 @@ public:
         label_4->setText(QCoreApplication::translate("Taller", "Veh\303\255culos en Cola 2", nullptr));
         label_5->setText(QCoreApplication::translate("Taller", "Veh\303\255culos en una de las Estaciones 5", nullptr));
         label_6->setText(QCoreApplication::translate("Taller", "Servicios Completados 20", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tablaClienteVehiculo->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("Taller", "Tipo", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tablaClienteVehiculo->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("Taller", "Nombre", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = tablaClienteVehiculo->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("Taller", "Hora", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = tablaClienteVehiculo->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("Taller", "Placa", nullptr));
+        label_8->setText(QCoreApplication::translate("Taller", "\303\232ltimas Entradas y Salidas", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Taller", "Inicio", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Taller", "Clientes", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Taller", "Estacionamiento", nullptr));

@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QWidget>
 #include <QTabBar>
+#include <QHeaderView>
 
 int main(int argc, char *argv[])
 {
@@ -92,6 +93,9 @@ int main(int argc, char *argv[])
         qDebug() << "Error: No se encontró el archivo de la imagen";
     }
 
+    //extiende los titulos de la tabla en lo horizontal
+    ui->tablaClienteVehiculo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    
      // Show the main window
     w.show();
 

@@ -48,3 +48,4 @@ void Taller::on_tabWidget_currentChanged(int index)
         break;
     }
 }
+
