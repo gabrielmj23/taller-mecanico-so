@@ -127,7 +127,6 @@ void Taller::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         (void)_t;
         switch (_id) {
         case 0: _t->on_tabWidget_currentChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 1: _t->on_tab_customContextMenuRequested((*reinterpret_cast< std::add_pointer_t<QPoint>>(_a[1]))); break;
         default: ;
         }
     }

@@ -22,7 +22,6 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
-    void on_tab_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::Taller *ui;
