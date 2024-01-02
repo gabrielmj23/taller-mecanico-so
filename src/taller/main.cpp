@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
         ui->tabWidget->setTabText(i, "");
         ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
     }
+
+
     // Show the main window
     w.show();
 
