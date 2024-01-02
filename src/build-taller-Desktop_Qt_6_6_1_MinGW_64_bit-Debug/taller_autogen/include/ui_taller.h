@@ -9,6 +9,7 @@
 #ifndef UI_TALLER_H
 #define UI_TALLER_H
 
+#include <QtCore/QLocale>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDateTimeEdit>
@@ -36,8 +37,8 @@ public:
     QWidget *tab_5;
     QWidget *tab_6;
     QWidget *tab_7;
+    QLabel *label_7;
     QDateTimeEdit *dateTimeEdit;
-    QLabel *label;
     QLabel *label_2;
     QStatusBar *statusbar;
 
@@ -75,6 +76,7 @@ public:
         label_3->setFrameShape(QFrame::Box);
         label_3->setFrameShadow(QFrame::Raised);
         label_3->setAlignment(Qt::AlignCenter);
+        label_3->setWordWrap(true);
         label_4 = new QLabel(tab);
         label_4->setObjectName("label_4");
         label_4->setGeometry(QRect(230, 10, 181, 81));
@@ -90,6 +92,7 @@ public:
         label_4->setFrameShape(QFrame::Box);
         label_4->setFrameShadow(QFrame::Raised);
         label_4->setAlignment(Qt::AlignCenter);
+        label_4->setWordWrap(true);
         label_5 = new QLabel(tab);
         label_5->setObjectName("label_5");
         label_5->setGeometry(QRect(450, 10, 181, 81));
@@ -104,6 +107,7 @@ public:
         label_5->setFrameShape(QFrame::Box);
         label_5->setFrameShadow(QFrame::Raised);
         label_5->setAlignment(Qt::AlignCenter);
+        label_5->setWordWrap(true);
         label_6 = new QLabel(tab);
         label_6->setObjectName("label_6");
         label_6->setGeometry(QRect(670, 10, 181, 81));
@@ -118,6 +122,7 @@ public:
         label_6->setFrameShape(QFrame::Box);
         label_6->setFrameShadow(QFrame::Raised);
         label_6->setAlignment(Qt::AlignCenter);
+        label_6->setWordWrap(true);
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName("tab_2");
@@ -137,16 +142,35 @@ public:
         tab_7 = new QWidget();
         tab_7->setObjectName("tab_7");
         tabWidget->addTab(tab_7, QString());
+        label_7 = new QLabel(centralwidget);
+        label_7->setObjectName("label_7");
+        label_7->setGeometry(QRect(0, 0, 983, 57));
+        label_7->setFont(font);
+        label_7->setLayoutDirection(Qt::LeftToRight);
+        label_7->setAutoFillBackground(false);
+        label_7->setStyleSheet(QString::fromUtf8("background-color: rgb(214, 27, 34);\n"
+"\n"
+"border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"\n"
+""));
+        label_7->setFrameShape(QFrame::Box);
+        label_7->setFrameShadow(QFrame::Raised);
+        label_7->setAlignment(Qt::AlignCenter);
+        label_7->setWordWrap(true);
         dateTimeEdit = new QDateTimeEdit(centralwidget);
         dateTimeEdit->setObjectName("dateTimeEdit");
         dateTimeEdit->setGeometry(QRect(780, 10, 194, 41));
         dateTimeEdit->setReadOnly(true);
-        label = new QLabel(centralwidget);
-        label->setObjectName("label");
-        label->setGeometry(QRect(10, 20, 63, 20));
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(330, 20, 161, 20));
+        label_2->setGeometry(QRect(0, 10, 981, 41));
+        QFont font1;
+        font1.setPointSize(22);
+        font1.setBold(true);
+        label_2->setFont(font1);
+        label_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        label_2->setLocale(QLocale(QLocale::Spanish, QLocale::Venezuela));
+        label_2->setAlignment(Qt::AlignCenter);
         Taller->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(Taller);
         statusbar->setObjectName("statusbar");
@@ -154,7 +178,7 @@ public:
 
         retranslateUi(Taller);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(5);
 
 
         QMetaObject::connectSlotsByName(Taller);
@@ -165,17 +189,17 @@ public:
         Taller->setWindowTitle(QCoreApplication::translate("Taller", "Taller", nullptr));
         label_3->setText(QCoreApplication::translate("Taller", "Clientes 5", nullptr));
         label_4->setText(QCoreApplication::translate("Taller", "Veh\303\255culos en Cola 2", nullptr));
-        label_5->setText(QCoreApplication::translate("Taller", "Veh\303\255culos en Mantenimiento 5", nullptr));
+        label_5->setText(QCoreApplication::translate("Taller", "Veh\303\255culos en una de las Estaciones 5", nullptr));
         label_6->setText(QCoreApplication::translate("Taller", "Servicios Completados 20", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("Taller", "Inicio", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Taller", "Clientes", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Taller", "Estacionamiento", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("Taller", "Diagn\303\263stico", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("Taller", "Repuestos", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_6), QCoreApplication::translate("Taller", "Compra de Repuestos", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("Taller", "Piezas", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_6), QCoreApplication::translate("Taller", "Compra de Piezas", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_7), QCoreApplication::translate("Taller", "Estaciones", nullptr));
-        label->setText(QCoreApplication::translate("Taller", "Logo", nullptr));
-        label_2->setText(QCoreApplication::translate("Taller", "Titulo Tab", nullptr));
+        label_7->setText(QString());
+        label_2->setText(QCoreApplication::translate("Taller", "Inicio", nullptr));
     } // retranslateUi
 
 };

@@ -18,6 +18,10 @@ public:
     ~Taller();
     Ui::Taller* getUi() const;
 
+private slots:
+
+    void on_tabWidget_currentChanged(int index);
+
 private:
     Ui::Taller *ui;
 };
