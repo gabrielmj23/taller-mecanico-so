@@ -16,6 +16,7 @@ class Taller : public QMainWindow
 public:
     Taller(QWidget *parent = nullptr);
     ~Taller();
+    Ui::Taller* getUi() const;
 
 private:
     Ui::Taller *ui;
