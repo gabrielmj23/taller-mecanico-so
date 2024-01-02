@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-84cfa9c437a25217828d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "taller",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "taller::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-taller-Debug-2524ab051658b3eab24b.json",
+					"name" : "taller",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "taller_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-taller_autogen-Debug-231d261a0a24b3719246.json",
+					"name" : "taller_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "taller_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-taller_autogen_timestamp_deps-Debug-9e76ca37021d99974b60.json",
+					"name" : "taller_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/karim/Desktop/taller-mecanico-so/src/build-taller-Desktop_Qt_6_6_1_MinGW_64_bit-Debug",
+		"source" : "C:/Users/karim/Desktop/taller-mecanico-so/src/taller"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

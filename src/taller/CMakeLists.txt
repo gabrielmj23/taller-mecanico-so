@@ -19,6 +19,9 @@ set(PROJECT_SOURCES
         taller.cpp
         taller.h
         taller.ui
+        clases.h
+        clases.cpp
+        
         ${TS_FILES}
 )
 

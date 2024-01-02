@@ -83,7 +83,7 @@ public:
         label_3->setWordWrap(true);
         label_4 = new QLabel(tab);
         label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(230, 10, 181, 81));
+        label_4->setGeometry(QRect(240, 10, 181, 81));
         label_4->setFont(font);
         label_4->setLayoutDirection(Qt::LeftToRight);
         label_4->setAutoFillBackground(false);
@@ -99,7 +99,7 @@ public:
         label_4->setWordWrap(true);
         label_5 = new QLabel(tab);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(450, 10, 181, 81));
+        label_5->setGeometry(QRect(460, 10, 181, 81));
         label_5->setFont(font);
         label_5->setLayoutDirection(Qt::LeftToRight);
         label_5->setAutoFillBackground(false);
@@ -114,7 +114,7 @@ public:
         label_5->setWordWrap(true);
         label_6 = new QLabel(tab);
         label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(670, 10, 181, 81));
+        label_6->setGeometry(QRect(690, 10, 181, 81));
         label_6->setFont(font);
         label_6->setLayoutDirection(Qt::LeftToRight);
         label_6->setAutoFillBackground(false);
@@ -139,7 +139,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tablaClienteVehiculo->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         tablaClienteVehiculo->setObjectName("tablaClienteVehiculo");
-        tablaClienteVehiculo->setGeometry(QRect(10, 180, 841, 192));
+        tablaClienteVehiculo->setGeometry(QRect(10, 180, 861, 192));
         label_8 = new QLabel(tab);
         label_8->setObjectName("label_8");
         label_8->setGeometry(QRect(10, 120, 841, 41));
