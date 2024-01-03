@@ -131,6 +131,7 @@ private:
 	int serviciosTerminados;
 	map<string, map<string, vector<Pieza>>> vehiculoEstacionesPiezas;
 	map<string, map<string, int>> vehiculoEstacionVisitas;
+	map<string, int> estacionVisitas;
 
 	/**
 	 * Devuelve las estaciones de trabajo por las que tiene que pasar el vehículo las piezas a reemplazar
@@ -140,12 +141,15 @@ private:
 		map<string, vector<Pieza>> piezasPorEstacion;
 		for (SistemaVehiculo &sistema : *(v.getSistemas()))
 		{
-			vehiculoEstacionVisitas[v.getPlaca()][sistema.getNombre()]++;
+
 			for (Pieza &pieza : sistema.getPiezas())
 			{
 				if (pieza.getEstado() == FALLA)
 				{
 					piezasPorEstacion[sistema.getNombre()].push_back(pieza); // Deja las referencias de las piezas a reemplazar
+					// Sumar visita y añadir estacion visitada si hay pieza dañada
+					vehiculoEstacionVisitas[v.getPlaca()][sistema.getNombre()]++;
+					estacionVisitas[sistema.getNombre()]++;
 				}
 			}
 		}
@@ -224,6 +228,20 @@ public:
 			}
 		}
 	}
+	void porcentajeUsoEstaciones()
+	{
+		int totalVisitas = 0;
+		for (auto estacion : estacionVisitas)
+		{
+			totalVisitas += estacion.second;
+		}
+
+		for (auto estacion : estacionVisitas)
+		{
+			cout << "Estacion de " << estacion.first << " visitada: " << estacion.second << " veces" << endl;
+			cout << "  Porcentaje: " << (estacion.second * 100) / totalVisitas << "%" << endl;
+		}
+	}
 };
 
 void *recibirVehiculo(void *arg)
@@ -258,7 +276,7 @@ int main()
 	int i = 0;
 	while (true)
 	{
-		cout << "1. Crear 1 vehiculo\n2. Salir\n3. Imprimir vehiculos\n";
+		cout << "1. Crear 1 vehiculo\n2. Salir\n3. Imprimir vehiculos\n4. Porcentaje de uso de estaciones\n";
 		int opcion;
 		cin >> opcion;
 
@@ -276,6 +294,11 @@ int main()
 			taller.printVehiculoEstacionesPiezas();
 			continue;
 		}
+		if (opcion == 4)
+		{
+			taller.porcentajeUsoEstaciones();
+			continue;
+		}
 		++i;
 		string cedula = "cedula" + to_string(i);
 		string nombre = "nombre" + to_string(i);
@@ -286,7 +309,5 @@ int main()
 			vehiculos.push(v);
 		}
 	}
-	pthread_join(hilo1, NULL);
-	pthread_join(hilo2, NULL);
 	return 0;
 }
