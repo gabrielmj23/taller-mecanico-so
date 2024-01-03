@@ -36,7 +36,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -227,7 +227,7 @@ border-radius:10px;
         <x>10</x>
         <y>180</y>
         <width>861</width>
-        <height>192</height>
+        <height>471</height>
        </rect>
       </property>
       <column>
@@ -294,7 +294,7 @@ border-radius:10px;
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QLineEdit" name="lineEdit">

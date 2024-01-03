@@ -168,7 +168,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tablaClienteVehiculo->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         tablaClienteVehiculo->setObjectName("tablaClienteVehiculo");
-        tablaClienteVehiculo->setGeometry(QRect(10, 180, 861, 192));
+        tablaClienteVehiculo->setGeometry(QRect(10, 180, 861, 471));
         label_8 = new QLabel(tab);
         label_8->setObjectName("label_8");
         label_8->setGeometry(QRect(10, 120, 841, 41));
@@ -478,8 +478,8 @@ public:
 
         retranslateUi(Taller);
 
-        tabWidget->setCurrentIndex(3);
-        stackedWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Taller);
