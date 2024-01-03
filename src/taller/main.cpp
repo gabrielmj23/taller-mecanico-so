@@ -6,52 +6,9 @@
 #include <QTranslator>
 #include <QFile>
 #include <QScreen>
-#include <QString>
+#include <QDebug>
 #include <QLabel>
-#include <QWidget>
-#include <QTabBar>
-#include <QHeaderView>
-#include <vector>
-#include <QTableWidgetItem>
-
-#include "clases.h"
-
-//variables globales
-
-std::vector<ClienteVehiculo> clientesVehiculo = {
-    {"Entrada", "Karim Sahili","09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili","10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili","12:00", "KHH323"},
-    {"Salida", "Ali Sahili","16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili","09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili","10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili","12:00", "KHH323"},
-    {"Salida", "Ali Sahili","16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili","09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili","10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili","12:00", "KHH323"},
-    {"Salida", "Ali Sahili","16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili","09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili","10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili","12:00", "KHH323"}
-};
-
-
-// actualiza las propiedades de los items de la tabla (centrar y no editable)
-void actItemsTabla(QTableWidget *tableWidget)
-{
-    // Los items no son editables y están centrados
-    for (int i = 0; i < tableWidget->rowCount(); i++)
-    {
-        for (int j = 0; j < tableWidget->columnCount(); j++)
-        {
-            QTableWidgetItem *item = tableWidget->item(i, j);
-            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
-            item->setTextAlignment(Qt::AlignCenter);
-        }
-    }
-}
-
+#include <QPixmap>
 
 
 int main(int argc, char *argv[])
@@ -100,26 +57,6 @@ int main(int argc, char *argv[])
         w.setGeometry(x, y, wWidth, wHeight);
     }
 
-    
-
-    // Access the UI
-    Ui::Taller *ui = w.getUi();
-    // Now you can use the `ui` pointer to interact with the UI elements
-
-    // Set the title text of each tab to be horizontal
-    for (int i = 0; i < ui->tabWidget->count(); i++)
-    {
-        QWidget *tabWidget = ui->tabWidget->widget(i);
-        QLabel *titleLabel = new QLabel(ui->tabWidget->tabText(i));
-        titleLabel->setAlignment(Qt::AlignHCenter);
-        ui->tabWidget->setTabText(i, "");
-        ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
-    }
-
-
-
-   
-
     // Add an image to the centralWidget at position (10, 10)
     imagePath = "../taller/logo41.png";
     if (QFile::exists(imagePath))
@@ -135,29 +72,8 @@ int main(int argc, char *argv[])
         qDebug() << "Error: No se encontró el archivo de la imagen";
     }
 
-    //extiende los titulos de la tabla en lo horizontal
-    ui->tablaClienteVehiculo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-        
-
-    // agrega ejemplos a la tablaClienteVehiculo
-    for (int i = 0; i < clientesVehiculo.size(); i++)
-    {
-        ClienteVehiculo clienteVehiculo = clientesVehiculo[i];
-        ui->tablaClienteVehiculo->insertRow(ui->tablaClienteVehiculo->rowCount());
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 0, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.tipo)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 1, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.nombre)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 2, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.hora)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 3, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.placa)));
-    }
-
-    actItemsTabla(ui->tablaClienteVehiculo);
-
-    // Quita la enumeracion de las filas
-    ui->tablaClienteVehiculo->verticalHeader()->setVisible(false);
-
     // Show the main window
     w.show();
 
     return a.exec();
-    }
+}
