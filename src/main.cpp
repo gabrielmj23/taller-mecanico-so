@@ -130,6 +130,7 @@ private:
 	vector<Vehiculo> estacionamiento;
 	int serviciosTerminados;
 	map<string, map<string, vector<Pieza>>> vehiculoEstacionesPiezas;
+	map<string, map<string, int>> vehiculoEstacionVisitas;
 
 	/**
 	 * Devuelve las estaciones de trabajo por las que tiene que pasar el vehículo las piezas a reemplazar
@@ -139,6 +140,7 @@ private:
 		map<string, vector<Pieza>> piezasPorEstacion;
 		for (SistemaVehiculo &sistema : *(v.getSistemas()))
 		{
+			vehiculoEstacionVisitas[v.getPlaca()][sistema.getNombre()]++;
 			for (Pieza &pieza : sistema.getPiezas())
 			{
 				if (pieza.getEstado() == FALLA)
@@ -214,7 +216,7 @@ public:
 			for (auto &estacionPair : vehiculo.second)
 			{
 				auto estacion = estacionPair.first;
-				cout << "  Estacion: " << estacion << endl;
+				cout << "  Estacion: " << estacion << " visitada: " << vehiculoEstacionVisitas[placa][estacion] << " veces" << endl;
 				for (auto pieza : estacionPair.second)
 				{
 					cout << "    Pieza: " << pieza.getNombre() << endl;
