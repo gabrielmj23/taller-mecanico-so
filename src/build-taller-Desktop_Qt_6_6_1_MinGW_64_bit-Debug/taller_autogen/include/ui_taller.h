@@ -17,6 +17,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
@@ -56,6 +57,7 @@ public:
     QWidget *tab_3;
     QTableWidget *tablaVehiculosCola;
     QWidget *tab_4;
+    QProgressBar *progressBar;
     QWidget *tab_5;
     QTableWidget *tablaRepuestos;
     QWidget *tab_7;
@@ -298,6 +300,10 @@ public:
         tabWidget->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName("tab_4");
+        progressBar = new QProgressBar(tab_4);
+        progressBar->setObjectName("progressBar");
+        progressBar->setGeometry(QRect(10, 230, 379, 51));
+        progressBar->setValue(24);
         tabWidget->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName("tab_5");
@@ -369,7 +375,7 @@ public:
 
         retranslateUi(Taller);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
         stackedWidget->setCurrentIndex(1);
 
 

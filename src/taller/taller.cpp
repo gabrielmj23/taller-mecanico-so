@@ -112,7 +112,7 @@ void imagenCorolla(Ui::Taller *ui)
         QLabel *imageLabel = new QLabel(ui->tabWidget->widget(3));
         QPixmap image(imagePath);
         imageLabel->setPixmap(image);
-        imageLabel->setGeometry(100, 100, image.width(), image.height());
+        imageLabel->setGeometry(10, 20, image.width(), image.height());
         imageLabel->show();
     }
     else
