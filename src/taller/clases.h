@@ -72,4 +72,30 @@ public:
     int getNumVehiculos(vector<Vehiculo> vehiculos);
 };
 
+class VehiculoCola {
+    public:
+    int nroPuesto;
+    string placa;
+    string hora;
+    VehiculoCola(int nroPuesto, string placa, string hora);
+};
+
+class Repuesto
+{
+    public:
+        string descripcion;
+        int existencia;
+        string estado;
+        Repuesto(string descripcion, int existencia, string estado);
+};
+
+class Estacion {
+    public:
+        string nombre;
+        string placaCarro;
+        string tiempoAcu;
+        Estacion(string nombre, string placaCarro, string tiempoAcu);
+};
+
+
 #endif // CLASES_H
