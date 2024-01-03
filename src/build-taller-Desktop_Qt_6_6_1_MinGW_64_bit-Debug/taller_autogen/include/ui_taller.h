@@ -16,6 +16,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
@@ -58,6 +59,13 @@ public:
     QTableWidget *tablaVehiculosCola;
     QWidget *tab_4;
     QProgressBar *progressBar;
+    QListWidget *listWidget;
+    QLabel *label_10;
+    QLabel *label_11;
+    QLabel *label_12;
+    QLabel *label_13;
+    QListWidget *listWidget_2;
+    QLabel *label_14;
     QWidget *tab_5;
     QTableWidget *tablaRepuestos;
     QWidget *tab_7;
@@ -302,8 +310,103 @@ public:
         tab_4->setObjectName("tab_4");
         progressBar = new QProgressBar(tab_4);
         progressBar->setObjectName("progressBar");
-        progressBar->setGeometry(QRect(10, 230, 379, 51));
+        progressBar->setGeometry(QRect(10, 300, 379, 51));
         progressBar->setValue(24);
+        listWidget = new QListWidget(tab_4);
+        new QListWidgetItem(listWidget);
+        new QListWidgetItem(listWidget);
+        new QListWidgetItem(listWidget);
+        listWidget->setObjectName("listWidget");
+        listWidget->setGeometry(QRect(550, 150, 256, 201));
+        QFont font3;
+        font3.setPointSize(12);
+        font3.setBold(true);
+        listWidget->setFont(font3);
+        listWidget->setStyleSheet(QString::fromUtf8("background-color: rgb(211, 214, 228);\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 10px;"));
+        listWidget->setFrameShadow(QFrame::Raised);
+        listWidget->setSelectionMode(QAbstractItemView::NoSelection);
+        label_10 = new QLabel(tab_4);
+        label_10->setObjectName("label_10");
+        label_10->setGeometry(QRect(0, 0, 801, 41));
+        QFont font4;
+        font4.setPointSize(20);
+        font4.setBold(true);
+        label_10->setFont(font4);
+        label_10->setStyleSheet(QString::fromUtf8(""));
+        label_10->setLocale(QLocale(QLocale::Spanish, QLocale::Venezuela));
+        label_10->setAlignment(Qt::AlignCenter);
+        label_11 = new QLabel(tab_4);
+        label_11->setObjectName("label_11");
+        label_11->setGeometry(QRect(0, 40, 751, 41));
+        label_11->setFont(font3);
+        label_11->setStyleSheet(QString::fromUtf8(""));
+        label_11->setLocale(QLocale(QLocale::Spanish, QLocale::Venezuela));
+        label_11->setAlignment(Qt::AlignCenter);
+        label_12 = new QLabel(tab_4);
+        label_12->setObjectName("label_12");
+        label_12->setGeometry(QRect(550, 90, 261, 51));
+        QFont font5;
+        font5.setPointSize(14);
+        font5.setWeight(QFont::Black);
+        label_12->setFont(font5);
+        label_12->setLayoutDirection(Qt::LeftToRight);
+        label_12->setAutoFillBackground(false);
+        label_12->setStyleSheet(QString::fromUtf8("background-color: rgb(211, 214, 228);\n"
+"color: rgb(255, 255, 255);\n"
+"border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"border-radius:10px;\n"
+""));
+        label_12->setFrameShape(QFrame::Box);
+        label_12->setFrameShadow(QFrame::Raised);
+        label_12->setAlignment(Qt::AlignCenter);
+        label_12->setWordWrap(true);
+        label_13 = new QLabel(tab_4);
+        label_13->setObjectName("label_13");
+        label_13->setGeometry(QRect(550, 370, 261, 51));
+        label_13->setFont(font5);
+        label_13->setLayoutDirection(Qt::LeftToRight);
+        label_13->setAutoFillBackground(false);
+        label_13->setStyleSheet(QString::fromUtf8("background-color: rgb(211, 214, 228);\n"
+"color: rgb(255, 255, 255);\n"
+"border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"border-radius:10px;\n"
+""));
+        label_13->setFrameShape(QFrame::Box);
+        label_13->setFrameShadow(QFrame::Raised);
+        label_13->setAlignment(Qt::AlignCenter);
+        label_13->setWordWrap(true);
+        listWidget_2 = new QListWidget(tab_4);
+        new QListWidgetItem(listWidget_2);
+        new QListWidgetItem(listWidget_2);
+        new QListWidgetItem(listWidget_2);
+        listWidget_2->setObjectName("listWidget_2");
+        listWidget_2->setGeometry(QRect(550, 430, 256, 201));
+        listWidget_2->setFont(font3);
+        listWidget_2->setStyleSheet(QString::fromUtf8("background-color: rgb(211, 214, 228);\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius: 10px;"));
+        listWidget_2->setFrameShadow(QFrame::Raised);
+        listWidget_2->setSelectionMode(QAbstractItemView::NoSelection);
+        label_14 = new QLabel(tab_4);
+        label_14->setObjectName("label_14");
+        label_14->setGeometry(QRect(20, 380, 331, 71));
+        QFont font6;
+        font6.setPointSize(12);
+        font6.setWeight(QFont::Black);
+        label_14->setFont(font6);
+        label_14->setLayoutDirection(Qt::LeftToRight);
+        label_14->setAutoFillBackground(false);
+        label_14->setStyleSheet(QString::fromUtf8("background-color: rgb(210, 60, 28);\n"
+"color: rgb(255, 255, 255);\n"
+"border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"border-radius:10px;\n"
+""));
+        label_14->setFrameShape(QFrame::Box);
+        label_14->setFrameShadow(QFrame::Raised);
+        label_14->setAlignment(Qt::AlignCenter);
+        label_14->setWordWrap(true);
         tabWidget->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName("tab_5");
@@ -361,10 +464,10 @@ public:
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(0, 10, 981, 41));
-        QFont font3;
-        font3.setPointSize(22);
-        font3.setBold(true);
-        label_2->setFont(font3);
+        QFont font7;
+        font7.setPointSize(22);
+        font7.setBold(true);
+        label_2->setFont(font7);
         label_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         label_2->setLocale(QLocale(QLocale::Spanish, QLocale::Venezuela));
         label_2->setAlignment(Qt::AlignCenter);
@@ -441,6 +544,33 @@ public:
         QTableWidgetItem *___qtablewidgetitem18 = tablaVehiculosCola->horizontalHeaderItem(2);
         ___qtablewidgetitem18->setText(QCoreApplication::translate("Taller", "Tiempo en Espera", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Taller", "Estacionamiento", nullptr));
+
+        const bool __sortingEnabled = listWidget->isSortingEnabled();
+        listWidget->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem = listWidget->item(0);
+        ___qlistwidgetitem->setText(QCoreApplication::translate("Taller", "Aceite", nullptr));
+        QListWidgetItem *___qlistwidgetitem1 = listWidget->item(1);
+        ___qlistwidgetitem1->setText(QCoreApplication::translate("Taller", "Caja Hidr\303\241ulica", nullptr));
+        QListWidgetItem *___qlistwidgetitem2 = listWidget->item(2);
+        ___qlistwidgetitem2->setText(QCoreApplication::translate("Taller", "Juego de Llaves", nullptr));
+        listWidget->setSortingEnabled(__sortingEnabled);
+
+        label_10->setText(QCoreApplication::translate("Taller", "Diagnosticando ...", nullptr));
+        label_11->setText(QCoreApplication::translate("Taller", "Nro. de Placa : JKL34I2", nullptr));
+        label_12->setText(QCoreApplication::translate("Taller", "Repuestos", nullptr));
+        label_13->setText(QCoreApplication::translate("Taller", "Ruta de Estaciones", nullptr));
+
+        const bool __sortingEnabled1 = listWidget_2->isSortingEnabled();
+        listWidget_2->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem3 = listWidget_2->item(0);
+        ___qlistwidgetitem3->setText(QCoreApplication::translate("Taller", "Sistema Motor", nullptr));
+        QListWidgetItem *___qlistwidgetitem4 = listWidget_2->item(1);
+        ___qlistwidgetitem4->setText(QCoreApplication::translate("Taller", "Sistema de Transmisi\303\263n", nullptr));
+        QListWidgetItem *___qlistwidgetitem5 = listWidget_2->item(2);
+        ___qlistwidgetitem5->setText(QCoreApplication::translate("Taller", "Sistema de Lubricaci\303\263n", nullptr));
+        listWidget_2->setSortingEnabled(__sortingEnabled1);
+
+        label_14->setText(QCoreApplication::translate("Taller", "Problema: Motor no Prende", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("Taller", "Diagn\303\263stico", nullptr));
         QTableWidgetItem *___qtablewidgetitem19 = tablaRepuestos->horizontalHeaderItem(0);
         ___qtablewidgetitem19->setText(QCoreApplication::translate("Taller", "Descripci\303\263n", nullptr));
