@@ -129,6 +129,7 @@ private:
 	vector<EstacionTrabajo> estaciones;
 	vector<Vehiculo> estacionamiento;
 	int serviciosTerminados;
+	map<string, map<string, vector<Pieza>>> vehiculoEstacionesPiezas;
 
 	/**
 	 * Devuelve las estaciones de trabajo por las que tiene que pasar el vehículo las piezas a reemplazar
@@ -146,6 +147,7 @@ private:
 				}
 			}
 		}
+		vehiculoEstacionesPiezas[v.getPlaca()] = piezasPorEstacion;
 		return piezasPorEstacion;
 	}
 
@@ -203,6 +205,23 @@ public:
 		}
 		cout << "Vehículo liberado\n========\n";
 	}
+	void printVehiculoEstacionesPiezas()
+	{
+		for (auto vehiculo : vehiculoEstacionesPiezas)
+		{
+			auto placa = vehiculo.first;
+			cout << "Vehiculo: " << placa << endl;
+			for (auto &estacionPair : vehiculo.second)
+			{
+				auto estacion = estacionPair.first;
+				cout << "  Estacion: " << estacion << endl;
+				for (auto pieza : estacionPair.second)
+				{
+					cout << "    Pieza: " << pieza.getNombre() << endl;
+				}
+			}
+		}
+	}
 };
 
 void *recibirVehiculo(void *arg)
@@ -234,27 +253,38 @@ int main()
 	pthread_create(&hilo2, NULL, recibirVehiculo, (void *)&taller);
 
 	cout << "Taller iniciado:\n";
+	int i = 0;
 	while (true)
 	{
-		cout << "1. Crear 100 vehiculos\n2. Salir\n";
+		cout << "1. Crear 1 vehiculo\n2. Salir\n3. Imprimir vehiculos\n";
 		int opcion;
 		cin >> opcion;
+
+		if (cin.fail())
+		{
+			cin.clear();												   // clear the error flags
+			cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // ignore the rest of the line
+			cout << "Invalid input. Please enter a number.\n";
+			continue;
+		}
 		if (opcion == 2)
 			break;
-		for (int i = 0; i < 100; ++i)
+		if (opcion == 3)
 		{
-			string cedula = "cedula" + to_string(i);
-			string nombre = "nombre" + to_string(i);
-			string placa = "placa" + to_string(i);
-			Vehiculo v = crearCorolla(cedula, nombre, placa);
-			{
-				lock_guard<mutex> lock(mtx);
-				vehiculos.push(v);
-			}
+			taller.printVehiculoEstacionesPiezas();
+			continue;
 		}
-		pthread_join(hilo1, NULL);
-		pthread_join(hilo2, NULL);
-
-		return 0;
+		++i;
+		string cedula = "cedula" + to_string(i);
+		string nombre = "nombre" + to_string(i);
+		string placa = "placa" + to_string(i);
+		Vehiculo v = crearCorolla(cedula, nombre, placa);
+		{
+			lock_guard<mutex> lock(mtx);
+			vehiculos.push(v);
+		}
 	}
+	pthread_join(hilo1, NULL);
+	pthread_join(hilo2, NULL);
+	return 0;
 }
