@@ -6,10 +6,10 @@
 #include <QTranslator>
 #include <QFile>
 #include <QScreen>
-#include <QString>
+#include <QDebug>
 #include <QLabel>
-#include <QWidget>
-#include <QTabBar>
+#include <QPixmap>
+
 
 int main(int argc, char *argv[])
 {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     Taller w;
 
     // Colocar el logo de la aplicación
-    QString imagePath = "../centro_garantia_vehiculos/logo500.png";
+    QString imagePath = "../taller/logo500.png";
     if (!QFile::exists(imagePath))
     {
         qDebug() << "Error: No se encontró el archivo del icono";
@@ -57,20 +57,20 @@ int main(int argc, char *argv[])
         w.setGeometry(x, y, wWidth, wHeight);
     }
 
-    // Access the UI
-    Ui::Taller *ui = w.getUi();
-    // Now you can use the `ui` pointer to interact with the UI elements
-
-    // Set the title text of each tab to be horizontal
-    for (int i = 0; i < ui->tabWidget->count(); i++)
+    // Add an image to the centralWidget at position (10, 10)
+    imagePath = "../taller/logo41.png";
+    if (QFile::exists(imagePath))
     {
-        QWidget *tabWidget = ui->tabWidget->widget(i);
-        QLabel *titleLabel = new QLabel(ui->tabWidget->tabText(i));
-        titleLabel->setAlignment(Qt::AlignHCenter);
-        ui->tabWidget->setTabText(i, "");
-        ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
+        QLabel *imageLabel = new QLabel(&w);
+        QPixmap image(imagePath);
+        imageLabel->setPixmap(image);
+        imageLabel->setGeometry(10, 10, image.width(), image.height());
+        imageLabel->show();
     }
-
+    else
+    {
+        qDebug() << "Error: No se encontró el archivo de la imagen";
+    }
 
     // Show the main window
     w.show();

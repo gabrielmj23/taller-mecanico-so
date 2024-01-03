@@ -46,11 +46,6 @@ vector<Cliente> clientes = {
 };
 
 
-
-
-
-
-
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
 {

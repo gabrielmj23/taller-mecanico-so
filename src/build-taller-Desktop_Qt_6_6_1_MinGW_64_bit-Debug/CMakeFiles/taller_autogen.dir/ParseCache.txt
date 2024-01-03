@@ -352,3 +352,5 @@ C:/Users/karim/Desktop/taller-mecanico-so/src/taller/main.cpp
  uic:ui_taller.h
 C:/Users/karim/Desktop/taller-mecanico-so/src/taller/taller.cpp
  uic:./ui_taller.h
+C:/Users/karim/Desktop/taller-mecanico-so/src/taller/clases.h
+C:/Users/karim/Desktop/taller-mecanico-so/src/taller/clases.cpp

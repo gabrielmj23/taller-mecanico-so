@@ -19,6 +19,9 @@ set(PROJECT_SOURCES
         taller.cpp
         taller.h
         taller.ui
+        clases.h
+        clases.cpp
+
         ${TS_FILES}
 )
 
@@ -44,6 +47,7 @@ else()
         add_executable(taller
             ${PROJECT_SOURCES}
         )
+
     endif()
 
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
