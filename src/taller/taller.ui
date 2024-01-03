@@ -36,7 +36,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -557,6 +557,40 @@ color: rgb(255, 255, 255);</string>
      <attribute name="title">
       <string>Estacionamiento</string>
      </attribute>
+     <widget class="QTableWidget" name="tablaVehiculosCola">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>851</width>
+        <height>621</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>40</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Número de Puesto</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Número de Placa</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tiempo en Espera</string>
+       </property>
+      </column>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -565,18 +599,81 @@ color: rgb(255, 255, 255);</string>
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>Piezas</string>
+      <string>Repuestos</string>
      </attribute>
-    </widget>
-    <widget class="QWidget" name="tab_6">
-     <attribute name="title">
-      <string>Compra de Piezas</string>
-     </attribute>
+     <widget class="QTableWidget" name="tablaRepuestos">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>851</width>
+        <height>621</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>40</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Descripción</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Existencia</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Estado</string>
+       </property>
+      </column>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_7">
      <attribute name="title">
       <string>Estaciones</string>
      </attribute>
+     <widget class="QTableWidget" name="tablaEstaciones">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>851</width>
+        <height>621</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>40</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <attribute name="verticalHeaderHighlightSections">
+       <bool>false</bool>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>Nombre</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Número de Placa</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Tiempo Acumulado</string>
+       </property>
+      </column>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="label_7">

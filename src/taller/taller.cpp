@@ -10,8 +10,11 @@
 #include <QTabBar>
 #include <QHeaderView>
 #include <QTableWidgetItem>
+#include <QFile>
 
 #include "clases.h"
+
+// variables globales
 
 // Ejemplo de Vehiculos
 
@@ -22,8 +25,17 @@ std::vector<Vehiculo> vehiculosVector = {
     {"456789124", "GHI788", true},
     {"456789123", "GHI777", false}};
 
-// variables globales
+std::vector<VehiculoCola> vehiculosCola = {
+    {1, "ABC123", "09:00"},
+    {2, "DEF456", "10:00"},
+    {3, "GHI789", "11:00"},
+    {4, "GHI788", "12:00"},
+    {5, "GHI777", "13:00"},
+    {6, "GHI776", "14:00"},
+    {7, "GHI775", "15:00"},
+};
 
+//Ejemplo para tabla de Ultimas Entradas y Salidas
 std::vector<ClienteVehiculo> clientesVehiculo = {
     {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
     {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
@@ -55,6 +67,27 @@ vector<Cliente> clientes = {
     {"Jane Smith", "987654321", "15-02-2021", "555-5678"},
     {"Alice Johnson", "456789123", "10-03-2021", "555-9012"}};
 
+// Arreglo repuestos ejemplo
+vector<Repuesto> repuestos = {
+    {"Filtro de aceite", 10, "Disponible"},
+    {"Filtro de aire", 0, "No disponible"},
+    {"Filtro de gasolina", 0, "Comprando"},
+    {"Bujia", 20, "Disponible"}
+};
+
+// Arreglo estaciones ejemplo
+vector<Estacion> estaciones = {
+    {"Sistema Motor", "ABC123", "42:23"},
+    {"Sistema de Lubricación", "DEF456", "02:00"},
+    {"Sistema de Frenos", "GHI789", "01:00"},
+    {"Sistema de Dirección", "Vacío", "00:00"},
+    {"Sistema Eléctrico", "Vacío", "00:00"},
+    {"Sistema de Transmisión", "GHI776", "00:30"},
+    {"Sistema de Suspensión", "Vacío", "00:00"},
+    {"Sistema de Refrigeración de Cabina", "GHI775", "00:01"},
+    {"Sistema Intercambiador de Calor", "Vacío", "00:00"}
+};
+
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
 {
@@ -69,6 +102,57 @@ void actItemsTabla(QTableWidget *tableWidget)
         }
     }
 }
+
+void imagenCorolla(Ui::Taller *ui)
+{
+    // Add an image to the centralWidget at position (10, 10)
+    QString imagePath = "../taller/corolla.png";
+    if (QFile::exists(imagePath))
+    {
+        QLabel *imageLabel = new QLabel(ui->tabWidget->widget(3));
+        QPixmap image(imagePath);
+        imageLabel->setPixmap(image);
+        imageLabel->setGeometry(100, 100, image.width(), image.height());
+        imageLabel->show();
+    }
+    else
+    {
+        qDebug() << "Error: No se encontró el archivo de la imagen";
+    }
+}
+
+// manejador de titulo dependiendo del tab seleccionado
+void tabManager(int index, Ui::Taller *ui){
+        switch (index)
+    {
+    case 0:
+        ui->label_2->setText("Inicio");
+        break;
+    case 1:
+        ui->label_2->setText("Clientes");
+        break;
+    case 2:
+        ui->label_2->setText("Estacionamiento");
+        break;
+    case 3:
+    {
+        ui->label_2->setText("Centro de Diagnóstico");
+
+        imagenCorolla(ui);
+    }
+    break;
+    case 4:
+        ui->label_2->setText("Repuestos");
+        break;
+    case 5:
+        ui->label_2->setText("Estaciones del Sistema");
+        break;
+    default:
+        ui->label_2->setText("Tab no reconocido");
+        break;
+    }
+}
+
 
 Taller::Taller(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::Taller)
@@ -90,6 +174,9 @@ Taller::Taller(QWidget *parent)
     ui->tablaClientes->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaVehiculos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaServicios->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaVehiculosCola->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaRepuestos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaEstaciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // agrega ejemplos a la tablaClienteVehiculo
     for (int i = 0; i < clientesVehiculo.size(); i++)
@@ -109,6 +196,10 @@ Taller::Taller(QWidget *parent)
     ui->tablaClientes->verticalHeader()->setVisible(false);
     ui->tablaVehiculos->verticalHeader()->setVisible(false);
     ui->tablaServicios->verticalHeader()->setVisible(false);
+    ui->tablaVehiculosCola->verticalHeader()->setVisible(false);
+    ui->tablaRepuestos->verticalHeader()->setVisible(false);
+    ui->tablaEstaciones->verticalHeader()->setVisible(false);
+
 
     // Agregar clientes a la tabla
     for (int i = 0; i < 3; i++)
@@ -122,6 +213,42 @@ Taller::Taller(QWidget *parent)
     }
 
     actItemsTabla(ui->tablaClientes);
+
+    // para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
+    tabManager(ui->tabWidget->currentIndex(), ui);
+
+    // Agregar vehiculos en cola a la tabla
+    for (int i = 0; i < vehiculosCola.size(); i++)
+    {
+        ui->tablaVehiculosCola->insertRow(i);
+        ui->tablaVehiculosCola->setItem(i, 0, new QTableWidgetItem(QString::number(vehiculosCola[i].nroPuesto)));
+        ui->tablaVehiculosCola->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(vehiculosCola[i].placa)));
+        ui->tablaVehiculosCola->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(vehiculosCola[i].hora)));
+    }
+
+    actItemsTabla(ui->tablaVehiculosCola);
+
+    // Agregar repuestos a la tabla
+    for (int i = 0; i < repuestos.size(); i++)
+    {
+        ui->tablaRepuestos->insertRow(i);
+        ui->tablaRepuestos->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(repuestos[i].descripcion)));
+        ui->tablaRepuestos->setItem(i, 1, new QTableWidgetItem(QString::number(repuestos[i].existencia)));
+        ui->tablaRepuestos->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(repuestos[i].estado)));
+    }
+
+    actItemsTabla(ui->tablaRepuestos);
+
+    // Agregar estaciones a la tabla
+    for (int i = 0; i < estaciones.size(); i++)
+    {
+        ui->tablaEstaciones->insertRow(i);
+        ui->tablaEstaciones->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(estaciones[i].nombre)));
+        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].placaCarro)));
+        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(estaciones[i].tiempoAcu)));
+    }
+
+    actItemsTabla(ui->tablaEstaciones);
 }
 
 Ui::Taller *Taller::getUi() const
@@ -137,33 +264,7 @@ Taller::~Taller()
 // manejador de titulo dependiendo del tab seleccionado
 void Taller::on_tabWidget_currentChanged(int index)
 {
-    switch (index)
-    {
-    case 0:
-        ui->label_2->setText("Inicio");
-        break;
-    case 1:
-        ui->label_2->setText("Clientes");
-        break;
-    case 2:
-        ui->label_2->setText("Estacionamiento");
-        break;
-    case 3:
-        ui->label_2->setText("Centro de Diagnóstico");
-        break;
-    case 4:
-        ui->label_2->setText("Piezas");
-        break;
-    case 5:
-        ui->label_2->setText("Compra de Piezas");
-        break;
-    case 6:
-        ui->label_2->setText("Estaciones del Sistema");
-        break;
-    default:
-        ui->label_2->setText("Tab no reconocido");
-        break;
-    }
+    tabManager(index, ui);
 }
 
 void Taller::on_lineEdit_textChanged(const QString &arg1)

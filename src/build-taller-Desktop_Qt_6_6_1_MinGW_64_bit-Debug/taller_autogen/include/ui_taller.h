@@ -54,10 +54,12 @@ public:
     QPushButton *pushButton_8;
     QLabel *label_9;
     QWidget *tab_3;
+    QTableWidget *tablaVehiculosCola;
     QWidget *tab_4;
     QWidget *tab_5;
-    QWidget *tab_6;
+    QTableWidget *tablaRepuestos;
     QWidget *tab_7;
+    QTableWidget *tablaEstaciones;
     QLabel *label_7;
     QDateTimeEdit *dateTimeEdit;
     QLabel *label_2;
@@ -279,18 +281,57 @@ public:
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName("tab_3");
+        tablaVehiculosCola = new QTableWidget(tab_3);
+        if (tablaVehiculosCola->columnCount() < 3)
+            tablaVehiculosCola->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
+        tablaVehiculosCola->setHorizontalHeaderItem(0, __qtablewidgetitem16);
+        QTableWidgetItem *__qtablewidgetitem17 = new QTableWidgetItem();
+        tablaVehiculosCola->setHorizontalHeaderItem(1, __qtablewidgetitem17);
+        QTableWidgetItem *__qtablewidgetitem18 = new QTableWidgetItem();
+        tablaVehiculosCola->setHorizontalHeaderItem(2, __qtablewidgetitem18);
+        tablaVehiculosCola->setObjectName("tablaVehiculosCola");
+        tablaVehiculosCola->setGeometry(QRect(20, 30, 851, 621));
+        sizePolicy1.setHeightForWidth(tablaVehiculosCola->sizePolicy().hasHeightForWidth());
+        tablaVehiculosCola->setSizePolicy(sizePolicy1);
+        tablaVehiculosCola->verticalHeader()->setHighlightSections(false);
         tabWidget->addTab(tab_3, QString());
         tab_4 = new QWidget();
         tab_4->setObjectName("tab_4");
         tabWidget->addTab(tab_4, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName("tab_5");
+        tablaRepuestos = new QTableWidget(tab_5);
+        if (tablaRepuestos->columnCount() < 3)
+            tablaRepuestos->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
+        tablaRepuestos->setHorizontalHeaderItem(0, __qtablewidgetitem19);
+        QTableWidgetItem *__qtablewidgetitem20 = new QTableWidgetItem();
+        tablaRepuestos->setHorizontalHeaderItem(1, __qtablewidgetitem20);
+        QTableWidgetItem *__qtablewidgetitem21 = new QTableWidgetItem();
+        tablaRepuestos->setHorizontalHeaderItem(2, __qtablewidgetitem21);
+        tablaRepuestos->setObjectName("tablaRepuestos");
+        tablaRepuestos->setGeometry(QRect(20, 30, 851, 621));
+        sizePolicy1.setHeightForWidth(tablaRepuestos->sizePolicy().hasHeightForWidth());
+        tablaRepuestos->setSizePolicy(sizePolicy1);
+        tablaRepuestos->verticalHeader()->setHighlightSections(false);
         tabWidget->addTab(tab_5, QString());
-        tab_6 = new QWidget();
-        tab_6->setObjectName("tab_6");
-        tabWidget->addTab(tab_6, QString());
         tab_7 = new QWidget();
         tab_7->setObjectName("tab_7");
+        tablaEstaciones = new QTableWidget(tab_7);
+        if (tablaEstaciones->columnCount() < 3)
+            tablaEstaciones->setColumnCount(3);
+        QTableWidgetItem *__qtablewidgetitem22 = new QTableWidgetItem();
+        tablaEstaciones->setHorizontalHeaderItem(0, __qtablewidgetitem22);
+        QTableWidgetItem *__qtablewidgetitem23 = new QTableWidgetItem();
+        tablaEstaciones->setHorizontalHeaderItem(1, __qtablewidgetitem23);
+        QTableWidgetItem *__qtablewidgetitem24 = new QTableWidgetItem();
+        tablaEstaciones->setHorizontalHeaderItem(2, __qtablewidgetitem24);
+        tablaEstaciones->setObjectName("tablaEstaciones");
+        tablaEstaciones->setGeometry(QRect(20, 30, 851, 621));
+        sizePolicy1.setHeightForWidth(tablaEstaciones->sizePolicy().hasHeightForWidth());
+        tablaEstaciones->setSizePolicy(sizePolicy1);
+        tablaEstaciones->verticalHeader()->setHighlightSections(false);
         tabWidget->addTab(tab_7, QString());
         label_7 = new QLabel(centralwidget);
         label_7->setObjectName("label_7");
@@ -328,7 +369,7 @@ public:
 
         retranslateUi(Taller);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         stackedWidget->setCurrentIndex(1);
 
 
@@ -387,10 +428,27 @@ public:
         pushButton_8->setText(QCoreApplication::translate("Taller", "< Volver", nullptr));
         label_9->setText(QCoreApplication::translate("Taller", "Servicios al Veh\303\255culo de Placa ", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("Taller", "Clientes", nullptr));
+        QTableWidgetItem *___qtablewidgetitem16 = tablaVehiculosCola->horizontalHeaderItem(0);
+        ___qtablewidgetitem16->setText(QCoreApplication::translate("Taller", "N\303\272mero de Puesto", nullptr));
+        QTableWidgetItem *___qtablewidgetitem17 = tablaVehiculosCola->horizontalHeaderItem(1);
+        ___qtablewidgetitem17->setText(QCoreApplication::translate("Taller", "N\303\272mero de Placa", nullptr));
+        QTableWidgetItem *___qtablewidgetitem18 = tablaVehiculosCola->horizontalHeaderItem(2);
+        ___qtablewidgetitem18->setText(QCoreApplication::translate("Taller", "Tiempo en Espera", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("Taller", "Estacionamiento", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QCoreApplication::translate("Taller", "Diagn\303\263stico", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("Taller", "Piezas", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_6), QCoreApplication::translate("Taller", "Compra de Piezas", nullptr));
+        QTableWidgetItem *___qtablewidgetitem19 = tablaRepuestos->horizontalHeaderItem(0);
+        ___qtablewidgetitem19->setText(QCoreApplication::translate("Taller", "Descripci\303\263n", nullptr));
+        QTableWidgetItem *___qtablewidgetitem20 = tablaRepuestos->horizontalHeaderItem(1);
+        ___qtablewidgetitem20->setText(QCoreApplication::translate("Taller", "Existencia", nullptr));
+        QTableWidgetItem *___qtablewidgetitem21 = tablaRepuestos->horizontalHeaderItem(2);
+        ___qtablewidgetitem21->setText(QCoreApplication::translate("Taller", "Estado", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("Taller", "Repuestos", nullptr));
+        QTableWidgetItem *___qtablewidgetitem22 = tablaEstaciones->horizontalHeaderItem(0);
+        ___qtablewidgetitem22->setText(QCoreApplication::translate("Taller", "Nombre", nullptr));
+        QTableWidgetItem *___qtablewidgetitem23 = tablaEstaciones->horizontalHeaderItem(1);
+        ___qtablewidgetitem23->setText(QCoreApplication::translate("Taller", "N\303\272mero de Placa", nullptr));
+        QTableWidgetItem *___qtablewidgetitem24 = tablaEstaciones->horizontalHeaderItem(2);
+        ___qtablewidgetitem24->setText(QCoreApplication::translate("Taller", "Tiempo Acumulado", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_7), QCoreApplication::translate("Taller", "Estaciones", nullptr));
         label_7->setText(QString());
         label_2->setText(QCoreApplication::translate("Taller", "Inicio", nullptr));
