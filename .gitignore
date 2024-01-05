@@ -31,4 +31,9 @@
 *.out
 *.app
 
+# Archivos de prueba
+*.py
+*.bash
+
+# Archivos compilados
 build*/
