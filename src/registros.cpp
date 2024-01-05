@@ -20,7 +20,7 @@ private:
 public:
     void agregarServicio(const string &fecha, const string &servicio);
     const vector<RegistroServicio> &obtenerRegistrosServicios() const;
-    void setPlaca(const string &newval);
+    void setPlaca(const string &nuevoValor);
     const string &getPlaca() const;
     void guardarServiciosEnArchivo() const;
     void cargarServiciosDesdeArchivo();
