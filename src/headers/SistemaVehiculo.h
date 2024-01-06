@@ -15,4 +15,6 @@ class SistemaVehiculo {
         vector<Pieza> getPiezas();
         void *iniciarSistema();
         void reemplazarPieza(Pieza p);
+        string serialize();
+        static SistemaVehiculo deserialize(const string &s);
 };

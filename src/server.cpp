@@ -85,7 +85,7 @@ int main()
 void *manejar_conexion(void *p_client_socket)
 {
     int client_socket = *((int *)p_client_socket);
-    free(p_client_socket);
+    free(p_client_socket); // Liberar memoria
     char buf[BUFSIZE];
     size_t bytes;
     int msg_size = 0;
@@ -94,7 +94,7 @@ void *manejar_conexion(void *p_client_socket)
     while ((bytes = read(client_socket, buf + msg_size, sizeof(buf) - msg_size - 1)) > 0)
     {
         msg_size += bytes;
-        if (msg_size > BUFSIZE - 1 || buf[msg_size - 1] == '\n')
+        if (msg_size > BUFSIZE - 1 || buf[msg_size - 1] == '/')
             break;
     }
     if (bytes == SOCKETERR)
@@ -102,7 +102,7 @@ void *manejar_conexion(void *p_client_socket)
         cout << "Error leyendo mensaje\n";
         exit(1);
     }
-    buf[msg_size - 1] = 0;
+    buf[msg_size - 1] = 0; // Caracter de terminación de string
     cout << "PETICIÓN: " << buf << endl;
     write(client_socket, "Hola mundo\n", 12);
     close(client_socket);
