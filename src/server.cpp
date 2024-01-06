@@ -6,20 +6,37 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <limits.h>
+#include <pthread.h>
+#include <queue>
 using namespace std;
 
 #define PORT 6060
 #define BUFSIZE 4096
 #define SOCKETERR (-1)
-#define SERVER_BACKLOG 1
+#define SERVER_BACKLOG 50
+#define THREAD_POOL_SIZE 10
 
+// Para la thread pool
+pthread_t thread_pool[THREAD_POOL_SIZE];
+queue<int *> client_queue;
+pthread_mutex_t queue_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t queue_cond = PTHREAD_COND_INITIALIZER;
+
+// Para el servidor
 typedef struct sockaddr_in SA_IN;
 typedef struct sockaddr SA;
 
-void manejar_conexion(int client_socket);
+// Prototipos de funciones relevantes
+void *manejar_conexion(void *p_client_socket);
+void *init_hilo_server(void *arg);
 
 int main()
 {
+    // Inicializar thread pool
+    for (int i = 0; i < THREAD_POOL_SIZE; i++)
+    {
+        pthread_create(&thread_pool[i], NULL, init_hilo_server, NULL);
+    }
     int server_socket, client_socket, addr_size;
     SA_IN server_addr, client_addr;
     // Crear socket TCP
@@ -54,13 +71,21 @@ int main()
             exit(1);
         }
         cout << "Conexión aceptada\n";
-        manejar_conexion(client_socket);
+        // Guardar información de la conexión
+        int *pclient = (int *)malloc(sizeof(int));
+        *pclient = client_socket;
+        pthread_mutex_lock(&queue_mutex);
+        client_queue.push(pclient);
+        pthread_cond_signal(&queue_cond);
+        pthread_mutex_unlock(&queue_mutex);
     }
     return 0;
 }
 
-void manejar_conexion(int client_socket)
+void *manejar_conexion(void *p_client_socket)
 {
+    int client_socket = *((int *)p_client_socket);
+    free(p_client_socket);
     char buf[BUFSIZE];
     size_t bytes;
     int msg_size = 0;
@@ -82,4 +107,26 @@ void manejar_conexion(int client_socket)
     write(client_socket, "Hola mundo\n", 12);
     close(client_socket);
     cout << "Conexión cerrada\n";
+    return NULL;
+}
+
+void *init_hilo_server(void *arg)
+{
+    while (true)
+    {
+        pthread_mutex_lock(&queue_mutex);
+        if (client_queue.empty())
+        {
+            pthread_cond_wait(&queue_cond, &queue_mutex);
+        }
+        if (!client_queue.empty())
+        {
+            // Existe conexión
+            int *pclient = client_queue.front();
+            client_queue.pop();
+            manejar_conexion(pclient);
+        }
+        pthread_mutex_unlock(&queue_mutex);
+    }
+    return NULL;
 }
