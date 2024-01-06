@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Archivos de prueba
+*.py
+*.bash
+test.cpp
+
+# Archivos compilados
+build*/

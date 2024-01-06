@@ -17,4 +17,6 @@ public:
     string getPlaca();
     vector<SistemaVehiculo> *getSistemas();
     void identificar();
+    string serialize();
+    static Vehiculo deserialize(const string &s);
 };
