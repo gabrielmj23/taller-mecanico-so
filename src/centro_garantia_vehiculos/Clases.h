@@ -17,14 +17,12 @@ private:
 
 public:
     Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso);
-    ~Servicio();
     string getPlacaVehiculo();
     string getFechaIni();
     string getFechaFin();
     string getRazon();
     double getKmIngreso();
     int getId();
-    static void decrementarId() { --nextID; }
 };
 
 class Vehiculo

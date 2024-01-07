@@ -72,11 +72,6 @@ int Servicio::nextID = 1;
 
 Servicio::Servicio(string placa, string fechaIni, string fechaFin, string razon, double kmIngreso) 
     : id(nextID++), placaVehiculo(placa), fechaIni(fechaIni), fechaFin(fechaFin), razon(razon), kmIngreso(kmIngreso) {}
-Servicio::~Servicio()
-{
-    decrementarId();
-}
-
 
 int Servicio::getId()
 {
