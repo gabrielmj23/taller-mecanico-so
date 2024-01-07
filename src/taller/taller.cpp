@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <pthread.h>
 #include <QScreen>
 #include <QString>
 #include <QLabel>
@@ -13,19 +14,12 @@
 #include <QFile>
 
 #include "clases.h"
+#include "Cliente.h"
+#include "Vehiculo.h"
+#include "server.h"
+using namespace std;
 
-// variables globales
-
-// Ejemplo de Vehiculos
-
-std::vector<Vehiculo> vehiculosVector = {
-    {"123456789", "ABC123", true},
-    {"987654321", "DEF456", false},
-    {"456789123", "GHI789", true},
-    {"456789124", "GHI788", true},
-    {"456789123", "GHI777", false}};
-
-std::vector<VehiculoCola> vehiculosCola = {
+vector<VehiculoCola> vehiculosCola = {
     {1, "ABC123", "09:00"},
     {2, "DEF456", "10:00"},
     {3, "GHI789", "11:00"},
@@ -35,8 +29,8 @@ std::vector<VehiculoCola> vehiculosCola = {
     {7, "GHI775", "15:00"},
 };
 
-//Ejemplo para tabla de Ultimas Entradas y Salidas
-std::vector<ClienteVehiculo> clientesVehiculo = {
+// Ejemplo para tabla de Ultimas Entradas y Salidas
+vector<ClienteVehiculo> clientesVehiculo = {
     {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
     {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
     {"Entrada", "Samy Sahili", "12:00", "KHH323"},
@@ -54,26 +48,19 @@ std::vector<ClienteVehiculo> clientesVehiculo = {
     {"Entrada", "Samy Sahili", "12:00", "KHH323"}};
 
 // Ejemplo Servicios
-std::vector<Servicio> serviciosVector = {
+vector<Servicio> serviciosVector = {
     {"ABC123", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
     {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
     {"GHI789", "01-01-2021", "02-01-2021", "Cambio de aceite", 30000},
     {"GHI777", "01-06-2021", "02-07-2021", "Cambio de aceite", 2000},
     {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000}};
 
-// Arreglo clientes ejemplo
-vector<Cliente> clientes = {
-    {"John Doe", "123456789", "01-01-2021", "555-1234"},
-    {"Jane Smith", "987654321", "15-02-2021", "555-5678"},
-    {"Alice Johnson", "456789123", "10-03-2021", "555-9012"}};
-
 // Arreglo repuestos ejemplo
 vector<Repuesto> repuestos = {
     {"Filtro de aceite", 10, "Disponible"},
     {"Filtro de aire", 0, "No disponible"},
     {"Filtro de gasolina", 0, "Comprando"},
-    {"Bujia", 20, "Disponible"}
-};
+    {"Bujia", 20, "Disponible"}};
 
 // Arreglo estaciones ejemplo
 vector<Estacion> estaciones = {
@@ -85,8 +72,7 @@ vector<Estacion> estaciones = {
     {"Sistema de Transmisión", "GHI776", "00:30"},
     {"Sistema de Suspensión", "Vacío", "00:00"},
     {"Sistema de Refrigeración de Cabina", "GHI775", "00:01"},
-    {"Sistema Intercambiador de Calor", "Vacío", "00:00"}
-};
+    {"Sistema Intercambiador de Calor", "Vacío", "00:00"}};
 
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -122,8 +108,9 @@ void imagenCorolla(Ui::Taller *ui)
 }
 
 // manejador de titulo dependiendo del tab seleccionado
-void tabManager(int index, Ui::Taller *ui){
-        switch (index)
+void tabManager(int index, Ui::Taller *ui)
+{
+    switch (index)
     {
     case 0:
         ui->label_2->setText("Inicio");
@@ -137,7 +124,6 @@ void tabManager(int index, Ui::Taller *ui){
     case 3:
     {
         ui->label_2->setText("Centro de Diagnóstico");
-
         imagenCorolla(ui);
     }
     break;
@@ -152,7 +138,6 @@ void tabManager(int index, Ui::Taller *ui){
         break;
     }
 }
-
 
 Taller::Taller(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::Taller)
@@ -200,15 +185,16 @@ Taller::Taller(QWidget *parent)
     ui->tablaRepuestos->verticalHeader()->setVisible(false);
     ui->tablaEstaciones->verticalHeader()->setVisible(false);
 
-
     // Agregar clientes a la tabla
-    for (int i = 0; i < 3; i++)
+    vector<Cliente> clientes = Cliente::cargarClientesDesdeArchivo();
+    vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
+    for (int i = 0; i < clientes.size(); i++)
     {
         ui->tablaClientes->insertRow(i);
         ui->tablaClientes->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(clientes[i].getNombre())));
         ui->tablaClientes->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(clientes[i].getCedula())));
         ui->tablaClientes->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(clientes[i].getFechaRegistro())));
-        ui->tablaClientes->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculosVector))));
+        ui->tablaClientes->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculos))));
         ui->tablaClientes->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
     }
 
@@ -249,6 +235,10 @@ Taller::Taller(QWidget *parent)
     }
 
     actItemsTabla(ui->tablaEstaciones);
+
+    // Iniciar servidor
+    pthread_t server_thread;
+    pthread_create(&server_thread, NULL, init_hilo_server, NULL);
 }
 
 Ui::Taller *Taller::getUi() const
@@ -301,13 +291,12 @@ void Taller::on_pushButton_clicked()
     ui->tablaVehiculos->setRowCount(0);
 
     // Iterar en el arreglo de vehículos
-    for (Vehiculo vehiculo : vehiculosVector)
-
+    vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
+    for (Vehiculo vehiculo : vehiculos)
     {
-
         // Obtener la información del vehículo
         string placa = vehiculo.getPlaca();
-        string dentroTaller = vehiculo.getUbicacion();
+        string dentroTaller = vehiculo.getEnTaller() ? "Sí" : "No";
 
         // Agregar una nueva fila a la tabla de vehículos del cliente
         int numRows = ui->tablaVehiculos->rowCount();

@@ -49,7 +49,7 @@ const vector<RegistroServicio> &Vehiculo::obtenerRegistrosServicios() const
     return registrosServicios;
 }
 
-// Dentro de la función guardarServiciosEnArchivo
+
 void Vehiculo::guardarServiciosEnArchivo() const
 {
     string nombreArchivo = placa + "_servicios.bin";

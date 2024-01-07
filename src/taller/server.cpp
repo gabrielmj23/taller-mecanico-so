@@ -1,3 +1,4 @@
+#include "server.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -14,7 +15,7 @@ using namespace std;
 #define BUFSIZE 4096
 #define SOCKETERR (-1)
 #define SERVER_BACKLOG 50
-#define THREAD_POOL_SIZE 10
+#define THREAD_POOL_SIZE 6
 
 // Para la thread pool
 pthread_t thread_pool[THREAD_POOL_SIZE];
@@ -26,11 +27,7 @@ pthread_cond_t queue_cond = PTHREAD_COND_INITIALIZER;
 typedef struct sockaddr_in SA_IN;
 typedef struct sockaddr SA;
 
-// Prototipos de funciones relevantes
-void *manejar_conexion(void *p_client_socket);
-void *init_hilo_server(void *arg);
-
-int main()
+void *init_servidor(void *arg)
 {
     // Inicializar thread pool
     for (int i = 0; i < THREAD_POOL_SIZE; i++)
