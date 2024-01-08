@@ -20,14 +20,14 @@ set(PROJECT_SOURCES
         centrogarantiavehiculo.cpp
         centrogarantiavehiculo.h
         centrogarantiavehiculo.ui
-        Clases.cpp
-        Clases.h
         ../Pieza.h
         ../Pieza.cpp
         ../SistemaVehiculo.h
         ../SistemaVehiculo.cpp
         ../Vehiculo.h
         ../Vehiculo.cpp
+        ../Servicio.h
+        ../Servicio.cpp
         ../Cliente.h
         ../Cliente.cpp
         ${TS_FILES}

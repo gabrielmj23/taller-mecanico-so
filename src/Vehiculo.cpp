@@ -2,7 +2,9 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <vector>
 #include "Vehiculo.h"
+#include "Servicio.h"
 using namespace std;
 
 Vehiculo::Vehiculo(string cedulaCliente, string placa, vector<SistemaVehiculo> sistemas)
@@ -67,7 +69,7 @@ Vehiculo Vehiculo::deserialize(const string &s)
 
 vector<Vehiculo> Vehiculo::cargarVehiculosDesdeArchivo()
 {
-    string nombreArchivo = "vehiculos.bin";
+    string nombreArchivo = "../../vehiculos.bin";
     ifstream archivo(nombreArchivo, ios::binary | ios::in);
     vector<Vehiculo> vehiculos;
     if (archivo.is_open())
@@ -100,7 +102,7 @@ vector<Vehiculo> Vehiculo::cargarVehiculosDesdeArchivo()
     }
     else
     {
-        cout << "No se pudo abrir el archivo para lectura.\n";
+        cout << "No se pudo abrir el archivo para lectura -> VEHÍCULOS.\n";
     }
     return vehiculos;
 }
@@ -129,5 +131,6 @@ void Vehiculo::guardarVehiculoEnArchivo(Vehiculo vehiculo)
 
 int Vehiculo::getNumServicios()
 {
-    return 1;
+    vector<Servicio> serviciosVehiculo = Servicio::cargarServiciosDesdeArchivo(this->placa);
+    return serviciosVehiculo.size();
 }

@@ -12,7 +12,7 @@
 
 #include "centrogarantiavehiculo.h"
 #include "./ui_centrogarantiavehiculo.h"
-#include "Clases.h"
+#include "Servicio.h"
 #include "Cliente.h"
 #include "Vehiculo.h"
 using namespace std;
@@ -21,15 +21,7 @@ using namespace std;
 string cedulaActual = "";
 string placaActual = "";
 
-// Ejemplo Servicios
-vector<Servicio> serviciosVector = {
-    {"ABC123", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
-    {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
-    {"GHI789", "01-01-2021", "02-01-2021", "Cambio de aceite", 30000},
-    {"GHI777", "01-06-2021", "02-07-2021", "Cambio de aceite", 2000},
-    {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000}};
-
-// actualiza las propiedades de los items de la tabla (centrar y no editable)
+// Actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
 {
     // Los items no son editables y están centrados
@@ -44,7 +36,8 @@ void actItemsTabla(QTableWidget *tableWidget)
     }
 }
 
-void actualizarTablaClientes(QTableWidget *tableWidget)
+// Rellena la tabla de clientes basado en los contenidos del archivo de clientes
+void rellenarTablaClientes(QTableWidget *tableWidget)
 {
     // Limpiar la tabla de clientes
     tableWidget->clearContents();
@@ -62,8 +55,43 @@ void actualizarTablaClientes(QTableWidget *tableWidget)
         tableWidget->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculos))));
         tableWidget->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
     }
-
     actItemsTabla(tableWidget);
+}
+
+// Rellena la tabla de vehiculos basado en los contenidos del archivo de vehiculos
+void rellenarTablaVehiculos(QTableWidget *tableWidget)
+{
+    // Limpiar la tabla de vehículos
+    tableWidget->clearContents();
+    tableWidget->setRowCount(0);
+
+    // Agregar vehículos
+    vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
+    for (Vehiculo vehiculo : vehiculos)
+    {
+        // Verificar si el vehículo tiene la misma cédula del cliente
+        if (vehiculo.getCedulaCliente().compare(cedulaActual) == 0)
+        {
+            // Obtener la información del vehículo
+            string placa = vehiculo.getPlaca();
+            string dentroTaller = vehiculo.getEnTaller() ? "Sí" : "No";
+
+            // Agregar una nueva fila a la tabla de vehículos del cliente
+            int numRows = tableWidget->rowCount();
+            tableWidget->insertRow(numRows);
+
+            // Mostrar la información del vehículo en la tabla
+            QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(placa));
+            QTableWidgetItem *itemDentroTaller = new QTableWidgetItem(QString::fromStdString(dentroTaller));
+            QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(vehiculo.getNumServicios()));
+
+            tableWidget->setItem(numRows, 0, itemPlaca);
+            tableWidget->setItem(numRows, 1, itemDentroTaller);
+            tableWidget->setItem(numRows, 2, itemNumServicios);
+        }
+    }
+    actItemsTabla(tableWidget);
+    tableWidget->verticalHeader()->setVisible(false);
 }
 
 CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
@@ -86,7 +114,7 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     ui->clienteTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // Agregar clientes a la tabla
-    actualizarTablaClientes(ui->clienteTableWidget);
+    rellenarTablaClientes(ui->clienteTableWidget);
     actItemsTabla(ui->clienteTableWidget);
 
     /*
@@ -141,7 +169,7 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
         // Create a new Cliente object
         Cliente newCliente(name.toStdString(), cedula.toStdString(), QDate::currentDate().toString("dd-MM-yyyy").toStdString(), numContacto.toStdString());
         Cliente::guardarClienteEnArchivo(newCliente);
-        actualizarTablaClientes(ui->clienteTableWidget);
+        rellenarTablaClientes(ui->clienteTableWidget);
         actItemsTabla(ui->clienteTableWidget);
     }
 }
@@ -302,8 +330,7 @@ void CentroGarantiaVehiculo::on_pushButton_7_clicked()
 
         // Create a new Vehiculo object
         Vehiculo newVehiculo(cedulaActual, placa.toStdString(), {});
-        vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
-        vehiculos.push_back(newVehiculo);
+        Vehiculo::guardarVehiculoEnArchivo(newVehiculo);
 
         // Get the current number of rows in the table
         int numRows = ui->vehiculosClienteTable->rowCount();
@@ -379,34 +406,30 @@ void CentroGarantiaVehiculo::on_pushButton_4_clicked()
     ui->serviciosTable->setRowCount(0);
 
     // Populate the serviciosTable with the items from serviciosVector
+    vector<Servicio> serviciosVector = Servicio::cargarServiciosDesdeArchivo(placaActual);
     for (Servicio servicio : serviciosVector)
     {
+        int numRows = ui->serviciosTable->rowCount();
+        // Insert a new row at the end of the table
+        ui->serviciosTable->insertRow(numRows);
 
-        // Check if the servicio's placa matches the placaActual
-        if (servicio.getPlacaVehiculo().compare(placaActual) == 0)
-        {
-            int numRows = ui->serviciosTable->rowCount();
-            // Insert a new row at the end of the table
-            ui->serviciosTable->insertRow(numRows);
+        // Create new QTableWidgetItem objects for each column
+        QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
+        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
+        QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
+        QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));
 
-            // Create new QTableWidgetItem objects for each column
-            QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
-            itemFechaIngreso->setData(Qt::UserRole, servicio.getId());
-            QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
-            QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
-            QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));
-
-            // Insert the QTableWidgetItem objects into the serviciosTable
-            ui->serviciosTable->setItem(numRows, 0, itemFechaIngreso);
-            ui->serviciosTable->setItem(numRows, 1, itemFechaSalida);
-            ui->serviciosTable->setItem(numRows, 2, itemRazon);
-            ui->serviciosTable->setItem(numRows, 3, itemKilometrajeIngreso);
-        }
+        // Insert the QTableWidgetItem objects into the serviciosTable
+        ui->serviciosTable->setItem(numRows, 0, itemFechaIngreso);
+        ui->serviciosTable->setItem(numRows, 1, itemFechaSalida);
+        ui->serviciosTable->setItem(numRows, 2, itemRazon);
+        ui->serviciosTable->setItem(numRows, 3, itemKilometrajeIngreso);
     }
 
     actItemsTabla(ui->serviciosTable);
-
     ui->serviciosTable->verticalHeader()->setVisible(false);
+    // Actualizar tabla de vehículos para cuando vuelva a revisar
+    rellenarTablaVehiculos(ui->vehiculosClienteTable);
 }
 
 void CentroGarantiaVehiculo::on_pushButton_9_clicked()
@@ -438,8 +461,8 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
         }
 
         // Create a new Servicio object
-        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon.toStdString(), kmIngreso.toDouble());
-        serviciosVector.push_back(servicio);
+        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon.toStdString(), kmIngreso.toInt());
+        Servicio::guardarServicioEnArchivo(servicio);
 
         // Get the current number of rows in the table
         int numRows = ui->serviciosTable->rowCount();
@@ -451,7 +474,6 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
         // Mostrar la información del vehículo en la tabla
         // Create new QTableWidgetItem objects for each column
         QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
-        itemFechaIngreso->setData(Qt::UserRole, servicio.getId());
         QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
         QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
         QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));
