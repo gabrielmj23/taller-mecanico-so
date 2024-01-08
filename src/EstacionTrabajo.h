@@ -8,6 +8,7 @@ class EstacionTrabajo
 {
 private:
     string nombre;
+    string placa;
     pthread_t hilo_estacion;
     bool trabajando;
 

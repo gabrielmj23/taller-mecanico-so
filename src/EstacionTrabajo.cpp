@@ -53,6 +53,7 @@ void EstacionTrabajo::iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas)
     u.vehiculo = &v;
     u.piezas = &piezas;
     pthread_create(&hilo_estacion, nullptr, trabajar, &u);
+    this->placa = v.getPlaca();
     this->trabajando = true;
     pthread_join(hilo_estacion, nullptr);
     this->trabajando = false;

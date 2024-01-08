@@ -62,17 +62,19 @@ vector<Repuesto> repuestos = {
     {"Filtro de gasolina", 0, "Comprando"},
     {"Bujia", 20, "Disponible"}};
 
-// Arreglo estaciones ejemplo
-vector<Estacion> estaciones = {
-    {"Sistema Motor", "ABC123", "42:23"},
-    {"Sistema de Lubricación", "DEF456", "02:00"},
-    {"Sistema de Frenos", "GHI789", "01:00"},
-    {"Sistema de Dirección", "Vacío", "00:00"},
-    {"Sistema Eléctrico", "Vacío", "00:00"},
-    {"Sistema de Transmisión", "GHI776", "00:30"},
-    {"Sistema de Suspensión", "Vacío", "00:00"},
-    {"Sistema de Refrigeración de Cabina", "GHI775", "00:01"},
-    {"Sistema Intercambiador de Calor", "Vacío", "00:00"}};
+// Estaciones de trabajo del taller
+vector<EstacionTrabajo> estaciones = {
+    EstacionTrabajo("Lubricación"),
+    EstacionTrabajo("Motor"),
+    EstacionTrabajo("Transmisión"),
+    EstacionTrabajo("Dirección"),
+    EstacionTrabajo("Combustible"),
+    EstacionTrabajo("Suspensión"),
+    EstacionTrabajo("Frenos"),
+    EstacionTrabajo("Seguridad"),
+    EstacionTrabajo("Electricidad"),
+    EstacionTrabajo("Refrigeración"),
+    EstacionTrabajo("Intercambio de calor")};
 
 // actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -230,8 +232,8 @@ Taller::Taller(QWidget *parent)
     {
         ui->tablaEstaciones->insertRow(i);
         ui->tablaEstaciones->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(estaciones[i].nombre)));
-        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].placaCarro)));
-        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(estaciones[i].tiempoAcu)));
+        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].trabajando ? estaciones[i].placa : "Vacía")));
+        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString("00:00")));
     }
 
     actItemsTabla(ui->tablaEstaciones);

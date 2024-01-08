@@ -26,6 +26,8 @@ set(PROJECT_SOURCES
     server.cpp
     ../Vehiculo.h
     ../Vehiculo.cpp
+    ../EstacionTrabajo.h
+    ../EstacionTrabajo.cpp
     ../Cliente.h
     ../Cliente.cpp
 
