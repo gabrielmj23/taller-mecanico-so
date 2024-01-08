@@ -48,7 +48,7 @@ int Cliente::getNumVehiculos(vector<Vehiculo> &vehiculos)
 
 vector<Cliente> Cliente::cargarClientesDesdeArchivo()
 {
-    string nombreArchivo = "clientes.bin";
+    string nombreArchivo = "../../clientes.bin";
     ifstream archivo(nombreArchivo, ios::binary | ios::in);
     vector<Cliente> clientes;
     if (archivo.is_open())
@@ -102,7 +102,7 @@ vector<Cliente> Cliente::cargarClientesDesdeArchivo()
 
 void Cliente::guardarClienteEnArchivo(Cliente cliente)
 {
-    string nombreArchivo = "clientes.bin";
+    string nombreArchivo = "../../clientes.bin";
     ofstream archivo(nombreArchivo, ios::binary | ios::app);
 
     if (archivo.is_open())
@@ -110,7 +110,7 @@ void Cliente::guardarClienteEnArchivo(Cliente cliente)
         for (const auto &str : {cliente.nombre, cliente.cedula, cliente.fechaRegistro, cliente.numContacto})
         {
             size_t len = str.size();
-            archivo.write(reinterpret_cast<char *>(&len), sizeof(len));
+            archivo.write(reinterpret_cast<char *>(&len), sizeof(size_t));
             archivo.write(str.c_str(), len);
         }
         cout << "Cliente guardado con éxito\n";

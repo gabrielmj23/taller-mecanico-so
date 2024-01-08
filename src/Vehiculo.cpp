@@ -107,7 +107,7 @@ vector<Vehiculo> Vehiculo::cargarVehiculosDesdeArchivo()
 
 void Vehiculo::guardarVehiculoEnArchivo(Vehiculo vehiculo)
 {
-    string nombreArchivo = "vehiculos.bin";
+    string nombreArchivo = "../../vehiculos.bin";
     ofstream archivo(nombreArchivo, ios::binary | ios::app);
 
     if (archivo.is_open())
@@ -125,4 +125,9 @@ void Vehiculo::guardarVehiculoEnArchivo(Vehiculo vehiculo)
     {
         cout << "Error abriendo archivo\n";
     }
+}
+
+int Vehiculo::getNumServicios()
+{
+    return 1;
 }

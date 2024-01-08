@@ -27,5 +27,5 @@ public:
     // Archivos
     static vector<Vehiculo> cargarVehiculosDesdeArchivo();
     static void guardarVehiculoEnArchivo(Vehiculo vehiculo);
-    // int getNumServicios(vector<Servicio> servicios);
+    int getNumServicios();
 };
