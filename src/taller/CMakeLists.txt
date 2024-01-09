@@ -38,6 +38,8 @@ set(PROJECT_SOURCES
     ../Servicio.cpp
     ../Cliente.h
     ../Cliente.cpp
+    ../ClienteVehiculo.h
+    ../ClienteVehiculo.cpp
 
     ${TS_FILES}
 )

@@ -23,6 +23,7 @@
 #include "Inventario.h"
 #include "Cliente.h"
 #include "Servicio.h"
+#include "ClienteVehiculo.h"
 #include "EstacionTrabajo.h"
 #include "Vehiculo.h"
 #include "server.h"
@@ -39,24 +40,6 @@ vector<VehiculoCola> vehiculosCola = {
     {6, "GHI776", "14:00"},
     {7, "GHI775", "15:00"},
 };
-
-// Ejemplo para tabla de Ultimas Entradas y Salidas
-vector<ClienteVehiculo> clientesVehiculo = {
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"},
-    {"Salida", "Ali Sahili", "16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"},
-    {"Salida", "Ali Sahili", "16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"},
-    {"Salida", "Ali Sahili", "16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"}};
 
 // Inventario de repuestos
 Inventario inventario;
@@ -177,6 +160,22 @@ void rellenarTablaRepuestos(Ui::Taller *ui)
     actItemsTabla(ui->tablaRepuestos);
 }
 
+// Rellena la tabla de últimas entradas y salidas
+void rellenarEntradasSalidas(Ui::Taller *ui)
+{
+    vector<ClienteVehiculo> clientesVehiculo = ClienteVehiculo::leerClienteVehiculosDeArchivo();
+    for (int i = 0; i < clientesVehiculo.size(); i++)
+    {
+        ClienteVehiculo clienteVehiculo = clientesVehiculo[i];
+        ui->tablaClienteVehiculo->insertRow(ui->tablaClienteVehiculo->rowCount());
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 0, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getTipo())));
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 1, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getNombre())));
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 2, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getHora())));
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 3, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getPlaca())));
+    }
+    actItemsTabla(ui->tablaClienteVehiculo);
+}
+
 Taller::Taller(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::Taller)
 {
@@ -192,7 +191,7 @@ Taller::Taller(QWidget *parent)
         ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
     }
 
-    // extiende los titulos de la tabla en lo horizontal
+    // Extiende los titulos de la tabla en lo horizontal
     ui->tablaClienteVehiculo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaClientes->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaVehiculos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -201,18 +200,8 @@ Taller::Taller(QWidget *parent)
     ui->tablaRepuestos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaEstaciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    // Agrega ejemplos a la tablaClienteVehiculo
-    for (int i = 0; i < clientesVehiculo.size(); i++)
-    {
-        ClienteVehiculo clienteVehiculo = clientesVehiculo[i];
-        ui->tablaClienteVehiculo->insertRow(ui->tablaClienteVehiculo->rowCount());
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 0, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.tipo)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 1, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.nombre)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 2, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.hora)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 3, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.placa)));
-    }
-
-    actItemsTabla(ui->tablaClienteVehiculo);
+    // Agrega últimas entradas y salidas
+    rellenarEntradasSalidas(ui);
 
     // Quita la enumeracion de las filas
     ui->tablaClienteVehiculo->verticalHeader()->setVisible(false);
@@ -226,7 +215,7 @@ Taller::Taller(QWidget *parent)
     // Agregar clientes a la tabla
     rellenarTablaClientes(ui);
 
-    // para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
+    // Para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
     tabManager(ui->tabWidget->currentIndex(), ui);
 
     // Agregar vehiculos en cola a la tabla
@@ -269,7 +258,7 @@ Taller::~Taller()
     delete ui;
 }
 
-// manejador de titulo dependiendo del tab seleccionado
+// Manejador de titulo dependiendo del tab seleccionado
 void Taller::on_tabWidget_currentChanged(int index)
 {
     tabManager(index, ui);
