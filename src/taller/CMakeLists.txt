@@ -40,6 +40,8 @@ set(PROJECT_SOURCES
     ../Cliente.cpp
     ../ClienteVehiculo.h
     ../ClienteVehiculo.cpp
+    TallerMecanico.h
+    TallerMecanico.cpp
 
     ${TS_FILES}
 )

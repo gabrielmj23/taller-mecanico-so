@@ -26,10 +26,9 @@
 #include "ClienteVehiculo.h"
 #include "EstacionTrabajo.h"
 #include "Vehiculo.h"
+#include "TallerMecanico.h"
 #include "server.h"
 using namespace std;
-
-int serviciosCompletados = 0;
 
 vector<VehiculoCola> vehiculosCola = {
     {1, "ABC123", "09:00"},
@@ -44,19 +43,8 @@ vector<VehiculoCola> vehiculosCola = {
 // Inventario de repuestos
 Inventario inventario;
 
-// Estaciones de trabajo del taller
-vector<EstacionTrabajo> estaciones = {
-    EstacionTrabajo("Lubricación"),
-    EstacionTrabajo("Motor"),
-    EstacionTrabajo("Transmisión"),
-    EstacionTrabajo("Dirección"),
-    EstacionTrabajo("Combustible"),
-    EstacionTrabajo("Suspensión"),
-    EstacionTrabajo("Frenos"),
-    EstacionTrabajo("Seguridad"),
-    EstacionTrabajo("Electricidad"),
-    EstacionTrabajo("Refrigeración"),
-    EstacionTrabajo("Intercambio de calor")};
+// Objeto de taller mecánico
+TallerMecanico tallerMecanico;
 
 // Actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -233,6 +221,7 @@ Taller::Taller(QWidget *parent)
     rellenarTablaRepuestos(ui);
 
     // Agregar estaciones a la tabla
+    vector<EstacionTrabajo> estaciones = tallerMecanico.getEstaciones();
     for (int i = 0; i < estaciones.size(); i++)
     {
         ui->tablaEstaciones->insertRow(i);
