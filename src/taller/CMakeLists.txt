@@ -24,10 +24,16 @@ set(PROJECT_SOURCES
     clases.cpp
     server.h
     server.cpp
+    ../Pieza.h
+    ../Pieza.cpp
+    ../SistemaVehiculo.h
+    ../SistemaVehiculo.cpp
     ../Vehiculo.h
     ../Vehiculo.cpp
     ../EstacionTrabajo.h
     ../EstacionTrabajo.cpp
+    ../Servicio.h
+    ../Servicio.cpp
     ../Cliente.h
     ../Cliente.cpp
 

@@ -15,6 +15,8 @@
 
 #include "clases.h"
 #include "Cliente.h"
+#include "Servicio.h"
+#include "EstacionTrabajo.h"
 #include "Vehiculo.h"
 #include "server.h"
 using namespace std;
@@ -47,14 +49,6 @@ vector<ClienteVehiculo> clientesVehiculo = {
     {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
     {"Entrada", "Samy Sahili", "12:00", "KHH323"}};
 
-// Ejemplo Servicios
-vector<Servicio> serviciosVector = {
-    {"ABC123", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
-    {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000},
-    {"GHI789", "01-01-2021", "02-01-2021", "Cambio de aceite", 30000},
-    {"GHI777", "01-06-2021", "02-07-2021", "Cambio de aceite", 2000},
-    {"GHI777", "01-01-2021", "02-01-2021", "Cambio de aceite", 1000}};
-
 // Arreglo repuestos ejemplo
 vector<Repuesto> repuestos = {
     {"Filtro de aceite", 10, "Disponible"},
@@ -76,7 +70,7 @@ vector<EstacionTrabajo> estaciones = {
     EstacionTrabajo("Refrigeración"),
     EstacionTrabajo("Intercambio de calor")};
 
-// actualiza las propiedades de los items de la tabla (centrar y no editable)
+// Actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
 {
     // Los items no son editables y están centrados
@@ -165,7 +159,7 @@ Taller::Taller(QWidget *parent)
     ui->tablaRepuestos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tablaEstaciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    // agrega ejemplos a la tablaClienteVehiculo
+    // Agrega ejemplos a la tablaClienteVehiculo
     for (int i = 0; i < clientesVehiculo.size(); i++)
     {
         ClienteVehiculo clienteVehiculo = clientesVehiculo[i];
@@ -231,8 +225,8 @@ Taller::Taller(QWidget *parent)
     for (int i = 0; i < estaciones.size(); i++)
     {
         ui->tablaEstaciones->insertRow(i);
-        ui->tablaEstaciones->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(estaciones[i].nombre)));
-        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].trabajando ? estaciones[i].placa : "Vacía")));
+        ui->tablaEstaciones->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(estaciones[i].getNombre())));
+        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].getTrabajando() ? estaciones[i].getPlaca() : "Vacía")));
         ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString("00:00")));
     }
 
@@ -307,7 +301,7 @@ void Taller::on_pushButton_clicked()
         // Mostrar la información del vehículo en la tabla
         QTableWidgetItem *itemPlaca = new QTableWidgetItem(QString::fromStdString(placa));
         QTableWidgetItem *itemDentroTaller = new QTableWidgetItem(QString::fromStdString(dentroTaller));
-        QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(vehiculo.getNumServicios(serviciosVector)));
+        QTableWidgetItem *itemNumServicios = new QTableWidgetItem(QString::number(vehiculo.getNumServicios()));
 
         ui->tablaVehiculos->setItem(numRows, 0, itemPlaca);
         ui->tablaVehiculos->setItem(numRows, 1, itemDentroTaller);
@@ -346,6 +340,7 @@ void Taller::on_pushButton_2_clicked()
     ui->tablaServicios->setRowCount(0);
 
     // Populate the tablaServicios with the items from serviciosVector
+    vector<Servicio> serviciosVector = Servicio::cargarServiciosDesdeArchivo(placa.toStdString());
     for (Servicio servicio : serviciosVector)
     {
 
@@ -355,7 +350,6 @@ void Taller::on_pushButton_2_clicked()
 
         // Create new QTableWidgetItem objects for each column
         QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
-        itemFechaIngreso->setData(Qt::UserRole, servicio.getId());
         QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
         QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
         QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));

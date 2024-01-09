@@ -45,6 +45,16 @@ string EstacionTrabajo::getNombre()
     return this->nombre;
 }
 
+string EstacionTrabajo::getPlaca()
+{
+    return this->placa;
+}
+
+bool EstacionTrabajo::getTrabajando()
+{
+    return this->trabajando;
+}
+
 void EstacionTrabajo::iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas)
 {
     cout << "Iniciando estación de trabajo: Estación " << nombre << '\n';
