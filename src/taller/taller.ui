@@ -48,7 +48,7 @@
      <attribute name="title">
       <string>Inicio</string>
      </attribute>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="label_num_clientes">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -91,7 +91,7 @@ border-radius:10px;
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="label_cola">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -135,7 +135,7 @@ background-color: rgb(2, 210, 26);
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_5">
+     <widget class="QLabel" name="label_estaciones">
       <property name="geometry">
        <rect>
         <x>460</x>
@@ -178,7 +178,7 @@ border-radius:10px;
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="label_completados">
       <property name="geometry">
        <rect>
         <x>690</x>
@@ -294,7 +294,7 @@ border-radius:10px;
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QLineEdit" name="lineEdit">
@@ -1015,6 +1015,16 @@ border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0,
     </property>
     <property name="readOnly">
      <bool>true</bool>
+    </property>
+    <property name="dateTime">
+     <datetime>
+      <hour>0</hour>
+      <minute>0</minute>
+      <second>0</second>
+      <year>2024</year>
+      <month>1</month>
+      <day>1</day>
+     </datetime>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">

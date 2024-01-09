@@ -35,6 +35,8 @@
 *.py
 *.bash
 test.cpp
+fill*
+*.bin
 
 # Archivos compilados
 build*/

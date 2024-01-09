@@ -13,16 +13,31 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
 set(TS_FILES taller_es_VE.ts)
+include_directories(../)
 
 set(PROJECT_SOURCES
-        main.cpp
-        taller.cpp
-        taller.h
-        taller.ui
-        clases.h
-        clases.cpp
+    main.cpp
+    taller.cpp
+    taller.h
+    taller.ui
+    clases.h
+    clases.cpp
+    server.h
+    server.cpp
+    ../Pieza.h
+    ../Pieza.cpp
+    ../SistemaVehiculo.h
+    ../SistemaVehiculo.cpp
+    ../Vehiculo.h
+    ../Vehiculo.cpp
+    ../EstacionTrabajo.h
+    ../EstacionTrabajo.cpp
+    ../Servicio.h
+    ../Servicio.cpp
+    ../Cliente.h
+    ../Cliente.cpp
 
-        ${TS_FILES}
+    ${TS_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

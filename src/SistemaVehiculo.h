@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <Pieza.h>
+#include "Pieza.h"
 
 using namespace std;
 

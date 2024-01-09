@@ -23,6 +23,7 @@ vector<Pieza> SistemaVehiculo::getPiezas()
 void *SistemaVehiculo::iniciarSistema()
 {
     cout << "Iniciando sistema: Sistema de " << nombre << '\n';
+    return nullptr;
 }
 
 void SistemaVehiculo::reemplazarPieza(Pieza p)
