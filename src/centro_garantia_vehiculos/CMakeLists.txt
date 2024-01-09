@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
         centrogarantiavehiculo.ui
         ../Pieza.h
         ../Pieza.cpp
+        ../Inventario.h
+        ../Inventario.cpp
         ../SistemaVehiculo.h
         ../SistemaVehiculo.cpp
         ../Vehiculo.h

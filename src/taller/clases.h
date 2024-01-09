@@ -23,15 +23,6 @@ class VehiculoCola {
     VehiculoCola(int nroPuesto, string placa, string hora);
 };
 
-class Repuesto
-{
-    public:
-        string descripcion;
-        int existencia;
-        string estado;
-        Repuesto(string descripcion, int existencia, string estado);
-};
-
 class Estacion {
     public:
         string nombre;

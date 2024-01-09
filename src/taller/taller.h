@@ -33,6 +33,8 @@ private slots:
 
     void on_pushButton_8_clicked();
 
+    void on_btn_repuestos_clicked();
+
 private:
     Ui::Taller *ui;
 };

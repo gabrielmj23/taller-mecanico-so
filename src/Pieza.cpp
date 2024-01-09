@@ -1,23 +1,17 @@
 #include <string>
 #include <sstream>
-#include <Pieza.h>
+#include "Pieza.h"
 using namespace std;
 
-Pieza::Pieza(string nombre, string descripcion, EstadoPieza estado)
+Pieza::Pieza(string nombre, EstadoPieza estado)
 {
     this->nombre = nombre;
-    this->descripcion = descripcion;
     this->estado = estado;
 }
 
 string Pieza::getNombre()
 {
     return nombre;
-}
-
-string Pieza::getDescripcion()
-{
-    return descripcion;
 }
 
 EstadoPieza Pieza::getEstado()
@@ -28,17 +22,16 @@ EstadoPieza Pieza::getEstado()
 string Pieza::serialize()
 {
     ostringstream oss;
-    oss << nombre << '-' << descripcion << '-' << static_cast<int>(estado);
+    oss << nombre << '-' << static_cast<int>(estado);
     return oss.str();
 }
 
 Pieza Pieza::deserialize(const string &s)
 {
     istringstream iss(s);
-    string nombre, descripcion;
+    string nombre;
     int estado;
     getline(iss, nombre, '-');
-    getline(iss, descripcion, '-');
     iss >> estado;
-    return Pieza(nombre, descripcion, static_cast<EstadoPieza>(estado));
+    return Pieza(nombre, static_cast<EstadoPieza>(estado));
 }

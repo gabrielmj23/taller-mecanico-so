@@ -12,14 +12,15 @@ class Pieza
 {
 private:
     string nombre;
-    string descripcion;
     EstadoPieza estado;
 
 public:
-    Pieza(string nombre, string descripcion, EstadoPieza estado);
+    // Constructor
+    Pieza(string nombre, EstadoPieza estado);
+    // Getters
     string getNombre();
-    string getDescripcion();
     EstadoPieza getEstado();
+    // Envío por red
     string serialize();
     static Pieza deserialize(const string &s);
 };

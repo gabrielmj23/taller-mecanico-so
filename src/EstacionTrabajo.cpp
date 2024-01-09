@@ -26,7 +26,7 @@ void *trabajar(void *unidad)
         {
             for (Pieza &pieza : *piezas)
             {
-                s.reemplazarPieza(Pieza(pieza.getNombre(), pieza.getDescripcion(), FUNCIONA));
+                s.reemplazarPieza(Pieza(pieza.getNombre(), FUNCIONA));
             }
             break;
         }

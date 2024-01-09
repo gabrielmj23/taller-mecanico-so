@@ -2,7 +2,9 @@
 #include "./ui_taller.h"
 
 #include <string>
+#include <map>
 #include <vector>
+#include <iostream>
 #include <pthread.h>
 #include <QScreen>
 #include <QString>
@@ -12,14 +14,21 @@
 #include <QHeaderView>
 #include <QTableWidgetItem>
 #include <QFile>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QLineEdit>
 
 #include "clases.h"
+#include "Inventario.h"
 #include "Cliente.h"
 #include "Servicio.h"
 #include "EstacionTrabajo.h"
 #include "Vehiculo.h"
 #include "server.h"
 using namespace std;
+
+int serviciosCompletados = 0;
 
 vector<VehiculoCola> vehiculosCola = {
     {1, "ABC123", "09:00"},
@@ -49,12 +58,8 @@ vector<ClienteVehiculo> clientesVehiculo = {
     {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
     {"Entrada", "Samy Sahili", "12:00", "KHH323"}};
 
-// Arreglo repuestos ejemplo
-vector<Repuesto> repuestos = {
-    {"Filtro de aceite", 10, "Disponible"},
-    {"Filtro de aire", 0, "No disponible"},
-    {"Filtro de gasolina", 0, "Comprando"},
-    {"Bujia", 20, "Disponible"}};
+// Inventario de repuestos
+Inventario inventario;
 
 // Estaciones de trabajo del taller
 vector<EstacionTrabajo> estaciones = {
@@ -85,6 +90,7 @@ void actItemsTabla(QTableWidget *tableWidget)
     }
 }
 
+// Agrega la imagen del Corolla
 void imagenCorolla(Ui::Taller *ui)
 {
     // Add an image to the centralWidget at position (10, 10)
@@ -103,7 +109,7 @@ void imagenCorolla(Ui::Taller *ui)
     }
 }
 
-// manejador de titulo dependiendo del tab seleccionado
+// Manejador de titulo dependiendo del tab seleccionado
 void tabManager(int index, Ui::Taller *ui)
 {
     switch (index)
@@ -133,6 +139,42 @@ void tabManager(int index, Ui::Taller *ui)
         ui->label_2->setText("Tab no reconocido");
         break;
     }
+}
+
+// Rellena la tabla de clientes
+void rellenarTablaClientes(Ui::Taller *ui)
+{
+    // Agregar clientes a la tabla
+    vector<Cliente> clientes = Cliente::cargarClientesDesdeArchivo();
+    vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
+    for (int i = 0; i < clientes.size(); i++)
+    {
+        ui->tablaClientes->insertRow(i);
+        ui->tablaClientes->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(clientes[i].getNombre())));
+        ui->tablaClientes->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(clientes[i].getCedula())));
+        ui->tablaClientes->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(clientes[i].getFechaRegistro())));
+        ui->tablaClientes->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculos))));
+        ui->tablaClientes->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
+    }
+    ui->label_num_clientes->setText("Clientes: " + QString::number(clientes.size()));
+    actItemsTabla(ui->tablaClientes);
+}
+
+// Rellena la tabla de repuestos
+void rellenarTablaRepuestos(Ui::Taller *ui)
+{
+    // Agregar repuestos a la tabla
+    map<string, int> stock = inventario.getStock();
+    int i = 0;
+    for (auto p : stock)
+    {
+        ui->tablaRepuestos->insertRow(i);
+        ui->tablaRepuestos->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(p.first)));
+        ui->tablaRepuestos->setItem(i, 1, new QTableWidgetItem(QString::number(p.second)));
+        ui->tablaRepuestos->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(p.second == 0 ? "Agotado" : "Disponible")));
+        i++;
+    }
+    actItemsTabla(ui->tablaRepuestos);
 }
 
 Taller::Taller(QWidget *parent)
@@ -182,19 +224,7 @@ Taller::Taller(QWidget *parent)
     ui->tablaEstaciones->verticalHeader()->setVisible(false);
 
     // Agregar clientes a la tabla
-    vector<Cliente> clientes = Cliente::cargarClientesDesdeArchivo();
-    vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
-    for (int i = 0; i < clientes.size(); i++)
-    {
-        ui->tablaClientes->insertRow(i);
-        ui->tablaClientes->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(clientes[i].getNombre())));
-        ui->tablaClientes->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(clientes[i].getCedula())));
-        ui->tablaClientes->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(clientes[i].getFechaRegistro())));
-        ui->tablaClientes->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculos))));
-        ui->tablaClientes->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
-    }
-
-    actItemsTabla(ui->tablaClientes);
+    rellenarTablaClientes(ui);
 
     // para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
     tabManager(ui->tabWidget->currentIndex(), ui);
@@ -211,15 +241,7 @@ Taller::Taller(QWidget *parent)
     actItemsTabla(ui->tablaVehiculosCola);
 
     // Agregar repuestos a la tabla
-    for (int i = 0; i < repuestos.size(); i++)
-    {
-        ui->tablaRepuestos->insertRow(i);
-        ui->tablaRepuestos->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(repuestos[i].descripcion)));
-        ui->tablaRepuestos->setItem(i, 1, new QTableWidgetItem(QString::number(repuestos[i].existencia)));
-        ui->tablaRepuestos->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(repuestos[i].estado)));
-    }
-
-    actItemsTabla(ui->tablaRepuestos);
+    rellenarTablaRepuestos(ui);
 
     // Agregar estaciones a la tabla
     for (int i = 0; i < estaciones.size(); i++)
@@ -367,4 +389,36 @@ void Taller::on_pushButton_2_clicked()
 void Taller::on_pushButton_8_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page_2);
+}
+
+void Taller::on_btn_repuestos_clicked()
+{
+    QDialog dialog(nullptr);
+    QFormLayout form(&dialog);
+
+    QLineEdit *lineEditNombre = new QLineEdit(&dialog);
+    QLineEdit *lineEditCantidad = new QLineEdit(&dialog);
+    form.addRow("Pieza:", lineEditNombre);
+    form.addRow("Cantidad a agregar:", lineEditCantidad);
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+
+    QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QString nombre = lineEditNombre->text();
+        QString cantidad = lineEditCantidad->text();
+        if (nombre == "" || cantidad == "")
+        {
+            qDebug() << "Error: No se puede dejar campos vacios";
+            return;
+        }
+
+        // Agregar pieza
+        inventario.agregarPiezas(Pieza(nombre.toStdString(), FUNCIONA), cantidad.toInt());
+        rellenarTablaRepuestos(ui);
+    }
 }
