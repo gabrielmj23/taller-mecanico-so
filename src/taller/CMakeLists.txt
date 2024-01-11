@@ -22,8 +22,6 @@ set(PROJECT_SOURCES
     taller.ui
     clases.h
     clases.cpp
-    server.h
-    server.cpp
     ../Pieza.h
     ../Pieza.cpp
     ../Inventario.h

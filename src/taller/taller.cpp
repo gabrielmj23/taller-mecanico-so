@@ -2,10 +2,17 @@
 #include "./ui_taller.h"
 
 #include <string>
+#include <sstream>
 #include <map>
 #include <vector>
 #include <iostream>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <limits.h>
 #include <pthread.h>
+#include <queue>
+#include <stdlib.h>
 #include <QScreen>
 #include <QString>
 #include <QLabel>
@@ -27,7 +34,6 @@
 #include "EstacionTrabajo.h"
 #include "Vehiculo.h"
 #include "TallerMecanico.h"
-#include "server.h"
 using namespace std;
 
 vector<VehiculoCola> vehiculosCola = {
@@ -45,6 +51,187 @@ Inventario inventario;
 
 // Objeto de taller mecánico
 TallerMecanico tallerMecanico;
+
+// Objeto de UI
+Ui::Taller **uiTaller;
+
+// Constantes para el servidor
+#define PORT 6060
+#define BUFSIZE 4096
+#define SOCKETERR (-1)
+#define SERVER_BACKLOG 50
+#define THREAD_POOL_SIZE 6
+
+// Para la thread pool
+pthread_t thread_pool[THREAD_POOL_SIZE];
+queue<int *> client_queue;
+pthread_mutex_t queue_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t queue_cond = PTHREAD_COND_INITIALIZER;
+
+// Para el servidor
+typedef struct sockaddr_in SA_IN;
+typedef struct sockaddr SA;
+enum TipoMensaje
+{
+    NUEVO_CLIENTE,
+    VEHICULO_INGRESADO,
+};
+
+// Prototipo de funciones
+void rellenarTablaClientes(Ui::Taller *ui);
+void *init_hilo_server(void *arg);
+void *manejar_conexion(void *p_client_socket);
+
+// Función para inicializar el hilo del servidor
+void *init_servidor(void *arg)
+{
+    // Inicializar thread pool
+    for (int i = 0; i < THREAD_POOL_SIZE; i++)
+    {
+        pthread_create(&thread_pool[i], NULL, init_hilo_server, NULL);
+    }
+    int server_socket, client_socket, addr_size;
+    SA_IN server_addr, client_addr;
+    // Crear socket TCP
+    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) == SOCKETERR)
+    {
+        cout << "Error creando socket\n";
+        exit(1);
+    }
+    // Conectar socket a puerto
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(PORT);
+    if (bind(server_socket, (SA *)&server_addr, sizeof(server_addr)) == SOCKETERR)
+    {
+        cout << "Error conectando socket a puerto\n";
+        exit(1);
+    }
+    // Escuchar
+    if (listen(server_socket, SERVER_BACKLOG) == SOCKETERR)
+    {
+        cout << "Error escuchando\n";
+        exit(1);
+    }
+    while (true)
+    {
+        cout << "Esperando...\n";
+        // Aceptar conexión y trabajar
+        addr_size = sizeof(SA_IN);
+        if ((client_socket = accept(server_socket, (SA *)&client_addr, (socklen_t *)&addr_size)) == SOCKETERR)
+        {
+            cout << "Error aceptando conexión\n";
+            exit(1);
+        }
+        cout << "Conexión aceptada\n";
+        // Guardar información de la conexión
+        int *pclient = (int *)malloc(sizeof(int));
+        *pclient = client_socket;
+        pthread_mutex_lock(&queue_mutex);
+        client_queue.push(pclient);
+        pthread_cond_signal(&queue_cond);
+        pthread_mutex_unlock(&queue_mutex);
+    }
+    return 0;
+}
+
+// Se ejecuta cuando el socket recibe alguna conexión de cliente
+void *manejar_conexion(void *p_client_socket)
+{
+    int client_socket = *((int *)p_client_socket);
+    free(p_client_socket); // Liberar memoria
+    char buf[BUFSIZE];
+    size_t bytes;
+    int msg_size = 0;
+    char act_path[PATH_MAX + 1];
+    // Recibir tipo de mensaje
+    TipoMensaje tipoMsj;
+    if (recv(client_socket, &tipoMsj, sizeof(tipoMsj), 0) <= 0)
+    {
+        cerr << "Error recibiendo tipo de mensaje\n";
+        return NULL;
+    }
+    // Si es nuevo cliente, solo acepta el mensaje y actualiza la tabla de clientes
+    if (tipoMsj == NUEVO_CLIENTE)
+    {
+        cout << "Nuevo cliente\n";
+        string res_cliente = "Cliente aceptado\n";
+        write(client_socket, res_cliente.c_str(), res_cliente.length());
+        close(client_socket);
+        rellenarTablaClientes(*uiTaller);
+        return NULL;
+    }
+    // Recibir datos serializados
+    char buffer[BUFSIZE];
+    int bytes_received = recv(client_socket, buffer, sizeof(buffer), 0);
+    if (bytes_received > 0)
+    {
+        string serialized(buffer, bytes_received);
+        switch (tipoMsj)
+        {
+        case VEHICULO_INGRESADO:
+        {
+            istringstream iss(serialized);
+            string cedulaCliente, placa, razon, kmIngresado;
+            getline(iss, cedulaCliente, '-');
+            getline(iss, placa, '-');
+            getline(iss, razon, '-');
+            getline(iss, kmIngresado, '\n');
+            Vehiculo vehic(cedulaCliente, placa);
+            tallerMecanico.recibirVehiculo(vehic, razon);
+            string res_vehiculo = "Vehículo recibido\n";
+            write(client_socket, res_vehiculo.c_str(), res_vehiculo.length());
+            close(client_socket);
+            return NULL;
+        }
+        break;
+        default:
+            cerr << "Tipo de mensaje desconocido\n";
+            return NULL;
+        }
+    }
+    /*
+    while ((bytes = read(client_socket, buf + msg_size, sizeof(buf) - msg_size - 1)) > 0)
+    {
+        msg_size += bytes;
+        if (msg_size > BUFSIZE - 1 || buf[msg_size - 1] == '/')
+            break;
+    }
+    if (bytes == SOCKETERR)
+    {
+        cout << "Error leyendo mensaje\n";
+        exit(1);
+    }
+    buf[msg_size - 1] = 0; // Caracter de terminación de string
+    cout << "PETICIÓN: " << buf << endl;
+    write(client_socket, "Hola mundo\n", 12);
+    close(client_socket);
+    cout << "Conexión cerrada\n";
+    */
+    return NULL;
+}
+
+// Inicia los hilos de servidor que atienden a los clientes
+void *init_hilo_server(void *arg)
+{
+    while (true)
+    {
+        pthread_mutex_lock(&queue_mutex);
+        if (client_queue.empty())
+        {
+            pthread_cond_wait(&queue_cond, &queue_mutex);
+        }
+        if (!client_queue.empty())
+        {
+            // Existe conexión
+            int *pclient = client_queue.front();
+            client_queue.pop();
+            manejar_conexion(pclient);
+        }
+        pthread_mutex_unlock(&queue_mutex);
+    }
+    return NULL;
+}
 
 // Actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -115,6 +302,10 @@ void tabManager(int index, Ui::Taller *ui)
 // Rellena la tabla de clientes
 void rellenarTablaClientes(Ui::Taller *ui)
 {
+    // Limpiar la tabla de clientes
+    ui->tablaClientes->clearContents();
+    ui->tablaClientes->setRowCount(0);
+
     // Agregar clientes a la tabla
     vector<Cliente> clientes = Cliente::cargarClientesDesdeArchivo();
     vector<Vehiculo> vehiculos = Vehiculo::cargarVehiculosDesdeArchivo();
@@ -168,6 +359,7 @@ Taller::Taller(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::Taller)
 {
     ui->setupUi(this);
+    uiTaller = &ui;
 
     // Set the title text of each tab to be horizontal
     for (int i = 0; i < ui->tabWidget->count(); i++)
@@ -234,7 +426,7 @@ Taller::Taller(QWidget *parent)
 
     // Iniciar servidor
     pthread_t server_thread;
-    pthread_create(&server_thread, NULL, init_hilo_server, NULL);
+    pthread_create(&server_thread, NULL, init_servidor, NULL);
 }
 
 Ui::Taller *Taller::getUi() const
@@ -263,6 +455,7 @@ void Taller::on_lineEdit_textChanged(const QString &arg1)
     }
 }
 
+// Entra a ver los vehículos del cliente seleccionado
 void Taller::on_pushButton_clicked()
 {
 
@@ -318,6 +511,7 @@ void Taller::on_pushButton_3_clicked()
     ui->stackedWidget->setCurrentWidget(ui->page);
 }
 
+// Entra a ver los servicios del vehículo seleccionado
 void Taller::on_pushButton_2_clicked()
 {
 
@@ -369,6 +563,7 @@ void Taller::on_pushButton_8_clicked()
     ui->stackedWidget->setCurrentWidget(ui->page_2);
 }
 
+// Agregar una pieza al inventario de repuestos
 void Taller::on_btn_repuestos_clicked()
 {
     QDialog dialog(nullptr);

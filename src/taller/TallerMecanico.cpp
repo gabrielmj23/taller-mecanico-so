@@ -48,9 +48,11 @@ vector<EstacionTrabajo> TallerMecanico::getEstaciones()
     return this->estaciones;
 }
 
-void TallerMecanico::recibirVehiculo(Vehiculo &v)
+void TallerMecanico::recibirVehiculo(Vehiculo &v, string falla)
 {
     cout << "Recibió vehículo de placa: " << v.getPlaca() << "\n---\n";
+    // Asignar piezas basado en la falla
+    v.registrarFalla(falla);
     // Diagnosticar
     map<string, vector<Pieza>> piezasPorEstacion = diagnosticar(v);
     for (auto p : piezasPorEstacion)

@@ -19,6 +19,11 @@ EstadoPieza Pieza::getEstado()
     return this->estado;
 }
 
+void Pieza::setEstado(EstadoPieza estado)
+{
+    this->estado = estado;
+}
+
 string Pieza::serialize()
 {
     ostringstream oss;

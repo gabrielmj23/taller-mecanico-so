@@ -23,5 +23,5 @@ public:
     // Getters
     vector<EstacionTrabajo> getEstaciones();
     // Recibe un vehículo para hacer su evaluación y operación
-    void recibirVehiculo(Vehiculo &v);
+    void recibirVehiculo(Vehiculo &v, string falla);
 };
