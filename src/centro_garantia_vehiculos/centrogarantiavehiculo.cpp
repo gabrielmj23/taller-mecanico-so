@@ -1,6 +1,7 @@
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QDialog>
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QTableWidgetItem>
@@ -406,15 +407,38 @@ void CentroGarantiaVehiculo::on_pushButton_4_clicked()
     rellenarTablaVehiculos(ui->vehiculosClienteTable);
 }
 
+// Botón para ingresar un vehículo al taller
 void CentroGarantiaVehiculo::on_pushButton_9_clicked()
 {
     QDialog dialog(nullptr);
     QFormLayout form(&dialog);
 
-    QLineEdit *lineEditRazon = new QLineEdit(&dialog);
+    // Lista de fallas
+    QComboBox *comboBoxRazon = new QComboBox(&dialog);
+    string fallas[] = {"Ruidos por suspensión",
+                       "Acelera de forma brusca",
+                       "Se escuchan chirridos y se detiene el vehículo",
+                       "Embrague resbaladizo",
+                       "Arranque lento",
+                       "Bolsas de aire defectuosas",
+                       "Desvío de dirección",
+                       "Ruido al frenar",
+                       "Fuga de refrigerante",
+                       "El seguro de la puerta se desactiva inesperadamente"};
+    comboBoxRazon->addItems({"Ruidos por suspensión",
+                             "Acelera de forma brusca",
+                             "Se escuchan chirridos y se detiene el vehículo",
+                             "Embrague resbaladizo",
+                             "Arranque lento",
+                             "Bolsas de aire defectuosas",
+                             "Desvío de dirección",
+                             "Ruido al frenar",
+                             "Fuga de refrigerante",
+                             "El seguro de la puerta se desactiva inesperadamente"});
+    // Para registrar kilometraje de ingreso
     QLineEdit *lineEditKmIngreso = new QLineEdit(&dialog);
 
-    form.addRow("Razon:", lineEditRazon);
+    form.addRow("Razón:", comboBoxRazon);
     form.addRow("Kilometraje de Ingreso:", lineEditKmIngreso);
 
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
@@ -425,19 +449,19 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        QString razon = lineEditRazon->text();
+        int idRazon = comboBoxRazon->currentIndex();
         QString kmIngreso = lineEditKmIngreso->text();
-
-        if (razon == "" || kmIngreso == "")
+        if (idRazon == -1 || kmIngreso == "")
         {
             qDebug() << "Error: No se puede dejar campos vacios";
             return;
         }
+        string razon = fallas[idRazon];
 
         // Crear servicio, guardarlo e informar al taller
-        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon.toStdString(), kmIngreso.toInt());
+        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon, kmIngreso.toInt());
         Servicio::guardarServicioEnArchivo(servicio);
-        enviarVehiculo(cedulaActual, placaActual, razon.toStdString(), kmIngreso.toInt());
+        enviarVehiculo(cedulaActual, placaActual, razon, kmIngreso.toInt());
 
         // Get the current number of rows in the table
         int numRows = ui->serviciosTable->rowCount();
