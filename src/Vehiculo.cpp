@@ -151,14 +151,13 @@ void Vehiculo::registrarFalla(string falla)
     if (falla == "Ruidos por suspensión")
     {
         // La falla indica un desgaste en el sistema de suspensión
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : this->sistemas)
         {
-            if (sistemas[i].getNombre() == "Suspensión")
+            if (sis.getNombre() == "Suspensión")
             {
-                vector<Pieza> piezasSuspension = sistemas[i].getPiezas();
-                for (Pieza &p : piezasSuspension)
+                for (Pieza &p : sis.getPiezas())
                 {
-                    p.setEstado(RANDOM_FUNC);
+                    sis.setEstadoPieza(p.getNombre(), RANDOM_FUNC);
                 }
             }
         }
@@ -167,23 +166,21 @@ void Vehiculo::registrarFalla(string falla)
     {
         // La falla se encuentra en los inyectores y regulador del sistema de combustible
         // También puede estar en el motor
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Combustible")
+            if (sis.getNombre() == "Combustible")
             {
-                vector<Pieza> piezasCombustible = sistemas[i].getPiezas();
-                for (Pieza &p : piezasCombustible)
+                for (Pieza &p : sis.getPiezas())
                 {
                     if (p.getNombre() == "Inyectores" || p.getNombre() == "Regulador de presión")
                     {
-                        p.setEstado(FALLA);
+                        sis.setEstadoPieza(p.getNombre(), FALLA);
                     }
                 }
             }
-            else if (sistemas[i].getNombre() == "Motor")
+            else if (sis.getNombre() == "Motor")
             {
-                vector<Pieza> piezasMotor = sistemas[i].getPiezas();
-                for (Pieza &p : piezasMotor)
+                for (Pieza &p : sis.getPiezas())
                 {
                     p.setEstado(RANDOM_FUNC);
                 }
@@ -193,14 +190,13 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Se escuchan chirridos y se detiene el vehículo")
     {
         // La falla se encuentra en el sistema de transmisión
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Transmisión")
+            if (sis.getNombre() == "Transmisión")
             {
-                vector<Pieza> piezasTransmision = sistemas[i].getPiezas();
-                for (Pieza &p : piezasTransmision)
+                for (Pieza &p : sis.getPiezas())
                 {
-                    p.setEstado(RANDOM_FUNC);
+                    sis.setEstadoPieza(p.getNombre(), RANDOM_FUNC);
                 }
             }
         }
@@ -208,16 +204,15 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Embrague resbaladizo")
     {
         // La falla es localizada en el embrague del sistema de transmisión
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Transmisión")
+            if (sis.getNombre() == "Transmisión")
             {
-                vector<Pieza> piezasTransmision = sistemas[i].getPiezas();
-                for (Pieza &p : piezasTransmision)
+                for (Pieza &p : sis.getPiezas())
                 {
                     if (p.getNombre() == "Embrague")
                     {
-                        p.setEstado(FALLA);
+                        sis.setEstadoPieza(p.getNombre(), FALLA);
                     }
                 }
             }
@@ -226,14 +221,13 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Arranque lento")
     {
         // Falla en el motor, revisar todo el sistema
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Motor")
+            if (sis.getNombre() == "Motor")
             {
-                vector<Pieza> piezasMotor = sistemas[i].getPiezas();
-                for (Pieza &p : piezasMotor)
+                for (Pieza &p : sis.getPiezas())
                 {
-                    p.setEstado(RANDOM_FUNC);
+                    sis.setEstadoPieza(p.getNombre(), RANDOM_FUNC);
                 }
             }
         }
@@ -241,16 +235,15 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Bolsas de aire defectuosas")
     {
         // Falla en los airbags Toyota del sistema de seguridad
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Seguridad")
+            if (sis.getNombre() == "Seguridad")
             {
-                vector<Pieza> piezasSeguridad = sistemas[i].getPiezas();
-                for (Pieza &p : piezasSeguridad)
+                for (Pieza &p : sis.getPiezas())
                 {
                     if (p.getNombre() == "Airbags")
                     {
-                        p.setEstado(FALLA);
+                        sis.setEstadoPieza(p.getNombre(), FALLA);
                     }
                 }
             }
@@ -259,16 +252,15 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Desvío de dirección")
     {
         // Verificar estado del volante y caja de dirección
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Dirección")
+            if (sis.getNombre() == "Dirección")
             {
-                vector<Pieza> piezasDireccion = sistemas[i].getPiezas();
-                for (Pieza &p : piezasDireccion)
+                for (Pieza &p : sis.getPiezas())
                 {
                     if (p.getNombre() == "Volante" || p.getNombre() == "Caja de dirección")
                     {
-                        p.setEstado(FALLA);
+                        sis.setEstadoPieza(p.getNombre(), FALLA);
                     }
                 }
             }
@@ -277,20 +269,19 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Ruido al frenar")
     {
         // Desgaste de pastillas de freno, pero se debe revisar todo el sistema
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Frenos")
+            if (sis.getNombre() == "Frenos")
             {
-                vector<Pieza> piezasFrenos = sistemas[i].getPiezas();
-                for (Pieza &p : piezasFrenos)
+                for (Pieza &p : sis.getPiezas())
                 {
                     if (p.getNombre() == "Pastillas de freno")
                     {
-                        p.setEstado(FALLA);
+                        sis.setEstadoPieza(p.getNombre(), FALLA);
                     }
                     else
                     {
-                        p.setEstado(RANDOM_FUNC);
+                        sis.setEstadoPieza(p.getNombre(), RANDOM_FUNC);
                     }
                 }
             }
@@ -299,14 +290,13 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "Fuga de refrigerante")
     {
         // Verificar radiador y refrigerante del vehículo
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Intercambio de calor")
+            if (sis.getNombre() == "Intercambio de calor")
             {
-                vector<Pieza> piezasRefrigeracion = sistemas[i].getPiezas();
-                for (Pieza &p : piezasRefrigeracion)
+                for (Pieza &p : sis.getPiezas())
                 {
-                    p.setEstado(FALLA);
+                    sis.setEstadoPieza(p.getNombre(), FALLA);
                 }
             }
         }
@@ -314,24 +304,23 @@ void Vehiculo::registrarFalla(string falla)
     else if (falla == "El seguro de la puerta se desactiva inesperadamente")
     {
         // La falla puede encontrarse en los sistemas eléctrico o de seguridad
-        for (int i = 0; i < sistemas.size(); i++)
+        for (SistemaVehiculo &sis : sistemas)
         {
-            if (sistemas[i].getNombre() == "Electricidad")
+            if (sis.getNombre() == "Electricidad")
             {
-                vector<Pieza> piezasElectricidad = sistemas[i].getPiezas();
-                for (Pieza &p : piezasElectricidad)
+                for (Pieza &p : sis.getPiezas())
                 {
-                    p.setEstado(RANDOM_FUNC);
+                    sis.setEstadoPieza(p.getNombre(), RANDOM_FUNC);
                 }
             }
-            else if (sistemas[i].getNombre() == "Seguridad")
+            else if (sis.getNombre() == "Seguridad")
             {
-                vector<Pieza> piezasSeguridad = sistemas[i].getPiezas();
+                vector<Pieza> piezasSeguridad = sis.getPiezas();
                 for (Pieza &p : piezasSeguridad)
                 {
                     if (p.getNombre() == "Cierre centralizado")
                     {
-                        p.setEstado(FALLA);
+                        sis.setEstadoPieza(p.getNombre(), FALLA);
                     }
                 }
             }

@@ -171,6 +171,7 @@ void *manejar_conexion(void *p_client_socket)
         {
         case VEHICULO_INGRESADO:
         {
+            // Deserializar datos recibidos
             istringstream iss(serialized);
             string cedulaCliente, placa, razon, kmIngresado;
             getline(iss, cedulaCliente, '-');
@@ -178,7 +179,14 @@ void *manejar_conexion(void *p_client_socket)
             getline(iss, razon, '-');
             getline(iss, kmIngresado, '\n');
             Vehiculo vehic(cedulaCliente, placa);
-            tallerMecanico.recibirVehiculo(vehic, razon);
+            // Actualizar pantalla de diagnóstico
+            (*uiTaller)->progressBar->setValue(0);
+            (*uiTaller)->label_falla_diag->setText("Falla: " + QString::fromStdString(razon));
+            (*uiTaller)->label_placa_diag->setText("Nro. de Placa: " + QString::fromStdString(placa));
+            (*uiTaller)->repuestos_diag_list->clear();
+            (*uiTaller)->estaciones_diag_list->clear();
+            // Enviar vehículo al taller para diagnosticarlo y trabajar
+            tallerMecanico.recibirVehiculo(vehic, razon, (*uiTaller)->repuestos_diag_list, (*uiTaller)->estaciones_diag_list, (*uiTaller)->progressBar);
             string res_vehiculo = "Vehículo recibido\n";
             write(client_socket, res_vehiculo.c_str(), res_vehiculo.length());
             close(client_socket);

@@ -36,7 +36,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -609,7 +609,7 @@ color: rgb(255, 255, 255);</string>
        <number>24</number>
       </property>
      </widget>
-     <widget class="QListWidget" name="listWidget">
+     <widget class="QListWidget" name="repuestos_diag_list">
       <property name="geometry">
        <rect>
         <x>550</x>
@@ -626,7 +626,7 @@ color: rgb(255, 255, 255);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(211, 214, 228);
-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-radius: 10px;</string>
       </property>
       <property name="frameShadow">
@@ -679,7 +679,7 @@ border-radius: 10px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_11">
+     <widget class="QLabel" name="label_placa_diag">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -730,7 +730,7 @@ border-radius: 10px;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(211, 214, 228);
-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius:10px;
 </string>
@@ -774,7 +774,7 @@ border-radius:10px;
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(211, 214, 228);
-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius:10px;
 </string>
@@ -795,7 +795,7 @@ border-radius:10px;
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QListWidget" name="listWidget_2">
+     <widget class="QListWidget" name="estaciones_diag_list">
       <property name="geometry">
        <rect>
         <x>550</x>
@@ -812,7 +812,7 @@ border-radius:10px;
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(211, 214, 228);
-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
 border-radius: 10px;</string>
       </property>
       <property name="frameShadow">
@@ -837,7 +837,7 @@ border-radius: 10px;</string>
        </property>
       </item>
      </widget>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="label_falla_diag">
       <property name="geometry">
        <rect>
         <x>20</x>

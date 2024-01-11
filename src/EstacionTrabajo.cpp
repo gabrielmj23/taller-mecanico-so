@@ -2,6 +2,7 @@
 #include <iostream>
 #include <pthread.h>
 #include <Pieza.h>
+#include <unistd.h>
 #include <EstacionTrabajo.h>
 using namespace std;
 
@@ -31,6 +32,7 @@ void *trabajar(void *unidad)
             break;
         }
     }
+    sleep(5);
     return nullptr;
 }
 
