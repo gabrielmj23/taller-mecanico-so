@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>57</y>
+      <y>50</y>
       <width>983</width>
       <height>681</height>
      </rect>
@@ -126,7 +126,7 @@ background-color: rgb(2, 210, 26);
        <enum>QFrame::Raised</enum>
       </property>
       <property name="text">
-       <string>Vehículos en Cola 2</string>
+       <string>Vehículos en Cola: 0</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -169,7 +169,7 @@ border-radius:10px;
        <enum>QFrame::Raised</enum>
       </property>
       <property name="text">
-       <string>Vehículos en una de las Estaciones 5</string>
+       <string>Vehículos en Estaciones: 0</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -212,7 +212,7 @@ border-radius:10px;
        <enum>QFrame::Raised</enum>
       </property>
       <property name="text">
-       <string>Servicios Completados 20</string>
+       <string>Servicios Completados: 0</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -890,9 +890,9 @@ border-radius:10px;
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>30</y>
+        <y>60</y>
         <width>851</width>
-        <height>621</height>
+        <height>591</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -919,6 +919,30 @@ border-radius:10px;
         <string>Estado</string>
        </property>
       </column>
+     </widget>
+     <widget class="QPushButton" name="btn_repuestos">
+      <property name="geometry">
+       <rect>
+        <x>659</x>
+        <y>11</y>
+        <width>181</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 170, 0);</string>
+      </property>
+      <property name="text">
+       <string>Agregar Repuestos</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_7">

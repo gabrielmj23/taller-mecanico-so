@@ -13,14 +13,18 @@ private:
     vector<SistemaVehiculo> sistemas;
 
 public:
-    Vehiculo(string cedulaCliente, string placa, vector<SistemaVehiculo> sistemas);
+    Vehiculo(string cedulaCliente, string placa);
     // Getters
     string getCedulaCliente();
     string getPlaca();
     bool getEnTaller();
     vector<SistemaVehiculo> *getSistemas();
+    // Setters
+    void setEnTaller(bool enTaller);
     // Uso general
     void identificar();
+    // Establece las piezas no funcionales dependiendo de la falla especificada
+    void registrarFalla(string falla);
     // Comunicación por red
     string serialize();
     static Vehiculo deserialize(const string &s);

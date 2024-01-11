@@ -2,8 +2,17 @@
 #include "./ui_taller.h"
 
 #include <string>
+#include <sstream>
+#include <map>
 #include <vector>
+#include <iostream>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <limits.h>
 #include <pthread.h>
+#include <queue>
+#include <stdlib.h>
 #include <QScreen>
 #include <QString>
 #include <QLabel>
@@ -12,13 +21,19 @@
 #include <QHeaderView>
 #include <QTableWidgetItem>
 #include <QFile>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QLineEdit>
 
 #include "clases.h"
+#include "Inventario.h"
 #include "Cliente.h"
 #include "Servicio.h"
+#include "ClienteVehiculo.h"
 #include "EstacionTrabajo.h"
 #include "Vehiculo.h"
-#include "server.h"
+#include "TallerMecanico.h"
 using namespace std;
 
 vector<VehiculoCola> vehiculosCola = {
@@ -31,44 +46,192 @@ vector<VehiculoCola> vehiculosCola = {
     {7, "GHI775", "15:00"},
 };
 
-// Ejemplo para tabla de Ultimas Entradas y Salidas
-vector<ClienteVehiculo> clientesVehiculo = {
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"},
-    {"Salida", "Ali Sahili", "16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"},
-    {"Salida", "Ali Sahili", "16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"},
-    {"Salida", "Ali Sahili", "16:00", "KLHH23"},
-    {"Entrada", "Karim Sahili", "09:00", "JK37Y2"},
-    {"Salida", "Hamudi Sahili", "10:00", "JK23hf"},
-    {"Entrada", "Samy Sahili", "12:00", "KHH323"}};
+// Inventario de repuestos
+Inventario inventario;
 
-// Arreglo repuestos ejemplo
-vector<Repuesto> repuestos = {
-    {"Filtro de aceite", 10, "Disponible"},
-    {"Filtro de aire", 0, "No disponible"},
-    {"Filtro de gasolina", 0, "Comprando"},
-    {"Bujia", 20, "Disponible"}};
+// Objeto de taller mecánico
+TallerMecanico tallerMecanico;
 
-// Estaciones de trabajo del taller
-vector<EstacionTrabajo> estaciones = {
-    EstacionTrabajo("Lubricación"),
-    EstacionTrabajo("Motor"),
-    EstacionTrabajo("Transmisión"),
-    EstacionTrabajo("Dirección"),
-    EstacionTrabajo("Combustible"),
-    EstacionTrabajo("Suspensión"),
-    EstacionTrabajo("Frenos"),
-    EstacionTrabajo("Seguridad"),
-    EstacionTrabajo("Electricidad"),
-    EstacionTrabajo("Refrigeración"),
-    EstacionTrabajo("Intercambio de calor")};
+// Objeto de UI
+Ui::Taller **uiTaller;
+
+// Constantes para el servidor
+#define PORT 6060
+#define BUFSIZE 4096
+#define SOCKETERR (-1)
+#define SERVER_BACKLOG 50
+#define THREAD_POOL_SIZE 6
+
+// Para la thread pool
+pthread_t thread_pool[THREAD_POOL_SIZE];
+queue<int *> client_queue;
+pthread_mutex_t queue_mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t queue_cond = PTHREAD_COND_INITIALIZER;
+
+// Para el servidor
+typedef struct sockaddr_in SA_IN;
+typedef struct sockaddr SA;
+enum TipoMensaje
+{
+    NUEVO_CLIENTE,
+    VEHICULO_INGRESADO,
+};
+
+// Prototipo de funciones
+void rellenarTablaClientes(Ui::Taller *ui);
+void *init_hilo_server(void *arg);
+void *manejar_conexion(void *p_client_socket);
+
+// Función para inicializar el hilo del servidor
+void *init_servidor(void *arg)
+{
+    // Inicializar thread pool
+    for (int i = 0; i < THREAD_POOL_SIZE; i++)
+    {
+        pthread_create(&thread_pool[i], NULL, init_hilo_server, NULL);
+    }
+    int server_socket, client_socket, addr_size;
+    SA_IN server_addr, client_addr;
+    // Crear socket TCP
+    if ((server_socket = socket(AF_INET, SOCK_STREAM, 0)) == SOCKETERR)
+    {
+        cout << "Error creando socket\n";
+        exit(1);
+    }
+    // Conectar socket a puerto
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(PORT);
+    if (bind(server_socket, (SA *)&server_addr, sizeof(server_addr)) == SOCKETERR)
+    {
+        cout << "Error conectando socket a puerto\n";
+        exit(1);
+    }
+    // Escuchar
+    if (listen(server_socket, SERVER_BACKLOG) == SOCKETERR)
+    {
+        cout << "Error escuchando\n";
+        exit(1);
+    }
+    while (true)
+    {
+        cout << "Esperando...\n";
+        // Aceptar conexión y trabajar
+        addr_size = sizeof(SA_IN);
+        if ((client_socket = accept(server_socket, (SA *)&client_addr, (socklen_t *)&addr_size)) == SOCKETERR)
+        {
+            cout << "Error aceptando conexión\n";
+            exit(1);
+        }
+        cout << "Conexión aceptada\n";
+        // Guardar información de la conexión
+        int *pclient = (int *)malloc(sizeof(int));
+        *pclient = client_socket;
+        pthread_mutex_lock(&queue_mutex);
+        client_queue.push(pclient);
+        pthread_cond_signal(&queue_cond);
+        pthread_mutex_unlock(&queue_mutex);
+    }
+    return 0;
+}
+
+// Se ejecuta cuando el socket recibe alguna conexión de cliente
+void *manejar_conexion(void *p_client_socket)
+{
+    int client_socket = *((int *)p_client_socket);
+    free(p_client_socket); // Liberar memoria
+    char buf[BUFSIZE];
+    size_t bytes;
+    int msg_size = 0;
+    char act_path[PATH_MAX + 1];
+    // Recibir tipo de mensaje
+    TipoMensaje tipoMsj;
+    if (recv(client_socket, &tipoMsj, sizeof(tipoMsj), 0) <= 0)
+    {
+        cerr << "Error recibiendo tipo de mensaje\n";
+        return NULL;
+    }
+    // Si es nuevo cliente, solo acepta el mensaje y actualiza la tabla de clientes
+    if (tipoMsj == NUEVO_CLIENTE)
+    {
+        cout << "Nuevo cliente\n";
+        string res_cliente = "Cliente aceptado\n";
+        write(client_socket, res_cliente.c_str(), res_cliente.length());
+        close(client_socket);
+        rellenarTablaClientes(*uiTaller);
+        return NULL;
+    }
+    // Recibir datos serializados
+    char buffer[BUFSIZE];
+    int bytes_received = recv(client_socket, buffer, sizeof(buffer), 0);
+    if (bytes_received > 0)
+    {
+        string serialized(buffer, bytes_received);
+        switch (tipoMsj)
+        {
+        case VEHICULO_INGRESADO:
+        {
+            istringstream iss(serialized);
+            string cedulaCliente, placa, razon, kmIngresado;
+            getline(iss, cedulaCliente, '-');
+            getline(iss, placa, '-');
+            getline(iss, razon, '-');
+            getline(iss, kmIngresado, '\n');
+            Vehiculo vehic(cedulaCliente, placa);
+            tallerMecanico.recibirVehiculo(vehic, razon);
+            string res_vehiculo = "Vehículo recibido\n";
+            write(client_socket, res_vehiculo.c_str(), res_vehiculo.length());
+            close(client_socket);
+            return NULL;
+        }
+        break;
+        default:
+            cerr << "Tipo de mensaje desconocido\n";
+            return NULL;
+        }
+    }
+    /*
+    while ((bytes = read(client_socket, buf + msg_size, sizeof(buf) - msg_size - 1)) > 0)
+    {
+        msg_size += bytes;
+        if (msg_size > BUFSIZE - 1 || buf[msg_size - 1] == '/')
+            break;
+    }
+    if (bytes == SOCKETERR)
+    {
+        cout << "Error leyendo mensaje\n";
+        exit(1);
+    }
+    buf[msg_size - 1] = 0; // Caracter de terminación de string
+    cout << "PETICIÓN: " << buf << endl;
+    write(client_socket, "Hola mundo\n", 12);
+    close(client_socket);
+    cout << "Conexión cerrada\n";
+    */
+    return NULL;
+}
+
+// Inicia los hilos de servidor que atienden a los clientes
+void *init_hilo_server(void *arg)
+{
+    while (true)
+    {
+        pthread_mutex_lock(&queue_mutex);
+        if (client_queue.empty())
+        {
+            pthread_cond_wait(&queue_cond, &queue_mutex);
+        }
+        if (!client_queue.empty())
+        {
+            // Existe conexión
+            int *pclient = client_queue.front();
+            client_queue.pop();
+            manejar_conexion(pclient);
+        }
+        pthread_mutex_unlock(&queue_mutex);
+    }
+    return NULL;
+}
 
 // Actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -85,6 +248,7 @@ void actItemsTabla(QTableWidget *tableWidget)
     }
 }
 
+// Agrega la imagen del Corolla
 void imagenCorolla(Ui::Taller *ui)
 {
     // Add an image to the centralWidget at position (10, 10)
@@ -103,7 +267,7 @@ void imagenCorolla(Ui::Taller *ui)
     }
 }
 
-// manejador de titulo dependiendo del tab seleccionado
+// Manejador de titulo dependiendo del tab seleccionado
 void tabManager(int index, Ui::Taller *ui)
 {
     switch (index)
@@ -135,51 +299,12 @@ void tabManager(int index, Ui::Taller *ui)
     }
 }
 
-Taller::Taller(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::Taller)
+// Rellena la tabla de clientes
+void rellenarTablaClientes(Ui::Taller *ui)
 {
-    ui->setupUi(this);
-
-    // Set the title text of each tab to be horizontal
-    for (int i = 0; i < ui->tabWidget->count(); i++)
-    {
-        QWidget *tabWidget = ui->tabWidget->widget(i);
-        QLabel *titleLabel = new QLabel(ui->tabWidget->tabText(i));
-        titleLabel->setAlignment(Qt::AlignHCenter);
-        ui->tabWidget->setTabText(i, "");
-        ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
-    }
-
-    // extiende los titulos de la tabla en lo horizontal
-    ui->tablaClienteVehiculo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tablaClientes->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tablaVehiculos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tablaServicios->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tablaVehiculosCola->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tablaRepuestos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tablaEstaciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-    // Agrega ejemplos a la tablaClienteVehiculo
-    for (int i = 0; i < clientesVehiculo.size(); i++)
-    {
-        ClienteVehiculo clienteVehiculo = clientesVehiculo[i];
-        ui->tablaClienteVehiculo->insertRow(ui->tablaClienteVehiculo->rowCount());
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 0, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.tipo)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 1, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.nombre)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 2, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.hora)));
-        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 3, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.placa)));
-    }
-
-    actItemsTabla(ui->tablaClienteVehiculo);
-
-    // Quita la enumeracion de las filas
-    ui->tablaClienteVehiculo->verticalHeader()->setVisible(false);
-    ui->tablaClientes->verticalHeader()->setVisible(false);
-    ui->tablaVehiculos->verticalHeader()->setVisible(false);
-    ui->tablaServicios->verticalHeader()->setVisible(false);
-    ui->tablaVehiculosCola->verticalHeader()->setVisible(false);
-    ui->tablaRepuestos->verticalHeader()->setVisible(false);
-    ui->tablaEstaciones->verticalHeader()->setVisible(false);
+    // Limpiar la tabla de clientes
+    ui->tablaClientes->clearContents();
+    ui->tablaClientes->setRowCount(0);
 
     // Agregar clientes a la tabla
     vector<Cliente> clientes = Cliente::cargarClientesDesdeArchivo();
@@ -193,10 +318,84 @@ Taller::Taller(QWidget *parent)
         ui->tablaClientes->setItem(i, 3, new QTableWidgetItem(QString::number(clientes[i].getNumVehiculos(vehiculos))));
         ui->tablaClientes->setItem(i, 4, new QTableWidgetItem(QString::fromStdString(clientes[i].getNumContacto())));
     }
-
+    ui->label_num_clientes->setText("Clientes: " + QString::number(clientes.size()));
     actItemsTabla(ui->tablaClientes);
+}
 
-    // para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
+// Rellena la tabla de repuestos
+void rellenarTablaRepuestos(Ui::Taller *ui)
+{
+    // Agregar repuestos a la tabla
+    map<string, int> stock = inventario.getStock();
+    int i = 0;
+    for (auto p : stock)
+    {
+        ui->tablaRepuestos->insertRow(i);
+        ui->tablaRepuestos->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(p.first)));
+        ui->tablaRepuestos->setItem(i, 1, new QTableWidgetItem(QString::number(p.second)));
+        ui->tablaRepuestos->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(p.second == 0 ? "Agotado" : "Disponible")));
+        i++;
+    }
+    actItemsTabla(ui->tablaRepuestos);
+}
+
+// Rellena la tabla de últimas entradas y salidas
+void rellenarEntradasSalidas(Ui::Taller *ui)
+{
+    vector<ClienteVehiculo> clientesVehiculo = ClienteVehiculo::leerClienteVehiculosDeArchivo();
+    for (int i = 0; i < clientesVehiculo.size(); i++)
+    {
+        ClienteVehiculo clienteVehiculo = clientesVehiculo[i];
+        ui->tablaClienteVehiculo->insertRow(ui->tablaClienteVehiculo->rowCount());
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 0, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getTipo())));
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 1, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getNombre())));
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 2, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getHora())));
+        ui->tablaClienteVehiculo->setItem(ui->tablaClienteVehiculo->rowCount() - 1, 3, new QTableWidgetItem(QString::fromStdString(clienteVehiculo.getPlaca())));
+    }
+    actItemsTabla(ui->tablaClienteVehiculo);
+}
+
+Taller::Taller(QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::Taller)
+{
+    ui->setupUi(this);
+    uiTaller = &ui;
+
+    // Set the title text of each tab to be horizontal
+    for (int i = 0; i < ui->tabWidget->count(); i++)
+    {
+        QWidget *tabWidget = ui->tabWidget->widget(i);
+        QLabel *titleLabel = new QLabel(ui->tabWidget->tabText(i));
+        titleLabel->setAlignment(Qt::AlignHCenter);
+        ui->tabWidget->setTabText(i, "");
+        ui->tabWidget->tabBar()->setTabButton(i, QTabBar::LeftSide, titleLabel);
+    }
+
+    // Extiende los titulos de la tabla en lo horizontal
+    ui->tablaClienteVehiculo->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaClientes->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaVehiculos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaServicios->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaVehiculosCola->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaRepuestos->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tablaEstaciones->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    // Agrega últimas entradas y salidas
+    rellenarEntradasSalidas(ui);
+
+    // Quita la enumeracion de las filas
+    ui->tablaClienteVehiculo->verticalHeader()->setVisible(false);
+    ui->tablaClientes->verticalHeader()->setVisible(false);
+    ui->tablaVehiculos->verticalHeader()->setVisible(false);
+    ui->tablaServicios->verticalHeader()->setVisible(false);
+    ui->tablaVehiculosCola->verticalHeader()->setVisible(false);
+    ui->tablaRepuestos->verticalHeader()->setVisible(false);
+    ui->tablaEstaciones->verticalHeader()->setVisible(false);
+
+    // Agregar clientes a la tabla
+    rellenarTablaClientes(ui);
+
+    // Para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
     tabManager(ui->tabWidget->currentIndex(), ui);
 
     // Agregar vehiculos en cola a la tabla
@@ -211,17 +410,10 @@ Taller::Taller(QWidget *parent)
     actItemsTabla(ui->tablaVehiculosCola);
 
     // Agregar repuestos a la tabla
-    for (int i = 0; i < repuestos.size(); i++)
-    {
-        ui->tablaRepuestos->insertRow(i);
-        ui->tablaRepuestos->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(repuestos[i].descripcion)));
-        ui->tablaRepuestos->setItem(i, 1, new QTableWidgetItem(QString::number(repuestos[i].existencia)));
-        ui->tablaRepuestos->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(repuestos[i].estado)));
-    }
-
-    actItemsTabla(ui->tablaRepuestos);
+    rellenarTablaRepuestos(ui);
 
     // Agregar estaciones a la tabla
+    vector<EstacionTrabajo> estaciones = tallerMecanico.getEstaciones();
     for (int i = 0; i < estaciones.size(); i++)
     {
         ui->tablaEstaciones->insertRow(i);
@@ -234,7 +426,7 @@ Taller::Taller(QWidget *parent)
 
     // Iniciar servidor
     pthread_t server_thread;
-    pthread_create(&server_thread, NULL, init_hilo_server, NULL);
+    pthread_create(&server_thread, NULL, init_servidor, NULL);
 }
 
 Ui::Taller *Taller::getUi() const
@@ -247,7 +439,7 @@ Taller::~Taller()
     delete ui;
 }
 
-// manejador de titulo dependiendo del tab seleccionado
+// Manejador de titulo dependiendo del tab seleccionado
 void Taller::on_tabWidget_currentChanged(int index)
 {
     tabManager(index, ui);
@@ -263,6 +455,7 @@ void Taller::on_lineEdit_textChanged(const QString &arg1)
     }
 }
 
+// Entra a ver los vehículos del cliente seleccionado
 void Taller::on_pushButton_clicked()
 {
 
@@ -318,6 +511,7 @@ void Taller::on_pushButton_3_clicked()
     ui->stackedWidget->setCurrentWidget(ui->page);
 }
 
+// Entra a ver los servicios del vehículo seleccionado
 void Taller::on_pushButton_2_clicked()
 {
 
@@ -367,4 +561,37 @@ void Taller::on_pushButton_2_clicked()
 void Taller::on_pushButton_8_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->page_2);
+}
+
+// Agregar una pieza al inventario de repuestos
+void Taller::on_btn_repuestos_clicked()
+{
+    QDialog dialog(nullptr);
+    QFormLayout form(&dialog);
+
+    QLineEdit *lineEditNombre = new QLineEdit(&dialog);
+    QLineEdit *lineEditCantidad = new QLineEdit(&dialog);
+    form.addRow("Pieza:", lineEditNombre);
+    form.addRow("Cantidad a agregar:", lineEditCantidad);
+
+    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
+    form.addRow(&buttonBox);
+
+    QObject::connect(&buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    QObject::connect(&buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QString nombre = lineEditNombre->text();
+        QString cantidad = lineEditCantidad->text();
+        if (nombre == "" || cantidad == "")
+        {
+            qDebug() << "Error: No se puede dejar campos vacios";
+            return;
+        }
+
+        // Agregar pieza
+        inventario.agregarPiezas(Pieza(nombre.toStdString(), FUNCIONA), cantidad.toInt());
+        rellenarTablaRepuestos(ui);
+    }
 }

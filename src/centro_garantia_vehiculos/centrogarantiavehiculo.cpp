@@ -1,6 +1,7 @@
 #include <QHeaderView>
 #include <QLineEdit>
 #include <QDialog>
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QTableWidgetItem>
@@ -9,12 +10,16 @@
 #include <QString>
 #include <vector>
 #include <iostream>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
 
 #include "centrogarantiavehiculo.h"
 #include "./ui_centrogarantiavehiculo.h"
 #include "Servicio.h"
 #include "Cliente.h"
 #include "Vehiculo.h"
+#include "clientUtils.h"
 using namespace std;
 
 // Variables globales
@@ -100,16 +105,8 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     ui->setupUi(this);
 
     /*
-    *
-        TAB MANUAL
-    *
-    */
-
-    /*
-     *
-     * pagina 1 de stacked widget
+     * Página 1 de stacked widget
      */
-
     // Tabla de clientes
     ui->clienteTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
@@ -118,10 +115,9 @@ CentroGarantiaVehiculo::CentroGarantiaVehiculo(QWidget *parent)
     actItemsTabla(ui->clienteTableWidget);
 
     /*
-     * pagina 2 de stacked widget
+     * Página 2 de stacked widget
      */
-
-    // Tabla de vehiculos x cliente
+    // Tabla de vehiculos por cliente
     ui->vehiculosClienteTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->serviciosTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
@@ -133,10 +129,9 @@ CentroGarantiaVehiculo::~CentroGarantiaVehiculo()
 
 /*
  *
- *Boton para agregar clientes a la tabla
+ * Botón para agregar clientes a la tabla
  *
  */
-
 void CentroGarantiaVehiculo::on_pushButton_2_clicked()
 {
     QDialog dialog(nullptr);
@@ -171,20 +166,9 @@ void CentroGarantiaVehiculo::on_pushButton_2_clicked()
         Cliente::guardarClienteEnArchivo(newCliente);
         rellenarTablaClientes(ui->clienteTableWidget);
         actItemsTabla(ui->clienteTableWidget);
+        informarClienteNuevo();
     }
 }
-
-/*
- *
- *************** TAB MANUAL ***************
- *
- */
-
-/*
- *
- *************** STACKED WIDGET CLIENTES***************
- *
- */
 
 /**
  * @brief ** Funcion para buscar clientes en la tabla
@@ -204,44 +188,40 @@ void CentroGarantiaVehiculo::on_lineEdit_textChanged(const QString &arg1)
 
 /*
  *
- *Boton para eliminar clientes de la tabla
+ * Botón para eliminar clientes de la tabla
  *
  */
 void CentroGarantiaVehiculo::on_pushButton_5_clicked()
 {
     // Get the current row
     int row = ui->clienteTableWidget->currentRow();
-
     // If there is no row selected, return
     if (row == -1)
     {
         qDebug() << "Error: No se ha seleccionado una fila";
         return;
     }
-
     // Remove the row from the table
     ui->clienteTableWidget->removeRow(row);
 }
 
 /*
  *
- *Boton que permite seleccionar un cliente de la tabla y ver sus vehiculos
+ * Botón que permite seleccionar un cliente de la tabla y ver sus vehiculos
  *
  */
-
 void CentroGarantiaVehiculo::on_pushButton_clicked()
 {
     // Get the current row
     int row = ui->clienteTableWidget->currentRow();
-
     // If there is no row selected, return
     if (row == -1)
     {
         qDebug() << "Error: No se ha seleccionado una fila";
         return;
     }
-
     ui->stackedWidget->setCurrentWidget(ui->page_2);
+
     // Get the cliente's cedula from the selected row
     QTableWidgetItem *cedulaItem = ui->clienteTableWidget->item(row, 1);
     QString cedula = cedulaItem->text();
@@ -254,7 +234,6 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
 
     // Limpiar la tabla de vehículos del cliente
     ui->vehiculosClienteTable->clearContents();
-
     ui->vehiculosClienteTable->setRowCount(0);
 
     // Iterar en el arreglo de vehículos
@@ -289,13 +268,7 @@ void CentroGarantiaVehiculo::on_pushButton_clicked()
 
 /*
  *
- *************** STACKED WIDGET VEHICULOS X CLIENTE***************
- *
- */
-
-/*
- *
- *Boton para regresar a stacked widget clientes
+ * Botón para regresar a stacked widget clientes
  *
  */
 void CentroGarantiaVehiculo::on_pushButton_3_clicked()
@@ -303,6 +276,7 @@ void CentroGarantiaVehiculo::on_pushButton_3_clicked()
     ui->stackedWidget->setCurrentWidget(ui->page);
 }
 
+// Botón para registrar vehículo
 void CentroGarantiaVehiculo::on_pushButton_7_clicked()
 {
 
@@ -329,7 +303,7 @@ void CentroGarantiaVehiculo::on_pushButton_7_clicked()
         }
 
         // Create a new Vehiculo object
-        Vehiculo newVehiculo(cedulaActual, placa.toStdString(), {});
+        Vehiculo newVehiculo(cedulaActual, placa.toStdString());
         Vehiculo::guardarVehiculoEnArchivo(newVehiculo);
 
         // Get the current number of rows in the table
@@ -352,6 +326,7 @@ void CentroGarantiaVehiculo::on_pushButton_7_clicked()
     }
 }
 
+// Botón para eliminar vehículo
 void CentroGarantiaVehiculo::on_pushButton_6_clicked()
 {
     // Get the current row
@@ -432,15 +407,38 @@ void CentroGarantiaVehiculo::on_pushButton_4_clicked()
     rellenarTablaVehiculos(ui->vehiculosClienteTable);
 }
 
+// Botón para ingresar un vehículo al taller
 void CentroGarantiaVehiculo::on_pushButton_9_clicked()
 {
     QDialog dialog(nullptr);
     QFormLayout form(&dialog);
 
-    QLineEdit *lineEditRazon = new QLineEdit(&dialog);
+    // Lista de fallas
+    QComboBox *comboBoxRazon = new QComboBox(&dialog);
+    string fallas[] = {"Ruidos por suspensión",
+                       "Acelera de forma brusca",
+                       "Se escuchan chirridos y se detiene el vehículo",
+                       "Embrague resbaladizo",
+                       "Arranque lento",
+                       "Bolsas de aire defectuosas",
+                       "Desvío de dirección",
+                       "Ruido al frenar",
+                       "Fuga de refrigerante",
+                       "El seguro de la puerta se desactiva inesperadamente"};
+    comboBoxRazon->addItems({"Ruidos por suspensión",
+                             "Acelera de forma brusca",
+                             "Se escuchan chirridos y se detiene el vehículo",
+                             "Embrague resbaladizo",
+                             "Arranque lento",
+                             "Bolsas de aire defectuosas",
+                             "Desvío de dirección",
+                             "Ruido al frenar",
+                             "Fuga de refrigerante",
+                             "El seguro de la puerta se desactiva inesperadamente"});
+    // Para registrar kilometraje de ingreso
     QLineEdit *lineEditKmIngreso = new QLineEdit(&dialog);
 
-    form.addRow("Razon:", lineEditRazon);
+    form.addRow("Razón:", comboBoxRazon);
     form.addRow("Kilometraje de Ingreso:", lineEditKmIngreso);
 
     QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
@@ -451,18 +449,19 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        QString razon = lineEditRazon->text();
+        int idRazon = comboBoxRazon->currentIndex();
         QString kmIngreso = lineEditKmIngreso->text();
-
-        if (razon == "" || kmIngreso == "")
+        if (idRazon == -1 || kmIngreso == "")
         {
             qDebug() << "Error: No se puede dejar campos vacios";
             return;
         }
+        string razon = fallas[idRazon];
 
-        // Create a new Servicio object
-        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon.toStdString(), kmIngreso.toInt());
+        // Crear servicio, guardarlo e informar al taller
+        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon, kmIngreso.toInt());
         Servicio::guardarServicioEnArchivo(servicio);
+        enviarVehiculo(cedulaActual, placaActual, razon, kmIngreso.toInt());
 
         // Get the current number of rows in the table
         int numRows = ui->serviciosTable->rowCount();

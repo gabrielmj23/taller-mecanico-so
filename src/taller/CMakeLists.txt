@@ -22,10 +22,10 @@ set(PROJECT_SOURCES
     taller.ui
     clases.h
     clases.cpp
-    server.h
-    server.cpp
     ../Pieza.h
     ../Pieza.cpp
+    ../Inventario.h
+    ../Inventario.cpp
     ../SistemaVehiculo.h
     ../SistemaVehiculo.cpp
     ../Vehiculo.h
@@ -36,6 +36,10 @@ set(PROJECT_SOURCES
     ../Servicio.cpp
     ../Cliente.h
     ../Cliente.cpp
+    ../ClienteVehiculo.h
+    ../ClienteVehiculo.cpp
+    TallerMecanico.h
+    TallerMecanico.cpp
 
     ${TS_FILES}
 )

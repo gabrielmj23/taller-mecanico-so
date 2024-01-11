@@ -15,7 +15,7 @@ string SistemaVehiculo::getNombre()
     return nombre;
 }
 
-vector<Pieza> SistemaVehiculo::getPiezas()
+vector<Pieza>& SistemaVehiculo::getPiezas()
 {
     return this->piezas;
 }

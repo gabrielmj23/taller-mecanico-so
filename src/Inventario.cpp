@@ -1,36 +1,71 @@
 #include <string>
-#include <Inventario.h>
+#include <vector>
+#include <map>
+#include "Inventario.h"
+#include "Pieza.h"
 using namespace std;
 
-Inventario::Inventario(vector<Pieza> stock)
+Inventario::Inventario()
 {
-    this->stock = stock;
+    vector<string> PIEZAS_COROLLA = {
+        "Aceite",
+        "Bomba de aceite",
+        "Filtro de aceite",
+        "Carter de aceite",
+        "Cojinetes",
+        "Árboles de levas",
+        "Válvulas",
+        "Tapón de drenaje",
+        "Cilindros",
+        "Pistones",
+        "Válvulas",
+        "Cigüeñal",
+        "Bielas",
+        "Caja de cambios",
+        "Embrague",
+        "Árbol de transmisión",
+        "Diferencial",
+        "Palieres",
+        "Volante",
+        "Caja de dirección",
+        "Barra de acoplamiento",
+        "Brazos de dirección",
+        "Neumáticos direccionales",
+        "Tanque de combustible",
+        "Bomba de combustible",
+        "Filtro de combustible",
+        "Inyectores",
+        "Regulador de presión",
+    };
+
+    map<string, int> m{};
+    // Stock inicial del taller
+    for (string nombre : PIEZAS_COROLLA)
+    {
+        m[nombre] = 10;
+    }
+    this->stock = m;
 }
 
-void Inventario::agregarPieza(Pieza p)
+map<string, int> Inventario::getStock()
 {
-    stock.push_back(p);
+    return stock;
+}
+
+void Inventario::agregarPiezas(Pieza p, int cantidad)
+{
+    stock[p.getNombre()] += cantidad;
 }
 
 Pieza Inventario::sacarPieza(string nombre)
 {
-    for (int i = 0; i < stock.size(); i++)
-    {
-        if (stock[i].getNombre() == nombre)
-        {
-            Pieza ret = stock[i];
-            stock.erase(stock.begin() + i);
-            return ret;
-        }
-    }
-    return Pieza("No existe", "No existe", FUNCIONA);
+    if (!stock[nombre])
+        return Pieza("No existe", FUNCIONA);
+    stock[nombre]--;
+    return Pieza(nombre, FUNCIONA);
 }
 
 int Inventario::buscarCantidadPiezaPorNombre(string nombre)
 {
-    int cuenta = 0;
-    for (auto p : stock)
-        if (p.getNombre() == nombre)
-            cuenta++;
-    return cuenta;
+    return stock[nombre];
 }

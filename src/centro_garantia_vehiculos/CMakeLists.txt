@@ -20,8 +20,12 @@ set(PROJECT_SOURCES
         centrogarantiavehiculo.cpp
         centrogarantiavehiculo.h
         centrogarantiavehiculo.ui
+        clientUtils.h
+        clientUtils.cpp
         ../Pieza.h
         ../Pieza.cpp
+        ../Inventario.h
+        ../Inventario.cpp
         ../SistemaVehiculo.h
         ../SistemaVehiculo.cpp
         ../Vehiculo.h
