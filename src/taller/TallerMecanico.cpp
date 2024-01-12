@@ -5,6 +5,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <QString>
+#include <pthread.h>
 #include "Pieza.h"
 #include "SistemaVehiculo.h"
 #include "EstacionTrabajo.h"
@@ -14,19 +15,21 @@ using namespace std;
 TallerMecanico::TallerMecanico()
 {
     this->serviciosTerminados = 0;
+    this->inventario = Inventario();
+    this->inventario_mutex = PTHREAD_MUTEX_INITIALIZER;
     // Crear estaciones
     this->estaciones = vector<EstacionTrabajo>{
-        EstacionTrabajo("Lubricación"),
-        EstacionTrabajo("Motor"),
-        EstacionTrabajo("Transmisión"),
-        EstacionTrabajo("Dirección"),
-        EstacionTrabajo("Combustible"),
-        EstacionTrabajo("Suspensión"),
-        EstacionTrabajo("Frenos"),
-        EstacionTrabajo("Seguridad"),
-        EstacionTrabajo("Electricidad"),
-        EstacionTrabajo("Refrigeración"),
-        EstacionTrabajo("Intercambio de calor")};
+        EstacionTrabajo("Lubricación", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Motor", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Transmisión", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Dirección", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Combustible", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Suspensión", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Frenos", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Seguridad", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Electricidad", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Refrigeración", &this->inventario, &this->inventario_mutex),
+        EstacionTrabajo("Intercambio de calor", &this->inventario, &this->inventario_mutex)};
 }
 
 map<string, vector<Pieza>> TallerMecanico::diagnosticar(Vehiculo &v)
@@ -48,6 +51,16 @@ map<string, vector<Pieza>> TallerMecanico::diagnosticar(Vehiculo &v)
 vector<EstacionTrabajo> TallerMecanico::getEstaciones()
 {
     return this->estaciones;
+}
+
+Inventario &TallerMecanico::getInventario()
+{
+    return this->inventario;
+}
+
+pthread_mutex_t &TallerMecanico::getInventarioMutex()
+{
+    return this->inventario_mutex;
 }
 
 void TallerMecanico::recibirVehiculo(Vehiculo &v, string falla, QListWidget *lista_repuestos, QListWidget *lista_estaciones, QProgressBar *barra_progreso)

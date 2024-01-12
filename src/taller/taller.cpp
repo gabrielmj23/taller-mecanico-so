@@ -46,9 +46,6 @@ vector<VehiculoCola> vehiculosCola = {
     {7, "GHI775", "15:00"},
 };
 
-// Inventario de repuestos
-Inventario inventario;
-
 // Objeto de taller mecánico
 TallerMecanico tallerMecanico;
 
@@ -79,6 +76,7 @@ enum TipoMensaje
 
 // Prototipo de funciones
 void rellenarTablaClientes(Ui::Taller *ui);
+void rellenarTablaRepuestos(Ui::Taller *ui);
 void *init_hilo_server(void *arg);
 void *manejar_conexion(void *p_client_socket);
 
@@ -190,6 +188,7 @@ void *manejar_conexion(void *p_client_socket)
             string res_vehiculo = "Vehículo recibido\n";
             write(client_socket, res_vehiculo.c_str(), res_vehiculo.length());
             close(client_socket);
+            rellenarTablaRepuestos(*uiTaller);
             return NULL;
         }
         break;
@@ -334,7 +333,7 @@ void rellenarTablaClientes(Ui::Taller *ui)
 void rellenarTablaRepuestos(Ui::Taller *ui)
 {
     // Agregar repuestos a la tabla
-    map<string, int> stock = inventario.getStock();
+    map<string, int> stock = tallerMecanico.getInventario().getStock();
     int i = 0;
     for (auto p : stock)
     {
@@ -599,7 +598,11 @@ void Taller::on_btn_repuestos_clicked()
         }
 
         // Agregar pieza
+        Inventario &inventario = tallerMecanico.getInventario();
+        pthread_mutex_t &inventario_mutex = tallerMecanico.getInventarioMutex();
+        pthread_mutex_lock(&inventario_mutex);
         inventario.agregarPiezas(Pieza(nombre.toStdString(), FUNCIONA), cantidad.toInt());
         rellenarTablaRepuestos(ui);
+        pthread_mutex_unlock(&inventario_mutex);
     }
 }

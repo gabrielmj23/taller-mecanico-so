@@ -68,7 +68,7 @@ bool enviarVehiculo(string cedula, string placa, string razon, int kmIngreso)
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(PUERTO_SERVER);
-    inet_pton(AF_INET, "localhost", &server_addr.sin_addr);
+    inet_pton(AF_INET, "127.0.0.1", &server_addr.sin_addr);
     if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
         cerr << "Error conectando al servidor\nCodigo: " << errno << "\n";

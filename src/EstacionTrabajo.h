@@ -2,6 +2,7 @@
 #include <string>
 #include <pthread.h>
 #include <Vehiculo.h>
+#include "Inventario.h"
 using namespace std;
 
 class EstacionTrabajo
@@ -11,10 +12,12 @@ private:
     string placa;
     pthread_t hilo_estacion;
     bool trabajando;
+    Inventario *inventario;
+    pthread_mutex_t *inventario_mutex;
 
 public:
     // Constructor
-    EstacionTrabajo(string nombre);
+    EstacionTrabajo(string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex);
     // Getters
     string getNombre();
     string getPlaca();
