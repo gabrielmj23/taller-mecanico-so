@@ -56,11 +56,11 @@ TallerMecanico tallerMecanico;
 Ui::Taller **uiTaller;
 
 // Constantes para el servidor
-#define PORT 6060
+#define PORT 7070
 #define BUFSIZE 4096
 #define SOCKETERR (-1)
 #define SERVER_BACKLOG 50
-#define THREAD_POOL_SIZE 6
+#define THREAD_POOL_SIZE 5
 
 // Para la thread pool
 pthread_t thread_pool[THREAD_POOL_SIZE];

@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string>
 #include "clientUtils.h"
+#include <errno.h>
 using namespace std;
 
 enum TipoMensaje
@@ -70,7 +71,7 @@ bool enviarVehiculo(string cedula, string placa, string razon, int kmIngreso)
     inet_pton(AF_INET, "localhost", &server_addr.sin_addr);
     if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
-        cerr << "Error conectando al servidor\n";
+        cerr << "Error conectando al servidor\nCodigo: " << errno << "\n";
         return false;
     }
     // Enviar tipo

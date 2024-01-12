@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 using namespace std;
-#define PUERTO_SERVER 6060
+#define PUERTO_SERVER 7070
 
 // Informa al servidor que debe actualizar la lista de clientes
 bool informarClienteNuevo();
