@@ -4,8 +4,9 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class CentroGarantiaVehiculo;
+namespace Ui
+{
+    class CentroGarantiaVehiculo;
 }
 QT_END_NAMESPACE
 
@@ -39,6 +40,8 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_9_clicked();
+
+    void on_btn_aleatorios_clicked();
 
 private:
     Ui::CentroGarantiaVehiculo *ui;

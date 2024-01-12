@@ -30,7 +30,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -464,7 +464,7 @@ color: rgb(255, 255, 255);</string>
        <string>d/M/yyyy h:mm AP</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_12">
+     <widget class="QPushButton" name="btn_aleatorios">
       <property name="geometry">
        <rect>
         <x>370</x>

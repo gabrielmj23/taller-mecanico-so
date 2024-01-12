@@ -9,6 +9,7 @@
 #include <QDate>
 #include <QString>
 #include <vector>
+#include <string>
 #include <iostream>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -21,6 +22,8 @@
 #include "Vehiculo.h"
 #include "clientUtils.h"
 using namespace std;
+
+#define NUM_RANDOMS 50
 
 // Variables globales
 string cedulaActual = "";
@@ -484,5 +487,23 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
         ui->serviciosTable->setItem(numRows, 3, itemKilometrajeIngreso);
 
         actItemsTabla(ui->serviciosTable);
+    }
+}
+
+void CentroGarantiaVehiculo::on_btn_aleatorios_clicked()
+{
+    string fallas[] = {"Ruidos por suspensión",
+                       "Acelera de forma brusca",
+                       "Se escuchan chirridos y se detiene el vehículo",
+                       "Embrague resbaladizo",
+                       "Arranque lento",
+                       "Bolsas de aire defectuosas",
+                       "Desvío de dirección",
+                       "Ruido al frenar",
+                       "Fuga de refrigerante",
+                       "El seguro de la puerta se desactiva inesperadamente"};
+    for (int i = 0; i < NUM_RANDOMS; i++)
+    {
+        enviarVehiculo("cedula" + i, "placa" + i, fallas[rand() % 10], rand() % 1000);
     }
 }
