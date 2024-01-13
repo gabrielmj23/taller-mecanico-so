@@ -23,7 +23,7 @@
 #include "clientUtils.h"
 using namespace std;
 
-#define NUM_RANDOMS 50
+#define NUM_RANDOMS 10
 
 // Variables globales
 string cedulaActual = "";
@@ -504,6 +504,6 @@ void CentroGarantiaVehiculo::on_btn_aleatorios_clicked()
                        "El seguro de la puerta se desactiva inesperadamente"};
     for (int i = 0; i < NUM_RANDOMS; i++)
     {
-        enviarVehiculo("cedula" + i, "placa" + i, fallas[rand() % 10], rand() % 1000);
+        enviarVehiculo("cedula" + to_string(i), "placa" + to_string(i), fallas[rand() % 10], rand() % 1000);
     }
 }
