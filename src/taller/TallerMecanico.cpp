@@ -48,6 +48,26 @@ map<string, vector<Pieza>> TallerMecanico::diagnosticar(Vehiculo &v)
     return piezasPorEstacion;
 }
 
+void TallerMecanico::setBarraProgreso(QProgressBar *barra_progreso)
+{
+    this->barra_progreso = barra_progreso;
+}
+
+void TallerMecanico::setListaRepuestos(QListWidget *lista_repuestos)
+{
+    this->lista_repuestos = lista_repuestos;
+}
+
+void TallerMecanico::setListaEstaciones(QListWidget *lista_estaciones)
+{
+    this->lista_estaciones = lista_estaciones;
+}
+
+void TallerMecanico::setTablaRepuestos(QTableWidget *tabla_repuestos)
+{
+    this->tabla_repuestos = tabla_repuestos;
+}
+
 vector<EstacionTrabajo> TallerMecanico::getEstaciones()
 {
     return this->estaciones;
@@ -63,7 +83,7 @@ pthread_mutex_t &TallerMecanico::getInventarioMutex()
     return this->inventario_mutex;
 }
 
-void TallerMecanico::recibirVehiculo(Vehiculo &v, string falla, QListWidget *lista_repuestos, QListWidget *lista_estaciones, QProgressBar *barra_progreso)
+void TallerMecanico::recibirVehiculo(Vehiculo &v, string falla)
 {
     cout << "Recibió vehículo de placa: " << v.getPlaca() << "\n---\n";
     // Asignar piezas basado en la falla
@@ -94,7 +114,7 @@ void TallerMecanico::recibirVehiculo(Vehiculo &v, string falla, QListWidget *lis
             if (e.getNombre() == p.first)
             {
                 cout << "Enviando a estación de " << p.first << "\n";
-                e.iniciarEstacion(v, p.second);
+                e.iniciarEstacion(v, p.second, this->tabla_repuestos);
                 break;
             }
         }

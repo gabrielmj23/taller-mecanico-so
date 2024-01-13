@@ -184,11 +184,10 @@ void *manejar_conexion(void *p_client_socket)
             (*uiTaller)->repuestos_diag_list->clear();
             (*uiTaller)->estaciones_diag_list->clear();
             // Enviar vehículo al taller para diagnosticarlo y trabajar
-            tallerMecanico.recibirVehiculo(vehic, razon, (*uiTaller)->repuestos_diag_list, (*uiTaller)->estaciones_diag_list, (*uiTaller)->progressBar);
+            tallerMecanico.recibirVehiculo(vehic, razon);
             string res_vehiculo = "Vehículo recibido\n";
             write(client_socket, res_vehiculo.c_str(), res_vehiculo.length());
             close(client_socket);
-            rellenarTablaRepuestos(*uiTaller);
             return NULL;
         }
         break;
@@ -332,6 +331,10 @@ void rellenarTablaClientes(Ui::Taller *ui)
 // Rellena la tabla de repuestos
 void rellenarTablaRepuestos(Ui::Taller *ui)
 {
+    // Limpiar tabla
+    ui->tablaRepuestos->clearContents();
+    ui->tablaRepuestos->setRowCount(0);
+
     // Agregar repuestos a la tabla
     map<string, int> stock = tallerMecanico.getInventario().getStock();
     int i = 0;
@@ -367,6 +370,12 @@ Taller::Taller(QWidget *parent)
 {
     ui->setupUi(this);
     uiTaller = &ui;
+
+    // Agregar herramientas de UI al taller mecánico
+    tallerMecanico.setBarraProgreso(ui->progressBar);
+    tallerMecanico.setListaRepuestos(ui->repuestos_diag_list);
+    tallerMecanico.setListaEstaciones(ui->estaciones_diag_list);
+    tallerMecanico.setTablaRepuestos(ui->tablaRepuestos);
 
     // Set the title text of each tab to be horizontal
     for (int i = 0; i < ui->tabWidget->count(); i++)

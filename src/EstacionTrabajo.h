@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <pthread.h>
+#include <QTableWidget>
 #include <Vehiculo.h>
 #include "Inventario.h"
 using namespace std;
@@ -23,5 +24,5 @@ public:
     string getPlaca();
     bool getTrabajando();
     // Trabajo/Hilos
-    void iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas);
+    void iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTableWidget *tabla_repuestos);
 };
