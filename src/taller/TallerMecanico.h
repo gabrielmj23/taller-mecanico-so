@@ -1,15 +1,25 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <deque>
 #include <iostream>
 #include <QListWidget>
 #include <QProgressBar>
 #include <QTableWidget>
+#include <QLabel>
 #include "Pieza.h"
 #include "Vehiculo.h"
 #include "EstacionTrabajo.h"
 #include "Inventario.h"
 using namespace std;
+
+typedef struct vehiAtendido
+{
+    string cedula;
+    string horaEntrada;
+    string placa;
+    string razon;
+} VehiculoAtendido;
 
 class TallerMecanico
 {
@@ -18,6 +28,7 @@ private:
     pthread_mutex_t inventario_mutex;
     vector<EstacionTrabajo> estaciones;
     vector<Vehiculo> estacionamiento;
+    deque<VehiculoAtendido> vehiculos_atendidos;
     int serviciosTerminados;
 
 public:
@@ -28,11 +39,17 @@ public:
     QListWidget *lista_repuestos;
     QListWidget *lista_estaciones;
     QTableWidget *tabla_repuestos;
+    QTableWidget *tabla_atendidos;
+    QTableWidget *tabla_estaciones;
+    QLabel *label_servicios_terminados;
     // Setters de UI
     void setBarraProgreso(QProgressBar *barra_progreso);
     void setListaRepuestos(QListWidget *lista_repuestos);
     void setListaEstaciones(QListWidget *lista_estaciones);
     void setTablaRepuestos(QTableWidget *tabla_repuestos);
+    void setTablaAtendidos(QTableWidget *tabla_atendidos);
+    void setTablaEstaciones(QTableWidget *tabla_estaciones);
+    void setLabelServiciosTerminados(QLabel *label_servicios_terminados);
     // Getters
     vector<EstacionTrabajo> getEstaciones();
     Inventario &getInventario();

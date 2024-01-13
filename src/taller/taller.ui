@@ -36,7 +36,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -232,22 +232,22 @@ border-radius:10px;
       </property>
       <column>
        <property name="text">
-        <string>Tipo</string>
+        <string>Cédula del Cliente</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Nombre</string>
+        <string>Hora de Entrada</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Hora</string>
+        <string>Placa del Vehículo</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Placa</string>
+        <string>Razón</string>
        </property>
       </column>
      </widget>
@@ -273,7 +273,7 @@ border-radius:10px;
        <locale language="Spanish" country="Venezuela"/>
       </property>
       <property name="text">
-       <string>Últimas Entradas y Salidas</string>
+       <string>Últimos vehículos atendidos</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -969,17 +969,17 @@ border-radius:10px;
       </attribute>
       <column>
        <property name="text">
-        <string>Nombre</string>
+        <string>Nombre de Estación</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Número de Placa</string>
+        <string>Estado</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Tiempo Acumulado</string>
+        <string>Vehículo</string>
        </property>
       </column>
      </widget>

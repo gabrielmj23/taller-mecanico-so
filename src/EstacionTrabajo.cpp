@@ -67,8 +67,9 @@ void *trabajar(void *unidad)
     return nullptr;
 }
 
-EstacionTrabajo::EstacionTrabajo(string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex)
+EstacionTrabajo::EstacionTrabajo(int orden, string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex)
 {
+    this->orden = orden;
     this->nombre = nombre;
     this->trabajando = false;
     this->inventario = inventario;
@@ -90,7 +91,7 @@ bool EstacionTrabajo::getTrabajando()
     return this->trabajando;
 }
 
-void EstacionTrabajo::iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTableWidget *tabla_repuestos)
+void EstacionTrabajo::iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTableWidget *tabla_repuestos, QTableWidget *tabla_estaciones)
 {
     cout << "Iniciando estación de trabajo: Estación " << nombre << '\n';
     UnidadTrabajo u;
@@ -103,6 +104,11 @@ void EstacionTrabajo::iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTable
     pthread_create(&hilo_estacion, nullptr, trabajar, &u);
     this->placa = v.getPlaca();
     this->trabajando = true;
+    tabla_estaciones->setItem(orden, 1, new QTableWidgetItem(QString::fromStdString(v.getPlaca())));
+    tabla_estaciones->setItem(orden, 2, new QTableWidgetItem(QString::fromStdString("Trabajando")));
     pthread_join(hilo_estacion, nullptr);
     this->trabajando = false;
+    this->placa = "";
+    tabla_estaciones->setItem(orden, 1, new QTableWidgetItem(QString::fromStdString("")));
+    tabla_estaciones->setItem(orden, 2, new QTableWidgetItem(QString::fromStdString("Libre")));
 }

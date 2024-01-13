@@ -9,6 +9,7 @@ using namespace std;
 class EstacionTrabajo
 {
 private:
+    int orden;
     string nombre;
     string placa;
     pthread_t hilo_estacion;
@@ -18,11 +19,11 @@ private:
 
 public:
     // Constructor
-    EstacionTrabajo(string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex);
+    EstacionTrabajo(int orden, string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex);
     // Getters
     string getNombre();
     string getPlaca();
     bool getTrabajando();
     // Trabajo/Hilos
-    void iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTableWidget *tabla_repuestos);
+    void iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTableWidget *tabla_repuestos, QTableWidget *tabla_estaciones);
 };

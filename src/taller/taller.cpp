@@ -376,6 +376,9 @@ Taller::Taller(QWidget *parent)
     tallerMecanico.setListaRepuestos(ui->repuestos_diag_list);
     tallerMecanico.setListaEstaciones(ui->estaciones_diag_list);
     tallerMecanico.setTablaRepuestos(ui->tablaRepuestos);
+    tallerMecanico.setTablaAtendidos(ui->tablaClienteVehiculo);
+    tallerMecanico.setTablaEstaciones(ui->tablaEstaciones);
+    tallerMecanico.setLabelServiciosTerminados(ui->label_completados);
 
     // Set the title text of each tab to be horizontal
     for (int i = 0; i < ui->tabWidget->count(); i++)
@@ -434,8 +437,8 @@ Taller::Taller(QWidget *parent)
     {
         ui->tablaEstaciones->insertRow(i);
         ui->tablaEstaciones->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(estaciones[i].getNombre())));
-        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].getTrabajando() ? estaciones[i].getPlaca() : "Vacía")));
-        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString("00:00")));
+        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(estaciones[i].getTrabajando() ? "Trabajando" : "Libre"));
+        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(estaciones[i].getPlaca())));
     }
 
     actItemsTabla(ui->tablaEstaciones);
