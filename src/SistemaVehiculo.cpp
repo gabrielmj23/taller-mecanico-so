@@ -15,9 +15,21 @@ string SistemaVehiculo::getNombre()
     return nombre;
 }
 
-vector<Pieza>& SistemaVehiculo::getPiezas()
+vector<Pieza> &SistemaVehiculo::getPiezas()
 {
     return this->piezas;
+}
+
+void SistemaVehiculo::setEstadoPieza(string nombre, EstadoPieza estado)
+{
+    for (int i = 0; i < piezas.size(); i++)
+    {
+        if (piezas[i].getNombre() == nombre)
+        {
+            piezas[i].setEstado(estado);
+            return;
+        }
+    }
 }
 
 void *SistemaVehiculo::iniciarSistema()

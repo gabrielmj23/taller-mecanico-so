@@ -46,9 +46,6 @@ vector<VehiculoCola> vehiculosCola = {
     {7, "GHI775", "15:00"},
 };
 
-// Inventario de repuestos
-Inventario inventario;
-
 // Objeto de taller mecánico
 TallerMecanico tallerMecanico;
 
@@ -56,11 +53,11 @@ TallerMecanico tallerMecanico;
 Ui::Taller **uiTaller;
 
 // Constantes para el servidor
-#define PORT 6060
+#define PORT 7070
 #define BUFSIZE 4096
 #define SOCKETERR (-1)
 #define SERVER_BACKLOG 50
-#define THREAD_POOL_SIZE 6
+#define THREAD_POOL_SIZE 5
 
 // Para la thread pool
 pthread_t thread_pool[THREAD_POOL_SIZE];
@@ -79,6 +76,7 @@ enum TipoMensaje
 
 // Prototipo de funciones
 void rellenarTablaClientes(Ui::Taller *ui);
+void rellenarTablaRepuestos(Ui::Taller *ui);
 void *init_hilo_server(void *arg);
 void *manejar_conexion(void *p_client_socket);
 
@@ -171,6 +169,7 @@ void *manejar_conexion(void *p_client_socket)
         {
         case VEHICULO_INGRESADO:
         {
+            // Deserializar datos recibidos
             istringstream iss(serialized);
             string cedulaCliente, placa, razon, kmIngresado;
             getline(iss, cedulaCliente, '-');
@@ -178,6 +177,13 @@ void *manejar_conexion(void *p_client_socket)
             getline(iss, razon, '-');
             getline(iss, kmIngresado, '\n');
             Vehiculo vehic(cedulaCliente, placa);
+            // Actualizar pantalla de diagnóstico
+            (*uiTaller)->progressBar->setValue(0);
+            (*uiTaller)->label_falla_diag->setText("Falla: " + QString::fromStdString(razon));
+            (*uiTaller)->label_placa_diag->setText("Nro. de Placa: " + QString::fromStdString(placa));
+            (*uiTaller)->repuestos_diag_list->clear();
+            (*uiTaller)->estaciones_diag_list->clear();
+            // Enviar vehículo al taller para diagnosticarlo y trabajar
             tallerMecanico.recibirVehiculo(vehic, razon);
             string res_vehiculo = "Vehículo recibido\n";
             write(client_socket, res_vehiculo.c_str(), res_vehiculo.length());
@@ -325,8 +331,12 @@ void rellenarTablaClientes(Ui::Taller *ui)
 // Rellena la tabla de repuestos
 void rellenarTablaRepuestos(Ui::Taller *ui)
 {
+    // Limpiar tabla
+    ui->tablaRepuestos->clearContents();
+    ui->tablaRepuestos->setRowCount(0);
+
     // Agregar repuestos a la tabla
-    map<string, int> stock = inventario.getStock();
+    map<string, int> stock = tallerMecanico.getInventario().getStock();
     int i = 0;
     for (auto p : stock)
     {
@@ -360,6 +370,15 @@ Taller::Taller(QWidget *parent)
 {
     ui->setupUi(this);
     uiTaller = &ui;
+
+    // Agregar herramientas de UI al taller mecánico
+    tallerMecanico.setBarraProgreso(ui->progressBar);
+    tallerMecanico.setListaRepuestos(ui->repuestos_diag_list);
+    tallerMecanico.setListaEstaciones(ui->estaciones_diag_list);
+    tallerMecanico.setTablaRepuestos(ui->tablaRepuestos);
+    tallerMecanico.setTablaAtendidos(ui->tablaClienteVehiculo);
+    tallerMecanico.setTablaEstaciones(ui->tablaEstaciones);
+    tallerMecanico.setLabelServiciosTerminados(ui->label_completados);
 
     // Set the title text of each tab to be horizontal
     for (int i = 0; i < ui->tabWidget->count(); i++)
@@ -418,8 +437,8 @@ Taller::Taller(QWidget *parent)
     {
         ui->tablaEstaciones->insertRow(i);
         ui->tablaEstaciones->setItem(i, 0, new QTableWidgetItem(QString::fromStdString(estaciones[i].getNombre())));
-        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(estaciones[i].getTrabajando() ? estaciones[i].getPlaca() : "Vacía")));
-        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString("00:00")));
+        ui->tablaEstaciones->setItem(i, 1, new QTableWidgetItem(estaciones[i].getTrabajando() ? "Trabajando" : "Libre"));
+        ui->tablaEstaciones->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(estaciones[i].getPlaca())));
     }
 
     actItemsTabla(ui->tablaEstaciones);
@@ -591,7 +610,11 @@ void Taller::on_btn_repuestos_clicked()
         }
 
         // Agregar pieza
+        Inventario &inventario = tallerMecanico.getInventario();
+        pthread_mutex_t &inventario_mutex = tallerMecanico.getInventarioMutex();
+        pthread_mutex_lock(&inventario_mutex);
         inventario.agregarPiezas(Pieza(nombre.toStdString(), FUNCIONA), cantidad.toInt());
         rellenarTablaRepuestos(ui);
+        pthread_mutex_unlock(&inventario_mutex);
     }
 }
