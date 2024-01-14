@@ -20,8 +20,6 @@ set(PROJECT_SOURCES
     taller.cpp
     taller.h
     taller.ui
-    clases.h
-    clases.cpp
     ../Pieza.h
     ../Pieza.cpp
     ../Inventario.h

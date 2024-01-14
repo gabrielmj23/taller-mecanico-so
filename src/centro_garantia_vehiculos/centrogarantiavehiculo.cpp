@@ -10,6 +10,7 @@
 #include <QString>
 #include <vector>
 #include <string>
+#include <ctime>
 #include <iostream>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -377,7 +378,7 @@ void CentroGarantiaVehiculo::on_pushButton_12_clicked()
 void CentroGarantiaVehiculo::on_pushButton_4_clicked()
 {
     placaActual = ui->vehiculosClienteTable->item(ui->vehiculosClienteTable->currentRow(), 0)->text().toStdString();
-
+    ui->label_servicios_placa->setText("Servicios al Vehículo de Placa: " + QString::fromStdString(placaActual));
     ui->stackedWidget->setCurrentWidget(ui->page_3);
     // Limpiar la tabla de vehículos del cliente
     ui->serviciosTable->clearContents();
@@ -393,7 +394,7 @@ void CentroGarantiaVehiculo::on_pushButton_4_clicked()
 
         // Create new QTableWidgetItem objects for each column
         QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
-        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
+        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getHoraIni()));
         QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
         QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));
 
@@ -460,9 +461,14 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
             return;
         }
         string razon = fallas[idRazon];
-
+        // Obtener hora de entrada (hh:mm)
+        time_t now = std::time(nullptr);
+        tm *now_tm = std::localtime(&now);
+        char time_str[6];
+        strftime(time_str, sizeof(time_str), "%H:%M", now_tm);
+        string time_string(time_str);
         // Crear servicio, guardarlo e informar al taller
-        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), "Sigue en Taller", razon, kmIngreso.toInt());
+        Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), time_string, razon, kmIngreso.toInt());
         Servicio::guardarServicioEnArchivo(servicio);
         enviarVehiculo(cedulaActual, placaActual, razon, kmIngreso.toInt());
 
@@ -476,7 +482,7 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
         // Mostrar la información del vehículo en la tabla
         // Create new QTableWidgetItem objects for each column
         QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
-        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
+        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getHoraIni()));
         QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
         QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));
 

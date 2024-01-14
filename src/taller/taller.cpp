@@ -26,7 +26,6 @@
 #include <QFormLayout>
 #include <QLineEdit>
 
-#include "clases.h"
 #include "Inventario.h"
 #include "Cliente.h"
 #include "Servicio.h"
@@ -35,16 +34,6 @@
 #include "Vehiculo.h"
 #include "TallerMecanico.h"
 using namespace std;
-
-vector<VehiculoCola> vehiculosCola = {
-    {1, "ABC123", "09:00"},
-    {2, "DEF456", "10:00"},
-    {3, "GHI789", "11:00"},
-    {4, "GHI788", "12:00"},
-    {5, "GHI777", "13:00"},
-    {6, "GHI776", "14:00"},
-    {7, "GHI775", "15:00"},
-};
 
 // Objeto de taller mecánico
 TallerMecanico tallerMecanico;
@@ -178,11 +167,13 @@ void *manejar_conexion(void *p_client_socket)
             getline(iss, kmIngresado, '\n');
             Vehiculo vehic(cedulaCliente, placa);
             // Actualizar pantalla de diagnóstico
+            pthread_mutex_lock(&tallerMecanico.ui_mutex);
             (*uiTaller)->progressBar->setValue(0);
             (*uiTaller)->label_falla_diag->setText("Falla: " + QString::fromStdString(razon));
             (*uiTaller)->label_placa_diag->setText("Nro. de Placa: " + QString::fromStdString(placa));
             (*uiTaller)->repuestos_diag_list->clear();
             (*uiTaller)->estaciones_diag_list->clear();
+            pthread_mutex_unlock(&tallerMecanico.ui_mutex);
             // Enviar vehículo al taller para diagnosticarlo y trabajar
             tallerMecanico.recibirVehiculo(vehic, razon);
             string res_vehiculo = "Vehículo recibido\n";
@@ -378,7 +369,9 @@ Taller::Taller(QWidget *parent)
     tallerMecanico.setTablaRepuestos(ui->tablaRepuestos);
     tallerMecanico.setTablaAtendidos(ui->tablaClienteVehiculo);
     tallerMecanico.setTablaEstaciones(ui->tablaEstaciones);
+    tallerMecanico.setTablaCola(ui->tablaVehiculosCola);
     tallerMecanico.setLabelServiciosTerminados(ui->label_completados);
+    tallerMecanico.setLabelCola(ui->label_cola);
 
     // Set the title text of each tab to be horizontal
     for (int i = 0; i < ui->tabWidget->count(); i++)
@@ -416,15 +409,6 @@ Taller::Taller(QWidget *parent)
 
     // Para que se muestre el titulo del tab seleccionado al iniciar la aplicacion
     tabManager(ui->tabWidget->currentIndex(), ui);
-
-    // Agregar vehiculos en cola a la tabla
-    for (int i = 0; i < vehiculosCola.size(); i++)
-    {
-        ui->tablaVehiculosCola->insertRow(i);
-        ui->tablaVehiculosCola->setItem(i, 0, new QTableWidgetItem(QString::number(vehiculosCola[i].nroPuesto)));
-        ui->tablaVehiculosCola->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(vehiculosCola[i].placa)));
-        ui->tablaVehiculosCola->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(vehiculosCola[i].hora)));
-    }
 
     actItemsTabla(ui->tablaVehiculosCola);
 
@@ -563,7 +547,7 @@ void Taller::on_pushButton_2_clicked()
 
         // Create new QTableWidgetItem objects for each column
         QTableWidgetItem *itemFechaIngreso = new QTableWidgetItem(QString::fromStdString(servicio.getFechaIni()));
-        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getFechaFin()));
+        QTableWidgetItem *itemFechaSalida = new QTableWidgetItem(QString::fromStdString(servicio.getHoraIni()));
         QTableWidgetItem *itemRazon = new QTableWidgetItem(QString::fromStdString(servicio.getRazon()));
         QTableWidgetItem *itemKilometrajeIngreso = new QTableWidgetItem(QString::number(servicio.getKmIngreso()));
 
