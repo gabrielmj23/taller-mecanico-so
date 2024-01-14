@@ -36,7 +36,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>2</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -126,7 +126,7 @@ background-color: rgb(2, 210, 26);
        <enum>QFrame::Raised</enum>
       </property>
       <property name="text">
-       <string>Vehículos en Cola: 0</string>
+       <string>Vehículos en Espera: 0</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -582,12 +582,17 @@ color: rgb(255, 255, 255);</string>
       </column>
       <column>
        <property name="text">
-        <string>Número de Placa</string>
+        <string>Placa del Vehículo</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Tiempo en Espera</string>
+        <string>Razón</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Hora de Entrada</string>
        </property>
       </column>
      </widget>

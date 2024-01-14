@@ -16,10 +16,11 @@ private:
     bool trabajando;
     Inventario *inventario;
     pthread_mutex_t *inventario_mutex;
+    pthread_mutex_t *ui_mutex;
 
 public:
     // Constructor
-    EstacionTrabajo(int orden, string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex);
+    EstacionTrabajo(int orden, string nombre, Inventario *inventario, pthread_mutex_t *inventario_mutex, pthread_mutex_t *ui_mutex);
     // Getters
     string getNombre();
     string getPlaca();
