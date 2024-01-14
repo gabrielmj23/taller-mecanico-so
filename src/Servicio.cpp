@@ -5,11 +5,11 @@
 #include "Servicio.h"
 using namespace std;
 
-Servicio::Servicio(string placa, string fechaIni, string fechaFin, string razon, int kmIngreso)
+Servicio::Servicio(string placa, string fechaIni, string horaIni, string razon, int kmIngreso)
 {
     this->placaVehiculo = placa;
     this->fechaIni = fechaIni;
-    this->fechaFin = fechaFin;
+    this->horaIni = horaIni;
     this->razon = razon;
     this->kmIngreso = kmIngreso;
 }
@@ -24,9 +24,9 @@ string Servicio::getFechaIni()
     return this->fechaIni;
 }
 
-string Servicio::getFechaFin()
+string Servicio::getHoraIni()
 {
-    return this->fechaFin;
+    return this->horaIni;
 }
 
 string Servicio::getRazon()
@@ -48,7 +48,7 @@ vector<Servicio> Servicio::cargarServiciosDesdeArchivo(string placa)
     {
         while (true)
         {
-            size_t placaSize, fechaIniSize, fechaFinSize, razonSize, kmIngresoSize;
+            size_t placaSize, fechaIniSize, horaIniSize, razonSize, kmIngresoSize;
             // Leer placa
             archivo.read(reinterpret_cast<char *>(&placaSize), sizeof(size_t));
             if (archivo.eof())
@@ -65,12 +65,12 @@ vector<Servicio> Servicio::cargarServiciosDesdeArchivo(string placa)
             string fechaIni(fechaIniBuffer, fechaIniSize);
             delete[] fechaIniBuffer;
 
-            // Leer fechaFin
-            archivo.read(reinterpret_cast<char *>(&fechaFinSize), sizeof(size_t));
-            char *fechaFinBuffer = new char[fechaFinSize];
-            archivo.read(fechaFinBuffer, fechaFinSize);
-            string fechaFin(fechaFinBuffer, fechaFinSize);
-            delete[] fechaFinBuffer;
+            // Leer horaIni
+            archivo.read(reinterpret_cast<char *>(&horaIniSize), sizeof(size_t));
+            char *horaIniBuffer = new char[horaIniSize];
+            archivo.read(horaIniBuffer, horaIniSize);
+            string horaIni(horaIniBuffer, horaIniSize);
+            delete[] horaIniBuffer;
 
             // Leer razon
             archivo.read(reinterpret_cast<char *>(&razonSize), sizeof(size_t));
@@ -88,7 +88,7 @@ vector<Servicio> Servicio::cargarServiciosDesdeArchivo(string placa)
             int kmIngreso = stoi(kmIngreso_str);
 
             // Guardar vehículo
-            Servicio servicio(placa, fechaIni, fechaFin, razon, kmIngreso);
+            Servicio servicio(placa, fechaIni, horaIni, razon, kmIngreso);
             servicios.push_back(servicio);
         }
         cout << "Servicios cargados desde el archivo correctamente.\n";
@@ -108,7 +108,7 @@ void Servicio::guardarServicioEnArchivo(Servicio servicio)
 
     if (archivo.is_open())
     {
-        for (const auto &str : {servicio.getPlacaVehiculo(), servicio.getFechaIni(), servicio.getFechaFin(), servicio.getRazon(), to_string(servicio.getKmIngreso())})
+        for (const auto &str : {servicio.getPlacaVehiculo(), servicio.getFechaIni(), servicio.getHoraIni(), servicio.getRazon(), to_string(servicio.getKmIngreso())})
         {
             size_t len = str.size();
             archivo.write(reinterpret_cast<char *>(&len), sizeof(len));

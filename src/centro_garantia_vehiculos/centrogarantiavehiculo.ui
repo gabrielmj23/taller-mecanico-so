@@ -30,7 +30,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -391,7 +391,7 @@ color: rgb(255, 255, 255);</string>
         </column>
         <column>
          <property name="text">
-          <string>Fecha de Egreso</string>
+          <string>Hora de Ingreso</string>
          </property>
         </column>
         <column>
@@ -422,7 +422,7 @@ color: rgb(255, 255, 255);</string>
          <string>Reportar Falla</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label_servicios_placa">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -467,8 +467,8 @@ color: rgb(255, 255, 255);</string>
      <widget class="QPushButton" name="btn_aleatorios">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>120</y>
+        <x>380</x>
+        <y>170</y>
         <width>181</width>
         <height>111</height>
        </rect>
@@ -616,33 +616,20 @@ color: rgb(255, 255, 255);</string>
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>290</y>
+        <x>30</x>
+        <y>110</y>
         <width>621</width>
         <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
-        <bold>true</bold>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
        </font>
       </property>
       <property name="text">
-       <string>Velocidad de Tiempo</string>
-      </property>
-     </widget>
-     <widget class="QSlider" name="horizontalSlider">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>360</y>
-        <width>160</width>
-        <height>42</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <string>Se van a generar 10 vehículos para su asistencia</string>
       </property>
      </widget>
     </widget>

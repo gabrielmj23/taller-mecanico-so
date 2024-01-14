@@ -7,17 +7,17 @@ class Servicio
 private:
     string placaVehiculo;
     string fechaIni;
-    string fechaFin;
+    string horaIni;
     string razon;
     int kmIngreso;
 
 public:
     // Constructor
-    Servicio(string placa, string fechaIni, string fechaFin, string razon, int kmIngreso);
+    Servicio(string placa, string fechaIni, string horaIni, string razon, int kmIngreso);
     // Getters
     string getPlacaVehiculo();
     string getFechaIni();
-    string getFechaFin();
+    string getHoraIni();
     string getRazon();
     int getKmIngreso();
     // Archivos

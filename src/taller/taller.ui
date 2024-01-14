@@ -36,7 +36,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideLeft</enum>
@@ -504,7 +504,7 @@ color: rgb(255, 255, 255);</string>
         </column>
         <column>
          <property name="text">
-          <string>Fecha de Egreso</string>
+          <string>Hora de Ingreso</string>
          </property>
         </column>
         <column>
