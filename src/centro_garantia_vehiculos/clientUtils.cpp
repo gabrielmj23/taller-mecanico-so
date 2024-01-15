@@ -13,6 +13,14 @@ enum TipoMensaje
     VEHICULO_INGRESADO,
 };
 
+typedef struct unidad
+{
+    string cedula;
+    string placa;
+    string razon;
+    int kmIngreso;
+} UnidadVehiculo;
+
 bool informarClienteNuevo()
 {
     // Crear socket de cliente
@@ -55,14 +63,15 @@ bool informarClienteNuevo()
     return true;
 }
 
-bool enviarVehiculo(string cedula, string placa, string razon, int kmIngreso)
+void *enviarVehiculo(void *arg)
 {
+    UnidadVehiculo *u = (UnidadVehiculo *)arg;
     // Crear socket de cliente
     int sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0)
     {
         cerr << "Error creando socket\n";
-        return false;
+        return NULL;
     }
     // Conectar a servidor
     struct sockaddr_in server_addr;
@@ -72,21 +81,21 @@ bool enviarVehiculo(string cedula, string placa, string razon, int kmIngreso)
     if (connect(sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
         cerr << "Error conectando al servidor\nCodigo: " << errno << "\n";
-        return false;
+        return NULL;
     }
     // Enviar tipo
     TipoMensaje type = VEHICULO_INGRESADO;
     if (send(sock, &type, sizeof(type), 0) < 0)
     {
         cerr << "Error enviando tipo de mensaje\n";
-        return false;
+        return NULL;
     }
     // Enviar datos
-    string datos = cedula + "-" + placa + "-" + razon + "-" + to_string(kmIngreso) + '\n';
+    string datos = u->cedula + "-" + u->placa + "-" + u->razon + "-" + to_string(u->kmIngreso) + '\n';
     if (send(sock, datos.c_str(), datos.size(), 0) < 0)
     {
         cerr << "Error enviando datos\n";
-        return false;
+        return NULL;
     }
     // Esperar respuesta
     char buffer[1024];
@@ -101,5 +110,5 @@ bool enviarVehiculo(string cedula, string placa, string razon, int kmIngreso)
     }
     // Cerrar socket
     close(sock);
-    return true;
+    return NULL;
 }

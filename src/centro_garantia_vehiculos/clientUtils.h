@@ -7,4 +7,4 @@ using namespace std;
 bool informarClienteNuevo();
 
 // Envía al servidor un vehículo para su diagnóstico y reparación
-bool enviarVehiculo(string cedula, string placa, string razon, int kmIngreso);
+void *enviarVehiculo(void *arg);
