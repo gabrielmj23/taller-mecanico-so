@@ -496,8 +496,10 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
     }
 }
 
+
 void CentroGarantiaVehiculo::on_btn_aleatorios_clicked()
 {
+   
     string fallas[] = {"Ruidos por suspensión",
                        "Acelera de forma brusca",
                        "Se escuchan chirridos y se detiene el vehículo",
@@ -510,6 +512,6 @@ void CentroGarantiaVehiculo::on_btn_aleatorios_clicked()
                        "El seguro de la puerta se desactiva inesperadamente"};
     for (int i = 0; i < NUM_RANDOMS; i++)
     {
-        enviarVehiculo("cedula" + to_string(i), "placa" + to_string(i), fallas[rand() % 10], rand() % 1000);
+        enviarVehiculo("cedula", "placa" + to_string(i), fallas[rand() % 10], rand() % 1000);
     }
 }

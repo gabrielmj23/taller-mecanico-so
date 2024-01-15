@@ -68,6 +68,7 @@ void rellenarTablaClientes(Ui::Taller *ui);
 void rellenarTablaRepuestos(Ui::Taller *ui);
 void *init_hilo_server(void *arg);
 void *manejar_conexion(void *p_client_socket);
+void actItemsTabla(QTableWidget *tableWidget);
 
 // Función para inicializar el hilo del servidor
 void *init_servidor(void *arg)
@@ -173,6 +174,7 @@ void *manejar_conexion(void *p_client_socket)
             (*uiTaller)->label_placa_diag->setText("Nro. de Placa: " + QString::fromStdString(placa));
             (*uiTaller)->repuestos_diag_list->clear();
             (*uiTaller)->estaciones_diag_list->clear();
+            actItemsTabla((*uiTaller)->tablaEstaciones);
             pthread_mutex_unlock(&tallerMecanico.ui_mutex);
             // Enviar vehículo al taller para diagnosticarlo y trabajar
             tallerMecanico.recibirVehiculo(vehic, razon);

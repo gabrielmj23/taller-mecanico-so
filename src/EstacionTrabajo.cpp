@@ -6,6 +6,7 @@
 #include <QTableWidget>
 #include <EstacionTrabajo.h>
 #include "Inventario.h"
+
 using namespace std;
 
 typedef struct unidad
@@ -121,5 +122,6 @@ void EstacionTrabajo::iniciarEstacion(Vehiculo &v, vector<Pieza> &piezas, QTable
     pthread_mutex_lock(this->ui_mutex);
     tabla_estaciones->setItem(orden, 1, new QTableWidgetItem(QString::fromStdString("Libre")));
     tabla_estaciones->setItem(orden, 2, new QTableWidgetItem(QString::fromStdString("")));
+
     pthread_mutex_unlock(this->ui_mutex);
 }

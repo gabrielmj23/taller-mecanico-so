@@ -52,7 +52,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QTableWidget" name="clienteTableWidget">
@@ -184,22 +184,6 @@ color: rgb(255, 255, 255);</string>
          <string>Agregar</string>
         </property>
        </widget>
-       <widget class="QDateTimeEdit" name="dateTimeEdit_3">
-        <property name="geometry">
-         <rect>
-          <x>770</x>
-          <y>10</y>
-          <width>194</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="displayFormat">
-         <string>d/M/yyyy h:mm AP</string>
-        </property>
-       </widget>
       </widget>
       <widget class="QWidget" name="page_2">
        <widget class="QPushButton" name="pushButton_3">
@@ -268,22 +252,6 @@ color: rgb(255, 255, 255);</string>
          <string>Vehiculos de </string>
         </property>
        </widget>
-       <widget class="QDateTimeEdit" name="dateTimeEdit">
-        <property name="geometry">
-         <rect>
-          <x>770</x>
-          <y>10</y>
-          <width>194</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="displayFormat">
-         <string>d/M/yyyy h:mm AP</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="pushButton_4">
         <property name="geometry">
          <rect>
@@ -337,22 +305,6 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </widget>
       <widget class="QWidget" name="page_3">
-       <widget class="QDateTimeEdit" name="dateTimeEdit_4">
-        <property name="geometry">
-         <rect>
-          <x>770</x>
-          <y>10</y>
-          <width>194</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="displayFormat">
-         <string>d/M/yyyy h:mm AP</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="pushButton_8">
         <property name="geometry">
          <rect>
@@ -448,22 +400,6 @@ color: rgb(255, 255, 255);</string>
      <attribute name="title">
       <string>Otros</string>
      </attribute>
-     <widget class="QDateTimeEdit" name="dateTimeEdit_2">
-      <property name="geometry">
-       <rect>
-        <x>770</x>
-        <y>10</y>
-        <width>194</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-      <property name="displayFormat">
-       <string>d/M/yyyy h:mm AP</string>
-      </property>
-     </widget>
      <widget class="QPushButton" name="btn_aleatorios">
       <property name="geometry">
        <rect>
