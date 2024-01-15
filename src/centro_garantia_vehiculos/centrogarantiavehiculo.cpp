@@ -12,8 +12,7 @@
 #include <string>
 #include <ctime>
 #include <iostream>
-#include <sys/socket.h>
-#include <arpa/inet.h>
+#include <pthread.h>
 #include <unistd.h>
 
 #include "centrogarantiavehiculo.h"
@@ -29,6 +28,15 @@ using namespace std;
 // Variables globales
 string cedulaActual = "";
 string placaActual = "";
+
+// Para enviar vehículos al taller de forma automatizada
+typedef struct unidad
+{
+    string cedula;
+    string placa;
+    string razon;
+    int kmIngreso;
+} UnidadClienteV;
 
 // Actualiza las propiedades de los items de la tabla (centrar y no editable)
 void actItemsTabla(QTableWidget *tableWidget)
@@ -470,7 +478,12 @@ void CentroGarantiaVehiculo::on_pushButton_9_clicked()
         // Crear servicio, guardarlo e informar al taller
         Servicio servicio(placaActual, QDate::currentDate().toString("dd-MM-yyyy").toStdString(), time_string, razon, kmIngreso.toInt());
         Servicio::guardarServicioEnArchivo(servicio);
-        enviarVehiculo(cedulaActual, placaActual, razon, kmIngreso.toInt());
+        UnidadClienteV u;
+        u.cedula = cedulaActual;
+        u.placa = placaActual;
+        u.razon = razon;
+        u.kmIngreso = kmIngreso.toInt();
+        enviarVehiculo(&u);
 
         // Get the current number of rows in the table
         int numRows = ui->serviciosTable->rowCount();
@@ -508,8 +521,18 @@ void CentroGarantiaVehiculo::on_btn_aleatorios_clicked()
                        "Ruido al frenar",
                        "Fuga de refrigerante",
                        "El seguro de la puerta se desactiva inesperadamente"};
+    pthread_t hilos[NUM_RANDOMS];
+    UnidadClienteV u[NUM_RANDOMS];
     for (int i = 0; i < NUM_RANDOMS; i++)
     {
-        enviarVehiculo("cedula" + to_string(i), "placa" + to_string(i), fallas[rand() % 10], rand() % 1000);
+        u[i].cedula = "cedula" + to_string(i);
+        u[i].placa = "placa" + to_string(i);
+        u[i].razon = fallas[rand() % 10];
+        u[i].kmIngreso = rand() % 1000;
+        pthread_create(&hilos[i], NULL, enviarVehiculo, (void *)&u[i]);
+    }
+    for (int i = 0; i < NUM_RANDOMS; i++)
+    {
+        pthread_join(hilos[i], NULL);
     }
 }
